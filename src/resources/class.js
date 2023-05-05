@@ -9,11 +9,10 @@ classRoute.get('/:id', (req, res) => {
   const classFilter = classJSON.find(
     (classElement) => classElement.id.toString() === id,
   );
-  if (!classFilter) {
-    res.send('Not exists this ID');
-  } else {
-    res.send(classFilter);
-  }
+
+  if (!classFilter) return res.send('Not exists this ID');
+
+  return res.send(classFilter);
 });
 
 export default classRoute;
