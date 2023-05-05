@@ -17,7 +17,7 @@ classRoute.post('/', (req, res) => {
   classJSON.push(newClass);
   fs.promises.writeFile(path, JSON.stringify(classJSON, null, 2), (err) => {
     if (err) {
-      console.error(err);
+      res.send(err);
     }
   });
   res.send(classJSON);
