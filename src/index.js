@@ -12,7 +12,7 @@ const port = process.env.PORT || 4000;
 app.use(cors());
 app.use(express.json());
 
-app.use("/class", classRoute)
+app.use('/class', classRoute);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
