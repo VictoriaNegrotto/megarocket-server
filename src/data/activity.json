@@ -1,16 +1,22 @@
-[{
+[
+  {
     "id": 1,
-    "activity": "Crossfit"
-}, {
+    "name": "Crossfit"
+  },
+  {
     "id": 2,
-    "activity": "Spinning"
-}, {
+    "name": "Spinning"
+  },
+  {
     "id": 3,
-    "activity": "Functional"
-}, {
+    "name": "Functional"
+  },
+  {
     "id": 4,
-    "activity": "Boxeo"
-}, {
+    "name": "Boxeo"
+  },
+  {
     "id": 5,
-    "activity": "Musculacion"
-}]
+    "name": "Fitness"
+  }
+]
