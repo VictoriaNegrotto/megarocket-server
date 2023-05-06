@@ -19,7 +19,7 @@ superAdminsRoute.put('/:id', (req, res) => {
     res.send('Not exists this ID');
     return;
   }
-  superAdmins[superAdminIndex] = { id, ...newSuperAdmin };
+  superAdminsJSON[superAdminIndex] = { id, ...newSuperAdmin };
 
   fs.writeFile(path, JSON.stringify(superAdminsJSON, null, 2), (err) => {
     if (err) {
