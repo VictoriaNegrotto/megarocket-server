@@ -1,0 +1,62 @@
+[
+  {
+    "id": "1",
+    "trainer": "Franco Perez",
+    "activity": "Yoga",
+    "duration": 23
+  },
+  {
+    "id": 2,
+    "trainer": "Franco Gaston Lelli",
+    "activity": "Boxeo",
+    "duration": 111
+  },
+  {
+    "id": 3,
+    "trainer": "Julian Vicente",
+    "activity": "Musculacion",
+    "duration": 114
+  },
+  {
+    "id": 4,
+    "trainer": "Sergio Perez",
+    "activity": "Gym",
+    "duration": 61
+  },
+  {
+    "id": 5,
+    "trainer": "Milagros Cerro",
+    "activity": "Yoga",
+    "duration": 72
+  },
+  {
+    "id": 6,
+    "trainer": "Ariana Maldonado",
+    "activity": "Spinning",
+    "duration": 106
+  },
+  {
+    "id": 7,
+    "trainer": "Julian Vicente",
+    "activity": "Crossfit",
+    "duration": 73
+  },
+  {
+    "id": 8,
+    "trainer": "Franco Lelli",
+    "activity": "Musculacion",
+    "duration": 77
+  },
+  {
+    "id": 9,
+    "trainer": "Julian Vicente",
+    "activity": "Yoga",
+    "duration": 102
+  },
+  {
+    "id": 10,
+    "trainer": "Milagros Cerro",
+    "activity": "Yoga",
+    "duration": 86
+  }
+]
