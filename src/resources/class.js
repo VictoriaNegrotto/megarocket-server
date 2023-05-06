@@ -18,6 +18,26 @@ classRoute.get('/:id', (req, res) => {
   return res.send(classFilter);
 });
 
+classRoute.put('/:id', (req, res) => {
+  const { id } = req.params;
+  const newClass = req.body;
+
+  const classIndex = classJSON.findIndex(
+    (classElement) => classElement.id.toString() === id,
+  );
+
+  if (classIndex === -1) return res.send('Not exists this ID');
+
+  classJSON[classIndex] = { id, ...newClass };
+
+  fs.writeFile(path, JSON.stringify(classJSON, null, 2), (err) => {
+    if (err) {
+      res.send(err);
+    }
+  });
+  return res.send('Class updated');
+});
+
 classRoute.patch('/trainer', (req, res) => {
   const { id, trainer } = req.body;
 

@@ -1,9 +1,9 @@
 [
   {
-    "id": 1,
-    "trainer": "Franco Lelli",
-    "activity": "Boxeo",
-    "duration": 79
+    "id": "1",
+    "trainer": "Franco Perez",
+    "activity": "Yoga",
+    "duration": 23
   },
   {
     "id": 2,
