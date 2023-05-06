@@ -40,4 +40,15 @@ classRoute.delete('/:id', (req, res) => {
   });
 });
 
+classRoute.get('/:trainer', (req, res) => {
+  const { trainer } = req.params;
+  const trainerLower = trainer.toLowerCase();
+  const filteredClass = classJSON
+    .filter((classObj) => classObj.trainer.toLowerCase().includes(trainerLower));
+  if (filteredClass.length === 0) {
+    res.send('Not found trainer');
+  }
+  res.send(filteredClass);
+});
+
 export default classRoute;
