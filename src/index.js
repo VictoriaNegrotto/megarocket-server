@@ -6,8 +6,6 @@ import subscriptionsRouter from './resources/subscription';
 // use "require" to import JSON files
 const admins = require('./data/admins.json');
 
-// const subscriptionsRouter = require('./resources/subscription');
-
 const app = express();
 const port = process.env.PORT || 4000;
 

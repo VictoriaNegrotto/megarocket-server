@@ -1,11 +1,3 @@
-// Crear un Subscription (suscripción a una clase en determinada fecha)
-// Editar un Subscription
-// Obtener un Subscription
-// Eliminar un Subscription
-// Obtener la lista de Subscription con la opción de usar filtros
-
-// const express = require('express');
-
 import { Router } from 'express';
 
 const subscriptions = require('../data/subscription.json');
@@ -13,12 +5,15 @@ const subscriptions = require('../data/subscription.json');
 const subscriptionsRouter = Router();
 
 subscriptionsRouter.get('/', (req, res) => {
-  res.status(200).json({
+  res.json({
     data: subscriptions,
   });
-  // res.send(subscriptions);
 });
 
-// module.exports = subscriptionsRouter;
+subscriptionsRouter.get('/getById/:id', (req, res) => {
+  const subscriptionId = req.params.id;
+  const foundSubsc = subscriptions.find((subsc) => subsc.id.toString() === subscriptionId);
+  res.send(foundSubsc);
+});
 
 export default subscriptionsRouter;
