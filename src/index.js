@@ -1,7 +1,7 @@
 // use "import" to import libraries
 import express from 'express';
 import cors from 'cors';
-
+import routerMembers from './resources/member';
 // use "require" to import JSON files
 const admins = require('./data/admins.json');
 
@@ -10,6 +10,7 @@ const port = process.env.PORT || 4000;
 
 app.use(cors());
 app.use(express.json());
+app.use('/members', routerMembers);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
