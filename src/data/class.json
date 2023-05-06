@@ -1,13 +1,13 @@
 [
   {
-    "id": "1",
-    "trainer": "Franco Perez",
-    "activity": "Yoga",
-    "duration": 23
+    "id": 1,
+    "trainer": "Franco Lelli",
+    "activity": "Boxeo",
+    "duration": 79
   },
   {
     "id": 2,
-    "trainer": "Franco Gaston Lelli",
+    "trainer": "Milagros Cerro",
     "activity": "Boxeo",
     "duration": 111
   },
@@ -19,8 +19,8 @@
   },
   {
     "id": 4,
-    "trainer": "Sergio Perez",
-    "activity": "Gym",
+    "trainer": "Franco Lelli",
+    "activity": "Cardio",
     "duration": 61
   },
   {
@@ -56,7 +56,7 @@
   {
     "id": 10,
     "trainer": "Milagros Cerro",
-    "activity": "Yoga",
+    "activity": "Spinning",
     "duration": 86
   }
 ]
