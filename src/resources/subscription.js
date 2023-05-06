@@ -13,7 +13,11 @@ subscriptionsRouter.get('/', (req, res) => {
 subscriptionsRouter.get('/getById/:id', (req, res) => {
   const subscriptionId = req.params.id;
   const foundSubsc = subscriptions.find((subsc) => subsc.id.toString() === subscriptionId);
-  res.send(foundSubsc);
+  if (foundSubsc) {
+    res.send(foundSubsc);
+  } else {
+    res.send('Subscription not found');
+  }
 });
 
 export default subscriptionsRouter;
