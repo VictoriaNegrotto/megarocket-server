@@ -3,21 +3,23 @@ import express from 'express';
 import cors from 'cors';
 
 // use "require" to import JSON files
-const admins = require('./data/admins.json');
+const activity = require('./data/activity.json');
 
 const app = express();
 const port = process.env.PORT || 4000;
+const activityRouter = require('./resources/activity');
 
 app.use(cors());
 app.use(express.json());
+app.use('/activity', activityRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.get('/admins', (req, res) => {
+app.get('/activity', (req, res) => {
   res.status(200).json({
-    data: admins,
+    data: activity,
   });
 });
 
