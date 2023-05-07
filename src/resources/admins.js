@@ -37,7 +37,7 @@ router.put('/:id', (req, res) => {
   }
 });
 
-router.get('/get/:name', (req, res) => {
+router.get('/filter/:name', (req, res) => {
   const adminName = req.params.name;
   const foundAdmin = admins.filter((admin) => admin.first_name === adminName);
 
