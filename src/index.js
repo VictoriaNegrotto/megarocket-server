@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import routerMembers from './resources/member';
 import classRoute from './resources/class';
+import subscriptionsRouter from './resources/subscription';
 
 // use "require" to import JSON files
 const admins = require('./data/admins.json');
@@ -15,6 +16,8 @@ app.use(express.json());
 app.use('/members', routerMembers);
 
 app.use('/class', classRoute);
+
+app.use('/subscriptions', subscriptionsRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
