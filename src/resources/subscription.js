@@ -11,6 +11,16 @@ subscriptionsRouter.get('/', (req, res) => {
   });
 });
 
+subscriptionsRouter.get('/getById/:id', (req, res) => {
+  const subscriptionId = req.params.id;
+  const foundSubsc = subscriptions.find((subsc) => subsc.id.toString() === subscriptionId);
+  if (foundSubsc) {
+    res.send(foundSubsc);
+  } else {
+    res.send('Subscription not found');
+  }
+});
+
 subscriptionsRouter.post('/postSubs', (req, res) => {
   const newSubs = req.body;
   subscriptions.push(newSubs);
