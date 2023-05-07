@@ -28,10 +28,23 @@ router.put('/:id', (req, res) => {
     admins[index] = { id: adminId, ...editAdmin };
     fs.writeFile('src/data/admins.json', JSON.stringify(admins, null, 2), (err) => {
       if (err) {
-        res.send('Error admin cannot be edited');
+        res.send(err);
       }
     });
     res.send('Admin edited');
+  } else {
+    res.send('ID didn\'t match');
+  }
+});
+
+router.get('/get/:name', (req, res) => {
+  const adminName = req.params.name;
+  const foundAdmin = admins.filter((admin) => admin.first_name === adminName);
+
+  if (foundAdmin.length !== 0) {
+    res.send(foundAdmin);
+  } else {
+    res.send('Admin not found');
   }
 });
 
