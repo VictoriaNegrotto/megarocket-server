@@ -23,4 +23,26 @@ subscriptionsRouter.post('/postSubs', (req, res) => {
   });
 });
 
+subscriptionsRouter.post('/updateSubs:id', (req, res) => {
+  const updateSubs = req.body;
+  const { id } = updateSubs;
+  let foundSubs = false;
+  subscriptions.forEach((subs) => {
+    if (subs.id === id) {
+      foundSubs = true;
+      Object.assign(subs, updateSubs);
+      fs.writeFile('src/data/subscription.json', JSON.stringify(subscriptions, null, 2), (err) => {
+        if (err) {
+          res.send('Error! Subscription could not be updated!');
+        } else {
+          res.send('Subscription updated!');
+        }
+      });
+    }
+  });
+  if (!foundSubs) {
+    res.send('Error! Subscription not found!');
+  }
+});
+
 export default subscriptionsRouter;
