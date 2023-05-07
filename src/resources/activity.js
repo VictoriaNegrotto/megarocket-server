@@ -10,18 +10,16 @@ activityRouter.post('/post', (req, res) => {
   const newActivity = req.body;
 
   if (Object.keys(newActivity).length === 0) {
-    res.send('Error! Activity cannot be empty');
-    return;
+    return res.send('Error! Activity cannot be empty');
   }
 
   activities.push(newActivity);
   fs.writeFile('src/data/activity.json', JSON.stringify(activities, null, 2), (error) => {
     if (error) {
       res.send('Error! Activity cannot be created');
-    } else {
-      res.send('Activity created!');
     }
   });
+  return res.send('Activity created');
 });
 
 activityRouter.put('/:id', (req, res) => {
