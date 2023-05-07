@@ -9,6 +9,11 @@ const activityRouter = Router();
 activityRouter.post('/post', (req, res) => {
   const newActivity = req.body;
 
+  if (Object.keys(newActivity).length === 0) {
+    res.send('Error! Activity cannot be empty');
+    return;
+  }
+
   activities.push(newActivity);
   fs.writeFile('src/data/activity.json', JSON.stringify(activities, null, 2), (error) => {
     if (error) {
