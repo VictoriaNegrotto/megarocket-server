@@ -26,6 +26,8 @@ router.post('/', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   const memberId = req.params.id;
+  const deleteMember = members.filter((member) => member.id.toString() === memberId);
+  if (deleteMember.length === 0) return res.send('Member not found.');
   const filtMember = members.filter((member) => member.id.toString() !== memberId);
   fs.writeFile('src/data/member.json', JSON.stringify(filtMember, null, 2), (err) => {
     if (err) {
@@ -34,6 +36,7 @@ router.delete('/:id', (req, res) => {
       res.send('Member deleted.');
     }
   });
+  return {};
 });
 
 export default router;
