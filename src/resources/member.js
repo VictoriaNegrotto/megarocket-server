@@ -40,7 +40,7 @@ router.put('/:id', (req, res) => {
   return res.json({ msg: 'Member updated', member: members[memberIndex] });
 });
 
-router.get('/:firstName', (req, res) => {
+router.get('/filter/:firstName', (req, res) => {
   const { firstName } = req.params;
   const firstNameLC = firstName.toLowerCase();
   const filteredMember = members.filter((member) => member.firstName.toLowerCase() === firstNameLC);
