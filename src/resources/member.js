@@ -24,4 +24,16 @@ router.post('/', (req, res) => {
   });
 });
 
+router.delete('/:id', (req, res) => {
+  const memberId = req.params.id;
+  const filtMember = members.filter((member) => member.id.toString() !== memberId);
+  fs.writeFile('src/data/member.json', JSON.stringify(filtMember, null, 2), (err) => {
+    if (err) {
+      res.send('Error! cannot delete the member');
+    } else {
+      res.send('Member deleted.');
+    }
+  });
+});
+
 export default router;
