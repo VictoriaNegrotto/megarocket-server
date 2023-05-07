@@ -45,4 +45,12 @@ subscriptionsRouter.post('/updateSubs:id', (req, res) => {
   }
 });
 
+subscriptionsRouter.get('/filterSubsByDate/:date', (req, res) => {
+  const { date } = req.params;
+  const filterSubs = subscriptions.filter((subs) => subs.subscriptionDate.toString().split('/').join('-') === date);
+  res.json({
+    data: filterSubs,
+  });
+});
+
 export default subscriptionsRouter;
