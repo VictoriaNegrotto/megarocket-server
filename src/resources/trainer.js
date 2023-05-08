@@ -28,7 +28,7 @@ trainerRouter.put('/:id', (req, res) => {
   fs.writeFile(path, JSON.stringify(trainers, null, 2), (err) => {
     if (err) res.send('Error editing trainer');
   });
-  return res.status(200).json({ msg: 'Trainer updated successfully', trainer: trainers[trainerIndex] });
+  return res.json({ msg: 'Trainer updated successfully', trainer: trainers[trainerIndex] });
 });
 
 trainerRouter.delete('/:id', (req, res) => {
@@ -40,6 +40,29 @@ trainerRouter.delete('/:id', (req, res) => {
     if (err) res.send('Error deleting trainer');
   });
   return res.send();
+});
+
+trainerRouter.get('/', (req, resp) => {
+  resp.json({ trainers });
+});
+
+trainerRouter.get('/:id', (req, res) => {
+  const { id } = req.params;
+  const getTrainer = trainers.find((trainer) => trainer.id.toString() === id);
+
+  if (!getTrainer) return res.json({ msg: `No trainer with the id of ${id}` });
+
+  return res.json({ data: getTrainer });
+});
+
+trainerRouter.get('/filter/:activity', (req, res) => {
+  const { activity } = req.params;
+  const getTrainer = trainers.filter((trainer) => trainer.activity1 === activity
+   || trainer.activity2 === activity);
+
+  if (!getTrainer) return res.json({ msg: `No trainer with the activity of ${activity}` });
+
+  return res.json({ data: getTrainer });
 });
 
 export default trainerRouter;
