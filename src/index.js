@@ -7,6 +7,7 @@ import routerMembers from './resources/member';
 import classRoute from './resources/class';
 import adminRoute from './resources/admins';
 import subscriptionsRouter from './resources/subscription';
+import trainerRouter from './resources/trainer';
 
 // use "require" to import JSON files
 
@@ -15,6 +16,10 @@ const port = process.env.PORT || 4000;
 
 app.use(cors());
 app.use(express.json());
+app.use('/members', routerMembers);
+app.use('/trainer', trainerRouter);
+
+app.use('/class', classRoute);
 app.use('/super-admins', superAdminsRoute);
 app.use('/members', routerMembers);
 app.use('/admins', adminRoute);
