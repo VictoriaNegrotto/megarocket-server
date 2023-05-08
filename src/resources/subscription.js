@@ -11,7 +11,7 @@ subscriptionsRouter.get('/', (req, res) => {
   });
 });
 
-subscriptionsRouter.get('/getById/:id', (req, res) => {
+subscriptionsRouter.get('/:id', (req, res) => {
   const subscriptionId = req.params.id;
   const foundSubsc = subscriptions.find((subsc) => subsc.id.toString() === subscriptionId);
   if (foundSubsc) {
@@ -21,7 +21,7 @@ subscriptionsRouter.get('/getById/:id', (req, res) => {
   }
 });
 
-subscriptionsRouter.delete('/deleteById/:id', (req, res) => {
+subscriptionsRouter.delete('/:id', (req, res) => {
   const subscriptionId = req.params.id;
   const foundSubsc = subscriptions.filter((subsc) => subsc.id.toString() !== subscriptionId);
 
@@ -38,7 +38,7 @@ subscriptionsRouter.delete('/deleteById/:id', (req, res) => {
   }
 });
 
-subscriptionsRouter.post('/postSubs', (req, res) => {
+subscriptionsRouter.post('/', (req, res) => {
   const {
     idMember, idClass, subscriptionDate, subscriptionState, stateEditionDate,
   } = req.body;
