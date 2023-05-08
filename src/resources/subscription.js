@@ -39,15 +39,24 @@ subscriptionsRouter.delete('/deleteById/:id', (req, res) => {
 });
 
 subscriptionsRouter.post('/postSubs', (req, res) => {
-  const newSubs = req.body;
+  const {
+    idMember, idClass, subscriptionDate, subscriptionState, stateEditionDate,
+  } = req.body;
+  if (!idMember || !idClass || !subscriptionDate || !stateEditionDate) {
+    return res.json({ msg: 'Missing or empty required properties' });
+  }
+
+  const lastId = subscriptions.length + 1;
+  const newSubs = {
+    id: lastId, idMember, idClass, subscriptionDate, subscriptionState, stateEditionDate,
+  };
   subscriptions.push(newSubs);
   fs.writeFile('src/data/subscription.json', JSON.stringify(subscriptions, null, 2), (err) => {
     if (err) {
       res.send('Error! Subscription could not be created!');
-    } else {
-      res.send('Subscription created!');
     }
   });
+  return res.send('Subscription created!');
 });
 
 subscriptionsRouter.post('/updateSubs:id', (req, res) => {
