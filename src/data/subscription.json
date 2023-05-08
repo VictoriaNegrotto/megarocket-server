@@ -1,0 +1,66 @@
+[
+  {
+    "id": 1,
+    "idMember": 21,
+    "idClass": 8,
+    "subscriptionDate": "10/24/2022",
+    "subscriptionState": false,
+    "stateEditionDate": "10/29/2022"
+  },
+  {
+    "id": 2,
+    "idMember": 15,
+    "idClass": 89,
+    "subscriptionDate": "10/19/2022",
+    "subscriptionState": false,
+    "stateEditionDate": "1/7/2023"
+  },
+  {
+    "id": 3,
+    "idMember": 24,
+    "idClass": 35,
+    "subscriptionDate": "2/20/2023",
+    "subscriptionState": false,
+    "stateEditionDate": "4/20/2023"
+  },
+  {
+    "id": 4,
+    "idMember": 28,
+    "idClass": 52,
+    "subscriptionDate": "10/27/2022",
+    "subscriptionState": true,
+    "stateEditionDate": "4/28/2023"
+  },
+  {
+    "id": 5,
+    "idMember": 32,
+    "idClass": 45,
+    "subscriptionDate": "8/29/2022",
+    "subscriptionState": false,
+    "stateEditionDate": "1/17/2023"
+  },
+  {
+    "id": 6,
+    "idMember": 74,
+    "idClass": 58,
+    "subscriptionDate": "7/31/2022",
+    "subscriptionState": false,
+    "stateEditionDate": "12/1/2022"
+  },
+  {
+    "id": 7,
+    "idMember": 43,
+    "idClass": 61,
+    "subscriptionDate": "2/7/2023",
+    "subscriptionState": true,
+    "stateEditionDate": "4/26/2023"
+  },
+  {
+    "id": 10,
+    "idMember": 14,
+    "idClass": 17,
+    "subscriptionDate": "5/18/2022",
+    "subscriptionState": true,
+    "stateEditionDate": "11/24/2022"
+  }
+]
