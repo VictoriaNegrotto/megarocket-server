@@ -1,23 +1,22 @@
-
 [
-    {
-      "id": 1,
-      "name": "Crossfit"
-    },
-    {
-      "id": 2,
-      "name": "Spinning"
-    },
-    {
-      "id": 3,
-      "name": "Functional"
-    },
-    {
-      "id": 4,
-      "name": "Box"
-    },
-    {
-      "id": 5,
-      "name": "Fitness"
-    }
-  ]
+  {
+    "id": 1,
+    "name": "Crossfit"
+  },
+  {
+    "id": 2,
+    "name": "Spinning"
+  },
+  {
+    "id": 3,
+    "name": "Functional"
+  },
+  {
+    "id": 4,
+    "name": "Box"
+  },
+  {
+    "id": 5,
+    "name": "Fitness"
+  }
+]
