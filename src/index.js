@@ -5,6 +5,7 @@ import superAdminsRoute from './resources/super-admins';
 import routerMembers from './resources/member';
 import classRoute from './resources/class';
 import subscriptionsRouter from './resources/subscription';
+import trainerRouter from './resources/trainer';
 
 // use "require" to import JSON files
 const admins = require('./data/admins.json');
@@ -16,6 +17,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/super-admins', superAdminsRoute);
 app.use('/members', routerMembers);
+app.use('/trainer', trainerRouter);
 
 app.use('/class', classRoute);
 
