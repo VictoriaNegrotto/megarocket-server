@@ -59,14 +59,14 @@ subscriptionsRouter.post('/postSubs', (req, res) => {
   return res.send('Subscription created!');
 });
 
-subscriptionsRouter.post('/updateSubs:id', (req, res) => {
-  const updateSubs = req.body;
-  const { id } = updateSubs;
+subscriptionsRouter.put('/:id', (req, res) => {
+  const { id } = req.params;
+  const updatedSubs = req.body;
   let foundSubs = false;
   subscriptions.forEach((subs) => {
-    if (subs.id === id) {
+    if (subs.id.toString() === id) {
       foundSubs = true;
-      Object.assign(subs, updateSubs);
+      Object.assign(subs, updatedSubs);
       fs.writeFile('src/data/subscription.json', JSON.stringify(subscriptions, null, 2), (err) => {
         if (err) {
           res.send('Error! Subscription could not be updated!');
