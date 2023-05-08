@@ -25,7 +25,6 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-
 app.get('/admins', (req, res) => {
   res.status(200).json({
     data: admins,
