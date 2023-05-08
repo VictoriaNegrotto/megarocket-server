@@ -21,6 +21,23 @@ subscriptionsRouter.get('/getById/:id', (req, res) => {
   }
 });
 
+subscriptionsRouter.delete('/deleteById/:id', (req, res) => {
+  const subscriptionId = req.params.id;
+  const foundSubsc = subscriptions.filter((subsc) => subsc.id.toString() !== subscriptionId);
+
+  if (subscriptionId > subscriptions.length) {
+    res.send('Error! This id does not exist');
+  } else {
+    fs.writeFile('src/data/subscription.json', JSON.stringify(foundSubsc, null, 2), (err) => {
+      if (err) {
+        res.send('Error! Subscription cannot be deleted');
+      } else {
+        res.send('Subscription deleted');
+      }
+    });
+  }
+});
+
 subscriptionsRouter.post('/postSubs', (req, res) => {
   const newSubs = req.body;
   subscriptions.push(newSubs);
@@ -53,6 +70,14 @@ subscriptionsRouter.post('/updateSubs:id', (req, res) => {
   if (!foundSubs) {
     res.send('Error! Subscription not found!');
   }
+});
+
+subscriptionsRouter.get('/filter/:date', (req, res) => {
+  const { date } = req.params;
+  const filterSubs = subscriptions.filter((subs) => subs.subscriptionDate.toString().split('/').join('-') === date);
+  res.json({
+    data: filterSubs,
+  });
 });
 
 export default subscriptionsRouter;

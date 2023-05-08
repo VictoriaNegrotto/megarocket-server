@@ -12,11 +12,8 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   const adminId = req.params.id;
   const foundAdmin = admins.find((admin) => admin.id.toString() === adminId);
-  if (foundAdmin) {
-    res.send(foundAdmin);
-  } else {
-    res.send('Admin not found');
-  }
+  if (!foundAdmin) return res.send('Admin not found');
+  return res.send(foundAdmin);
 });
 
 router.put('/:id', (req, res) => {
@@ -41,11 +38,8 @@ router.get('/filter/:name', (req, res) => {
   const adminName = req.params.name;
   const foundAdmin = admins.filter((admin) => admin.first_name === adminName);
 
-  if (foundAdmin.length !== 0) {
-    res.send(foundAdmin);
-  } else {
-    res.send('Admin not found');
-  }
+  if (foundAdmin.length === 0) return res.send('Admin not found');
+  return res.send(foundAdmin);
 });
 
 export default router;
