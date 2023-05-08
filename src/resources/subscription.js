@@ -46,7 +46,8 @@ subscriptionsRouter.post('/', (req, res) => {
     return res.json({ msg: 'Missing or empty required properties' });
   }
 
-  const lastId = subscriptions.length + 1;
+  const lastSubs = subscriptions[subscriptions.length - 1];
+  const lastId = lastSubs.id + 1;
   const newSubs = {
     id: lastId, idMember, idClass, subscriptionDate, subscriptionState, stateEditionDate,
   };
