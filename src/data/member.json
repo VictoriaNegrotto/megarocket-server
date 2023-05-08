@@ -9,15 +9,6 @@
     "city": "Guadalupe"
   },
   {
-    "id": 2,
-    "firstName": "Saunder",
-    "lastName": "Scorthorne",
-    "email": "sscorthorne1@meetup.com",
-    "phone": "316-865-2985",
-    "address": "17046 Eastlawn Plaza",
-    "city": "Otwock"
-  },
-  {
     "id": 3,
     "firstName": "Culley",
     "lastName": "Snewin",
@@ -28,16 +19,18 @@
   },
   {
     "id": 4,
-    "firstName": "Burlie",
+    "firstName": "Mauro",
     "lastName": "Emanuel",
-    "email": "bemanuel3@seesaa.net",
+    "email": "mau@gmail.com",
     "phone": "187-477-9541",
     "address": "3169 Monument Drive",
-    "city": "Słońsk"
+    "city": "Słońsk",
+    "name": "Mauro",
+    "password": "123"
   },
   {
     "id": 5,
-    "firstName": "Grier",
+    "firstName": "Mauro",
     "lastName": "Telfer",
     "email": "gtelfer4@toplist.cz",
     "phone": "992-487-6155",

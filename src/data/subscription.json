@@ -56,10 +56,26 @@
     "stateEditionDate": "4/26/2023"
   },
   {
-    "id": 10,
-    "idMember": 14,
+    "id": 8,
+    "idMember": 11,
     "idClass": 17,
     "subscriptionDate": "5/18/2022",
+    "subscriptionState": true,
+    "stateEditionDate": "11/24/2022"
+  },
+  {
+    "id": 9,
+    "idMember": 23,
+    "idClass": 17,
+    "subscriptionDate": "6/18/2022",
+    "subscriptionState": true,
+    "stateEditionDate": "11/24/2022"
+  },
+  {
+    "id": 10,
+    "idMember": 65,
+    "idClass": 17,
+    "subscriptionDate": "8/18/2022",
     "subscriptionState": true,
     "stateEditionDate": "11/24/2022"
   }
