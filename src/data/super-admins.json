@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [
   {
     "id": 1,
@@ -66,3 +67,56 @@
     "password": "franco123"
   }
 ]
+=======
+[{
+  "id": 1,
+  "name": "Sallie",
+  "email": "soliphard0@blogspot.com",
+  "password": "YHggTW"
+}, {
+  "id": 2,
+  "name": "Den",
+  "email": "dpeddar1@slate.com",
+  "password": "JoyhXEYQ8"
+}, {
+  "id": 3,
+  "name": "Cleo",
+  "email": "chanscome2@ucoz.ru",
+  "password": "q9mM58"
+}, {
+  "id": 4,
+  "name": "Hank",
+  "email": "hdegowe3@posterous.com",
+  "password": "gzHmBGLavBo"
+}, {
+  "id": 5,
+  "name": "Fenelia",
+  "email": "fbrotherwood4@wufoo.com",
+  "password": "AayVhOmE2onJ"
+}, {
+  "id": 6,
+  "name": "Sully",
+  "email": "sbaddoe5@vimeo.com",
+  "password": "AVSWGKYYM"
+}, {
+  "id": 7,
+  "name": "Konstantine",
+  "email": "kbannister6@slideshare.net",
+  "password": "zXCzOalHPB"
+}, {
+  "id": 8,
+  "name": "Kiley",
+  "email": "kdallinder7@dailymotion.com",
+  "password": "erPuiv6ue"
+}, {
+  "id": 9,
+  "name": "Alayne",
+  "email": "ascruby8@hibu.com",
+  "password": "t3C0HJ"
+}, {
+  "id": 10,
+  "name": "Dalila",
+  "email": "dnutty9@fc2.com",
+  "password": "Z3JvyN3PZv2"
+}]
+>>>>>>> master

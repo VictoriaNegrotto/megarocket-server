@@ -2,13 +2,15 @@ import { Router } from 'express';
 
 import fs from 'fs';
 
-const superAdminRoute = Router();
+const superAdminsRoute = Router();
 
 const superAdminJSON = require('../data/super-admins.json');
 
 const path = './src/data/super-admins.json';
 
-superAdminRoute.post('/', (req, res) => {
+const superAdmins = [];
+
+superAdminsRoute.post('/', (req, res) => {
   const { email, name, password } = req.body;
   const idValue = superAdminJSON.length + 1;
 
@@ -30,7 +32,7 @@ superAdminRoute.post('/', (req, res) => {
   return res.send('Super admin created successfuly');
 });
 
-superAdminRoute.get('/:name', (req, res) => {
+superAdminsRoute.get('/:name', (req, res) => {
   const { name } = req.params;
 
   const nameLower = name.toLowerCase();
@@ -43,4 +45,53 @@ superAdminRoute.get('/:name', (req, res) => {
   res.send(filteredSuperAd);
 });
 
-export default superAdminRoute;
+superAdminsRoute.put('/:id', (req, res) => {
+  const { id } = req.params;
+  const newSuperAdmin = req.body;
+  const superAdminIndex = superAdminsJSON.findIndex(
+    (superAdmin) => superAdmin.id.toString() === id,
+  );
+  if (superAdminIndex === -1) {
+    res.send('Not exists this ID');
+    return;
+  }
+  superAdminsJSON[superAdminIndex] = { id, ...newSuperAdmin };
+
+  fs.writeFile(path, JSON.stringify(superAdminsJSON, null, 2), (err) => {
+    if (err) {
+      res.send(err);
+      return;
+    }
+    res.send('Super admin updated');
+  });
+});
+
+superAdminsRoute.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  const superAdminIndex = superAdminsJSON.findIndex(
+    (superAdmin) => superAdmin.id.toString() === id,
+  );
+  if (superAdminIndex !== -1) {
+    superAdmins.splice(superAdminIndex, 1);
+  } else {
+    return res.send('Not exists this ID');
+  }
+  fs.writeFile(path, JSON.stringify(superAdminsJSON, null, 2), (err) => {
+    if (err) {
+      res.send(err);
+    }
+  });
+  return res.send('Super admin deleted');
+});
+
+superAdminsRoute.get('/:id', (req, res) => {
+  const { id } = req.params;
+  const filteredSuperAdmin = superAdminsJSON
+    .filter((superAdmin) => superAdmin.id.toString() === id);
+  if (filteredSuperAdmin.length === 0) {
+    res.send('Not found super admin');
+  }
+  res.send(filteredSuperAdmin);
+});
+
+export default superAdminsRoute;
