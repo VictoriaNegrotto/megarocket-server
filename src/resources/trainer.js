@@ -1,14 +1,52 @@
 import express from 'express';
 
+const fs = require('fs');
 const trainers = require('../data/trainer.json');
 
-const router = express.Router();
+const trainerRouter = express.Router();
+const path = 'src/data/trainer.json';
 
-router.get('/', (req, resp) => {
+trainerRouter.post('/', (req, res) => {
+  const newTrainer = req.body;
+  trainers.push(newTrainer);
+  fs.writeFile(path, JSON.stringify(trainers, null, 2), (err) => {
+    if (err) res.send('Error creating trainer');
+  });
+  res.json({ msg: 'Trainer created successfully', trainer: newTrainer });
+});
+
+trainerRouter.put('/:id', (req, res) => {
+  const { id } = req.params;
+  const trainerIndex = trainers.findIndex((trainer) => trainer.id.toString() === id);
+  const trainerUpdate = req.body;
+  if (trainerIndex === -1) return res.json({ msg: `Trainer with id ${id} not found` });
+  const trainer = trainers[trainerIndex];
+  trainers[trainerIndex] = {
+    ...trainer,
+    ...trainerUpdate,
+  };
+  fs.writeFile(path, JSON.stringify(trainers, null, 2), (err) => {
+    if (err) res.send('Error editing trainer');
+  });
+  return res.json({ msg: 'Trainer updated successfully', trainer: trainers[trainerIndex] });
+});
+
+trainerRouter.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  const trainerIndex = trainers.findIndex((trainer) => trainer.id.toString() === id);
+  if (trainerIndex === -1) return res.json({ msg: `Trainer with id ${id} not found` });
+  trainers.splice(trainerIndex, 1);
+  fs.writeFile(path, JSON.stringify(trainers, null, 2), (err) => {
+    if (err) res.send('Error deleting trainer');
+  });
+  return res.send();
+});
+
+trainerRouter.get('/', (req, resp) => {
   resp.json({ trainers });
 });
 
-router.get('/:id', (req, res) => {
+trainerRouter.get('/:id', (req, res) => {
   const { id } = req.params;
   const getTrainer = trainers.find((trainer) => trainer.id.toString() === id);
 
@@ -17,7 +55,7 @@ router.get('/:id', (req, res) => {
   return res.json({ data: getTrainer });
 });
 
-router.get('/filter/:activity', (req, res) => {
+trainerRouter.get('/filter/:activity', (req, res) => {
   const { activity } = req.params;
   const getTrainer = trainers.filter((trainer) => trainer.activity1 === activity
    || trainer.activity2 === activity);
@@ -27,4 +65,4 @@ router.get('/filter/:activity', (req, res) => {
   return res.json({ data: getTrainer });
 });
 
-export default router;
+export default trainerRouter;
