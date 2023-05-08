@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "first_name": "Francois",
+    "last_name": "Gater",
+    "gender": "Male",
+    "activity1": "hiking",
+    "activity2": "",
+    "schedule": "afternoon",
+    "firstName": "Santiago",
+    "lastName": "Scorthorne",
+    "email": "sscorthorne1@meetup.com",
+    "phone": "316-865-2985",
+    "address": "17046 Eastlawn Plaza",
+    "city": "Otwock"
+  },
+  {
+    "id": 2,
+    "first_name": "Deerdre",
+    "last_name": "Rudeforth",
+    "gender": "Female",
+    "activity1": "yoga",
+    "activity2": "hiking",
+    "schedule": "afternoon"
+  },
+  {
+    "id": 3,
+    "first_name": "Bailey",
+    "last_name": "Jindrich",
+    "gender": "Genderqueer",
+    "activity1": "dancing",
+    "activity2": "hiking",
+    "schedule": "morning"
+  },
+  {
+    "id": 4,
+    "first_name": "Guillemette",
+    "last_name": "Ferrar",
+    "gender": "Female",
+    "activity1": " weightlifting",
+    "activity2": "yoga",
+    "schedule": "afternoon"
+  },
+  {
+    "id": 5,
+    "first_name": "Raffarty",
+    "last_name": "Grogona",
+    "gender": "Male",
+    "activity1": "kickboxing",
+    "activity2": "hiking",
+    "schedule": "morning"
+  },
+  {
+    "id": 6,
+    "first_name": "Bary",
+    "last_name": "Nation",
+    "gender": "Male",
+    "activity1": "boxing",
+    "activity2": "kickboxing",
+    "schedule": "afternoon"
+  },
+  {
+    "id": 7,
+    "first_name": "Derry",
+    "last_name": "Segoe",
+    "gender": "Male",
+    "activity1": "yoga",
+    "activity2": "pilates",
+    "schedule": "morning"
+  },
+  {
+    "id": 8,
+    "first_name": "Pat",
+    "last_name": "Huffey",
+    "gender": "Male",
+    "activity1": "cycling",
+    "activity2": "weightlifting",
+    "schedule": "morning"
+  },
+  {
+    "id": 9,
+    "first_name": "Stern",
+    "last_name": "Lucas",
+    "gender": "Male",
+    "activity1": "running",
+    "activity2": "",
+    "schedule": "morning"
+  },
+  {
+    "id": 10,
+    "first_name": "Selle",
+    "last_name": "Cordova",
+    "gender": "Female",
+    "activity1": "swimming",
+    "activity2": "pilates",
+    "schedule": "afternoon"
+  }
+]
