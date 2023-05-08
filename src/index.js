@@ -19,18 +19,12 @@ app.use('/super-admins', superAdminsRoute);
 app.use('/members', routerMembers);
 app.use('/admins', adminRoute);
 app.use('/class', classRoute);
-
+app.use('/activity', activityRouter);
 app.use('/subscriptions', subscriptionsRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
-
-app.use('/activity', activityRouter);
-app.use('/super-admins', superAdminsRoute);
-app.use('/members', routerMembers);
-app.use('/class', classRoute);
-app.use('/subscriptions', subscriptionsRouter);
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console
