@@ -79,7 +79,7 @@ classRoute.patch('/activity', (req, res) => {
 
 classRoute.post('/', (req, res) => {
   const { trainer, activity, duration } = req.body;
-  const idValue = classJSON.length + 1;
+  const idValue = classJSON[classJSON.length - 1].id + 1;
 
   if (!trainer || !activity || !duration) {
     return res.send('Incorrect data. Please fill in trainer, activity, duration');

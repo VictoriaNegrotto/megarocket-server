@@ -1,5 +1,11 @@
 [
   {
+    "id": 1,
+    "name": "Franco",
+    "email": "fran@slate.com",
+    "password": "JoyhXEYQ8"
+  },
+  {
     "id": 2,
     "name": "Den",
     "email": "dpeddar1@slate.com",
@@ -48,9 +54,9 @@
     "password": "t3C0HJ"
   },
   {
-    "id": 11,
+    "id": 10,
     "name": "Franco",
-    "email": "fran@gmail.com",
+    "email": "frangaston@gmail.com",
     "password": "franco123"
   }
 ]

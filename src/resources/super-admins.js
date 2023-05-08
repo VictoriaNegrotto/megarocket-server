@@ -10,7 +10,7 @@ const path = './src/data/super-admins.json';
 
 superAdminsRoute.post('/', (req, res) => {
   const { email, name, password } = req.body;
-  const idValue = superAdminJSON.length + 1;
+  const idValue = superAdminJSON[superAdminJSON.length - 1].id + 1;
 
   if (!email || !name || !password) {
     return res.send('Incorrect data. Please fill in name, email, password');
