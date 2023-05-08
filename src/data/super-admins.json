@@ -1,11 +1,5 @@
 [
   {
-    "id": 1,
-    "name": "Sallie",
-    "email": "soliphard0@blogspot.com",
-    "password": "YHggTW"
-  },
-  {
     "id": 2,
     "name": "Den",
     "email": "dpeddar1@slate.com",
@@ -52,12 +46,6 @@
     "name": "Alayne",
     "email": "ascruby8@hibu.com",
     "password": "t3C0HJ"
-  },
-  {
-    "id": 10,
-    "name": "Dalila",
-    "email": "dnutty9@fc2.com",
-    "password": "Z3JvyN3PZv2"
   },
   {
     "id": 11,
