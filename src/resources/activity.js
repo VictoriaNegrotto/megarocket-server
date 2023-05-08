@@ -39,4 +39,15 @@ activityRouter.put('/:id', (req, res) => {
   return res.send('Activity modified!');
 });
 
+activityRouter.get('/filter/:name', (req, res) => {
+  const { name } = req.params;
+  const nameLC = name.toLowerCase();
+  const filteredActivity = activities.filter((activity) => activity.name.toLowerCase() === nameLC);
+  if (!filteredActivity.length) return res.json({ msg: 'Member not found' });
+  fs.writeFile('src/data/activity.json', JSON.stringify(activities, null, 2), (err) => {
+    if (err) throw err;
+  });
+  return res.json({ activities: filteredActivity });
+});
+
 export default activityRouter;
