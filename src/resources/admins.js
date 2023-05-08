@@ -34,7 +34,7 @@ router.delete('/:id', (req, res) => {
   }
 });
 
-router.get('/filter/:lastname', (req, res) => {
+router.get('/filterByLastName/:lastname', (req, res) => {
   const adminLastName = req.params.lastname;
   const foundAdmin = admins.filter((admin) => admin.last_name === adminLastName);
   if (foundAdmin.length === 0) return res.send('Admin not found');
@@ -70,7 +70,7 @@ router.put('/:id', (req, res) => {
   }
 });
 
-router.get('/filtern/:name', (req, res) => {
+router.get('/filterByName/:name', (req, res) => {
   const adminName = req.params.name;
   const foundAdmin = admins.filter((admin) => admin.first_name === adminName);
   if (foundAdmin.length === 0) return res.send('Admin not found');
