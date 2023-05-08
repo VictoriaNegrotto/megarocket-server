@@ -4,7 +4,7 @@ import cors from 'cors';
 import activityRouter from './resources/activity';
 
 // use "require" to import JSON files
-const activities = require('./data/activity.json');
+const admins = require('./data/admins.json');
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -17,9 +17,9 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.get('/activity', (req, res) => {
+app.get('/admins', (req, res) => {
   res.status(200).json({
-    data: activities,
+    data: admins,
   });
 });
 
