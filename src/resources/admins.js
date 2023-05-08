@@ -37,11 +37,8 @@ router.delete('/:id', (req, res) => {
 router.get('/filter/:lastname', (req, res) => {
   const adminLastName = req.params.lastname;
   const foundAdmin = admins.filter((admin) => admin.last_name === adminLastName);
-  if (foundAdmin.length !== 0) {
-    res.send(foundAdmin);
-  } else {
-    res.send('Admin not found');
-  }
+  if (foundAdmin.length === 0) return res.send('Admin not found');
+  return res.send(foundAdmin);
 });
 
 export default router;
