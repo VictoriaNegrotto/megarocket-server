@@ -48,16 +48,16 @@ superAdminsRoute.get('/:name', (req, res) => {
 superAdminsRoute.put('/:id', (req, res) => {
   const { id } = req.params;
   const newSuperAdmin = req.body;
-  const superAdminIndex = superAdminsJSON.findIndex(
+  const superAdminIndex = superAdminJSON.findIndex(
     (superAdmin) => superAdmin.id.toString() === id,
   );
   if (superAdminIndex === -1) {
     res.send('Not exists this ID');
     return;
   }
-  superAdminsJSON[superAdminIndex] = { id, ...newSuperAdmin };
+  superAdminJSON[superAdminIndex] = { id, ...newSuperAdmin };
 
-  fs.writeFile(path, JSON.stringify(superAdminsJSON, null, 2), (err) => {
+  fs.writeFile(path, JSON.stringify(superAdminJSON, null, 2), (err) => {
     if (err) {
       res.send(err);
       return;
@@ -68,7 +68,7 @@ superAdminsRoute.put('/:id', (req, res) => {
 
 superAdminsRoute.delete('/:id', (req, res) => {
   const { id } = req.params;
-  const superAdminIndex = superAdminsJSON.findIndex(
+  const superAdminIndex = superAdminJSON.findIndex(
     (superAdmin) => superAdmin.id.toString() === id,
   );
   if (superAdminIndex !== -1) {
@@ -76,7 +76,7 @@ superAdminsRoute.delete('/:id', (req, res) => {
   } else {
     return res.send('Not exists this ID');
   }
-  fs.writeFile(path, JSON.stringify(superAdminsJSON, null, 2), (err) => {
+  fs.writeFile(path, JSON.stringify(superAdminJSON, null, 2), (err) => {
     if (err) {
       res.send(err);
     }
@@ -86,7 +86,7 @@ superAdminsRoute.delete('/:id', (req, res) => {
 
 superAdminsRoute.get('/:id', (req, res) => {
   const { id } = req.params;
-  const filteredSuperAdmin = superAdminsJSON
+  const filteredSuperAdmin = superAdminJSON
     .filter((superAdmin) => superAdmin.id.toString() === id);
   if (filteredSuperAdmin.length === 0) {
     res.send('Not found super admin');
