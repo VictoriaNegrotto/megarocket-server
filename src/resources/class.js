@@ -29,6 +29,12 @@ classRoute.put('/:id', (req, res) => {
 
   if (classIndex === -1) return res.send('Not exists this ID');
 
+  const propertiesValues = ['trainer', 'activity', 'duration'];
+  const newProperties = Object.keys(req.body);
+  const propertiesValid = newProperties.every((property) => propertiesValues.includes(property));
+
+  if (!propertiesValid) return res.send('Ivalid properties');
+
   classJSON[classIndex] = { id, ...newClass };
 
   fs.writeFile(path, JSON.stringify(classJSON, null, 2), (err) => {
