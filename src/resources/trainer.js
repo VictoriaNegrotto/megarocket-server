@@ -8,11 +8,18 @@ const path = 'src/data/trainer.json';
 
 trainerRouter.post('/', (req, res) => {
   const newTrainer = req.body;
+  const camposRequeridos = ['firstName', 'lastName', 'gender', 'activity1', 'schedule'];
+  if (camposRequeridos.some((campo) => !newTrainer[campo])) {
+    return res.json({ msg: 'All fields is required' });
+  }
+  const lastTrainer = trainers[trainers.length - 1];
+  const lastId = lastTrainer.id + 1;
+  newTrainer.id = lastId;
   trainers.push(newTrainer);
   fs.writeFile(path, JSON.stringify(trainers, null, 2), (err) => {
     if (err) res.send('Error creating trainer');
   });
-  res.json({ msg: 'Trainer created successfully', trainer: newTrainer });
+  return res.json({ msg: 'Trainer created successfully', trainer: newTrainer });
 });
 
 trainerRouter.put('/:id', (req, res) => {
@@ -20,6 +27,15 @@ trainerRouter.put('/:id', (req, res) => {
   const trainerIndex = trainers.findIndex((trainer) => trainer.id.toString() === id);
   const trainerUpdate = req.body;
   if (trainerIndex === -1) return res.json({ msg: `Trainer with id ${id} not found` });
+
+  const validProperties = ['firstName', 'lastName', 'gender', 'activity1', 'activity2', 'schedule'];
+  const editProperties = Object.keys(trainerUpdate);
+  const isValid = editProperties.every((property) => validProperties.includes(property));
+
+  if (!isValid) {
+    return res.send('Invalid properties');
+  }
+
   const trainer = trainers[trainerIndex];
   trainers[trainerIndex] = {
     ...trainer,
