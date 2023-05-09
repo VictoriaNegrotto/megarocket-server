@@ -6,8 +6,21 @@ const admins = require('../data/admins.json');
 const router = express.Router();
 
 router.post('/', (req, res) => {
-  const newAdmin = req.body;
+  const lastAdmin = admins[admins.length - 1];
+  const lastId = lastAdmin.id + 1;
+  const {
+    firstName, lastName, email, password,
+  } = req.body;
+  const newAdmin = {
+    lastId, firstName, lastName, email, password,
+  };
+
+  if (!(lastId && firstName && lastName && email && password)) {
+    return res.send('missing information');
+  }
+
   admins.push(newAdmin);
+
   fs.writeFile('src/data/admins.json', JSON.stringify(admins, null, 2), (error) => {
     if (error) {
       res.send('Error, admin cannot be created!');
@@ -15,6 +28,7 @@ router.post('/', (req, res) => {
       res.send('Admin created!');
     }
   });
+  return (newAdmin);
 });
 
 router.delete('/:id', (req, res) => {
