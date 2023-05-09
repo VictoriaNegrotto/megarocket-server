@@ -54,18 +54,23 @@ superAdminsRoute.put('/:id', (req, res) => {
     (superAdmin) => superAdmin.id.toString() === id,
   );
   if (superAdminIndex === -1) {
-    res.send('Not exists this ID');
-    return;
+    return res.send('Not exists this ID');
   }
+
+  const propertiesValues = ['name', 'email', 'password'];
+  const newProperties = Object.keys(req.body);
+  const propertiesValid = newProperties.every((property) => propertiesValues.includes(property));
+
+  if (!propertiesValid) return res.send('Ivalid properties');
+
   superAdminJSON[superAdminIndex] = { id, ...newSuperAdmin };
 
   fs.writeFile(path, JSON.stringify(superAdminJSON, null, 2), (err) => {
     if (err) {
       res.send(err);
-      return;
     }
-    res.send('Super admin updated');
   });
+  return res.send('Super admin updated');
 });
 
 superAdminsRoute.delete('/:id', (req, res) => {
