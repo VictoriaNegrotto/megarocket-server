@@ -24,18 +24,17 @@ subscriptionsRouter.get('/:id', (req, res) => {
 subscriptionsRouter.delete('/:id', (req, res) => {
   const subscriptionId = req.params.id;
   const foundSubsc = subscriptions.filter((subsc) => subsc.id.toString() !== subscriptionId);
+  const deleteSubs = subscriptions.filter((subs) => subs.id.toString() === subscriptionId);
 
-  if (subscriptionId > subscriptions.length) {
-    res.send('Error! This id does not exist');
-  } else {
-    fs.writeFile('src/data/subscription.json', JSON.stringify(foundSubsc, null, 2), (err) => {
-      if (err) {
-        res.send('Error! Subscription cannot be deleted');
-      } else {
-        res.send('Subscription deleted');
-      }
-    });
-  }
+  if (deleteSubs.length === 0) return res.send('Error! This id does not exist');
+  fs.writeFile('src/data/subscription.json', JSON.stringify(foundSubsc, null, 2), (err) => {
+    if (err) {
+      res.send('Error! Subscription cannot be deleted');
+    } else {
+      res.send('Subscription deleted');
+    }
+  });
+  return {};
 });
 
 subscriptionsRouter.post('/', (req, res) => {
