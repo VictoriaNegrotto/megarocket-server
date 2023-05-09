@@ -58,8 +58,8 @@ router.post('/', (req, res) => {
   if (!firstName || !lastName || !email || !phone || !address || !city) {
     return res.json({ msg: 'Missing or empty required properties' });
   }
-
-  const lastId = members.length + 1;
+  const lastMember = members[members.length - 1];
+  const lastId = lastMember.id + 1;
   const newMember = {
     id: lastId, firstName, lastName, email, phone, address, city,
   };
