@@ -1,71 +1,71 @@
 [
   {
     "id": 1,
-    "first_name": "Muriel",
-    "last_name": "Timson",
+    "firstName": "Muriel",
+    "lastName": "Timson",
     "email": "mtimson0@typepad.com",
     "password": "1KTlwBpZ"
   },
   {
     "id": 2,
-    "first_name": "Kerstin",
-    "last_name": "Mapston",
+    "firstName": "Kerstin",
+    "lastName": "Mapston",
     "email": "kmapston1@parallels.com",
     "password": "sVxFFhL"
   },
   {
     "id": 3,
-    "first_name": "Ahmed",
-    "last_name": "Pautard",
+    "firstName": "Ahmed",
+    "lastName": "Pautard",
     "email": "apautard2@prlog.org",
     "password": "k32ACRU"
   },
   {
     "id": 4,
-    "first_name": "Muriel",
-    "last_name": "Abrahams",
+    "firstName": "Muriel",
+    "lastName": "Abrahams",
     "email": "tabrahams3@netlog.com",
     "password": "b24epuJE"
   },
   {
     "id": 5,
-    "first_name": "Kendricks",
-    "last_name": "Ternott",
+    "firstName": "Kendricks",
+    "lastName": "Ternott",
     "email": "kternott4@tripadvisor.com",
     "password": "vD3xC29ySd"
   },
   {
     "id": 6,
-    "first_name": "Jim",
-    "last_name": "Mapston",
+    "firstName": "Jim",
+    "lastName": "Mapston",
     "email": "jpeasegood5@tripod.com",
     "password": "Q3qGnMjZ2e9"
   },
   {
     "id": 7,
-    "first_name": "Dex",
-    "last_name": "Dignam",
+    "firstName": "Dex",
+    "lastName": "Dignam",
     "email": "ddignam6@jigsy.com",
     "password": "7e1y4L1DYe"
   },
   {
     "id": 8,
-    "first_name": "Urbano",
-    "last_name": "Maro",
+    "firstName": "Urbano",
+    "lastName": "Maro",
     "email": "umaro7@squidoo.com",
     "password": "g2uzSS9Efv"
   },
   {
     "id": 9,
-    "first_name": "Nikolia",
-    "last_name": "Crier",
+    "firstName": "Nikolia",
+    "lastName": "Crier",
     "email": "ncrier8@gnu.org",
     "password": "Z0VyLZdmy"
   },
   {
     "id": 10,
-    "first_name": "Stearn",
-    "last_name": "Dufoure",
+    "firstName": "Stearn",
+    "lastName": "Dufoure",
     "email": "sdufoure9@ftc.gov",
     "password": "bT9G2hN"
   }
