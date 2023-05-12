@@ -34,7 +34,7 @@ const trainerSchema = new Schema({
   salary: {
     type: Number,
   },
-  is_active: {
+  isActive: {
     type: Boolean,
     default: false,
   },
