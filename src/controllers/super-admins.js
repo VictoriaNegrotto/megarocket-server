@@ -68,9 +68,7 @@ superAdminsRoute.put('/:id', (req, res) => {
 
 superAdminsRoute.delete('/:id', (req, res) => {
   const { id } = req.params;
-  const superAdminIndex = superAdminJSON.findIndex(
-    (superAdmin) => superAdmin.id.toString() === id,
-  );
+  const superAdminIndex = superAdminJSON.findIndex((superAdmin) => superAdmin.id.toString() === id);
   if (superAdminIndex !== -1) {
     superAdmins.splice(superAdminIndex, 1);
   } else {
