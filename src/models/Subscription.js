@@ -4,15 +4,11 @@ const { Schema } = mongoose;
 
 const subscriptionSchema = new Schema({
   class: {
-    type: Number,
-    min: 1,
-    max: 99999999,
+    type: mongoose.Types.ObjectId,
     require: true,
   },
   members: {
-    type: Number,
-    min: 1,
-    max: 99999999,
+    type: mongoose.Types.ObjectId,
     require: true,
   },
   date: {
