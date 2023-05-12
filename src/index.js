@@ -1,13 +1,7 @@
 // use "import" to import libraries
 import express from 'express';
 import cors from 'cors';
-import adminsRouter from './resources/admins';
-import activityRouter from './resources/activity';
-import superAdminsRoute from './resources/super-admins';
-import routerMembers from './resources/member';
-import classRoute from './resources/class';
-import subscriptionsRouter from './resources/subscription';
-import trainerRouter from './resources/trainer';
+import mongoose from 'mongoose';
 
 // use "require" to import JSON files
 
@@ -16,15 +10,13 @@ const port = process.env.PORT || 4000;
 
 app.use(cors());
 app.use(express.json());
-app.use('/trainer', trainerRouter);
-app.use('/class', classRoute);
 
-app.use('/super-admins', superAdminsRoute);
-app.use('/members', routerMembers);
-app.use('/class', classRoute);
-app.use('/activity', activityRouter);
-app.use('/subscriptions', subscriptionsRouter);
-app.use('/admins', adminsRouter);
+const DB_URL = 'mongodb+srv://juvi-team:bPKvUATQZFxqh2A7@megarocket-databases.inpprte.mongodb.net/juvi-database';
+
+mongoose
+  .connect(DB_URL)
+  .then(() => console.log('DB Connected'))
+  .catch((err) => console.log('Error: ', err));
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
