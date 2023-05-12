@@ -1,9 +1,9 @@
 [
   {
     "id": 1,
-    "name": "Franco",
-    "email": "fran@slate.com",
-    "password": "JoyhXEYQ8"
+    "name": "Sallie",
+    "email": "soliphard0@blogspot.com",
+    "password": "YHggTW"
   },
   {
     "id": 2,
@@ -55,8 +55,12 @@
   },
   {
     "id": 10,
-    "name": "Franco",
-    "email": "frangaston@gmail.com",
-    "password": "franco123"
+    "name": "Dalila",
+    "email": "dnutty9@fc2.com",
+    "password": "Z3JvyN3PZv2"
+  },
+  {
+    "id": 11,
+    "name": "homero el meromero"
   }
 ]

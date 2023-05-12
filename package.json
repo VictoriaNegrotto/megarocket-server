@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "nodemon --exec npm run babel-node -- src/index.js --ignore src/data",
+        "start": "nodemon --exec npm run babel-node -- src/index.js",
         "lint": "eslint .",
         "lint:fix": "eslint . --fix",
         "babel-node": "babel-node --presets=@babel/preset-env",
@@ -23,11 +23,6 @@
     "homepage": "https://github.com/radiumlearning/backend-template-basic-2023#readme",
     "engines": {
         "node": "14.x"
-    },
-    "nodemonConfig": {
-        "ignore": [
-            "src/data/*.json"
-        ]
     },
     "dependencies": {
         "cors": "^2.8.5",
