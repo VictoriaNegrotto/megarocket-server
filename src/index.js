@@ -1,6 +1,7 @@
 // use "import" to import libraries
 import express from 'express';
 import cors from 'cors';
+import mongoose from 'mongoose';
 import adminsRouter from './controllers/admins';
 import activityRouter from './controllers/activity';
 import superAdminsRoute from './controllers/super-admins';
@@ -23,6 +24,13 @@ app.use('/class', classRoute);
 app.use('/activity', activityRouter);
 app.use('/subscriptions', subscriptionsRouter);
 app.use('/admins', adminsRouter);
+
+const DB_URL = 'mongodb+srv://juvi-team:bPKvUATQZFxqh2A7@megarocket-databases.inpprte.mongodb.net/juvi-database';
+
+mongoose
+  .connect(DB_URL)
+  .then(() => console.log('DB Connected'))
+  .catch((err) => console.log('Error: ', err));
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
