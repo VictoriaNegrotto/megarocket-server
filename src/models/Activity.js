@@ -15,7 +15,7 @@ const activitySchema = new Schema({
     maxLength: 120,
     require: true,
   },
-  is_active: {
+  isActive: {
     type: Boolean,
     default: false,
   },
