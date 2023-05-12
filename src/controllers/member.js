@@ -27,7 +27,11 @@ router.put('/:id', (req, res) => {
   const memberUpdate = req.body;
 
   if (memberIndex === -1) return res.json({ msg: `No member with the id of ${req.params.id}` });
+  const validProperties = ['firstName', 'lastName', 'email', 'phone', 'address', 'city'];
+  const editProperties = Object.keys(memberUpdate);
+  const isValid = editProperties.every((property) => validProperties.includes(property));
   const member = members[memberIndex];
+  if (!isValid) return res.json({ msg: 'Invalid properties' });
   members[memberIndex] = {
     ...member,
     ...memberUpdate,
@@ -58,8 +62,8 @@ router.post('/', (req, res) => {
   if (!firstName || !lastName || !email || !phone || !address || !city) {
     return res.json({ msg: 'Missing or empty required properties' });
   }
-
-  const lastId = members.length + 1;
+  const lastMember = members[members.length - 1];
+  const lastId = lastMember.id + 1;
   const newMember = {
     id: lastId, firstName, lastName, email, phone, address, city,
   };

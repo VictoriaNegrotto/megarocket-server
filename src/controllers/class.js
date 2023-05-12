@@ -29,6 +29,12 @@ classRoute.put('/:id', (req, res) => {
 
   if (classIndex === -1) return res.send('Not exists this ID');
 
+  const propertiesValues = ['trainer', 'activity', 'duration'];
+  const newProperties = Object.keys(req.body);
+  const propertiesValid = newProperties.every((property) => propertiesValues.includes(property));
+
+  if (!propertiesValid) return res.send('Ivalid properties');
+
   classJSON[classIndex] = { id, ...newClass };
 
   fs.writeFile(path, JSON.stringify(classJSON, null, 2), (err) => {
@@ -79,7 +85,11 @@ classRoute.patch('/activity', (req, res) => {
 
 classRoute.post('/', (req, res) => {
   const { trainer, activity, duration } = req.body;
-  const idValue = classJSON.length + 1;
+  const idValue = classJSON[classJSON.length - 1].id + 1;
+
+  if (!trainer || !activity || !duration) {
+    return res.send('Incorrect data. Please fill in trainer, activity, duration');
+  }
   const newClass = {
     id: idValue, trainer, activity, duration,
   };
@@ -89,7 +99,7 @@ classRoute.post('/', (req, res) => {
       res.send('Error! Class canot be created!');
     }
   });
-  res.send('Class created successfuly');
+  return res.send('Class created successfuly');
 });
 
 classRoute.delete('/:id', (req, res) => {
@@ -109,15 +119,15 @@ classRoute.delete('/:id', (req, res) => {
   });
 });
 
-classRoute.get('/:trainer', (req, res) => {
+classRoute.get('/filter/:trainer', (req, res) => {
   const { trainer } = req.params;
   const trainerLower = trainer.toLowerCase();
   const filteredClass = classJSON
     .filter((classObj) => classObj.trainer.toLowerCase().includes(trainerLower));
   if (filteredClass.length === 0) {
-    res.send('Not found trainer');
+    return res.send('Not found trainer');
   }
-  res.send(filteredClass);
+  return res.send(filteredClass);
 });
 
 export default classRoute;

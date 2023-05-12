@@ -8,11 +8,13 @@ const superAdminJSON = require('../data/super-admins.json');
 
 const path = './src/data/super-admins.json';
 
-const superAdmins = [];
-
 superAdminsRoute.post('/', (req, res) => {
   const { email, name, password } = req.body;
-  const idValue = superAdminJSON.length + 1;
+  const idValue = superAdminJSON[superAdminJSON.length - 1].id + 1;
+
+  if (!email || !name || !password) {
+    return res.send('Incorrect data. Please fill in name, email, password');
+  }
 
   const newSuperAdmin = {
     id: idValue,
@@ -32,7 +34,7 @@ superAdminsRoute.post('/', (req, res) => {
   return res.send('Super admin created successfuly');
 });
 
-superAdminsRoute.get('/:name', (req, res) => {
+superAdminsRoute.get('/filter/:name', (req, res) => {
   const { name } = req.params;
 
   const nameLower = name.toLowerCase();
@@ -40,9 +42,9 @@ superAdminsRoute.get('/:name', (req, res) => {
   const filteredSuperAd = superAdminJSON
     .filter((superAdminObj) => superAdminObj.name.toLowerCase().includes(nameLower));
   if (filteredSuperAd.length === 0) {
-    res.send('Not found Super Admin');
+    return res.send('Not found Super Admin');
   }
-  res.send(filteredSuperAd);
+  return res.send(filteredSuperAd);
 });
 
 superAdminsRoute.put('/:id', (req, res) => {
@@ -52,29 +54,40 @@ superAdminsRoute.put('/:id', (req, res) => {
     (superAdmin) => superAdmin.id.toString() === id,
   );
   if (superAdminIndex === -1) {
-    res.send('Not exists this ID');
-    return;
+    return res.send('Not exists this ID');
   }
+
+  const propertiesValues = ['name', 'email', 'password'];
+  const newProperties = Object.keys(req.body);
+  const propertiesValid = newProperties.every((property) => propertiesValues.includes(property));
+
+  if (!propertiesValid) return res.send('Ivalid properties');
+
   superAdminJSON[superAdminIndex] = { id, ...newSuperAdmin };
 
   fs.writeFile(path, JSON.stringify(superAdminJSON, null, 2), (err) => {
     if (err) {
       res.send(err);
-      return;
     }
-    res.send('Super admin updated');
   });
+  return res.send('Super admin updated');
 });
 
 superAdminsRoute.delete('/:id', (req, res) => {
   const { id } = req.params;
-  const superAdminIndex = superAdminJSON.findIndex((superAdmin) => superAdmin.id.toString() === id);
-  if (superAdminIndex !== -1) {
-    superAdmins.splice(superAdminIndex, 1);
-  } else {
+  const superAdminIndex = superAdminJSON.filter(
+    (superAdmin) => superAdmin.id.toString() === id,
+  );
+
+  if (superAdminIndex.length === 0) {
     return res.send('Not exists this ID');
   }
-  fs.writeFile(path, JSON.stringify(superAdminJSON, null, 2), (err) => {
+
+  const newSuperAdminArray = superAdminJSON.filter(
+    (superAdmin) => superAdmin.id.toString() !== id,
+  );
+
+  fs.writeFile(path, JSON.stringify(newSuperAdminArray, null, 2), (err) => {
     if (err) {
       res.send(err);
     }
@@ -87,9 +100,9 @@ superAdminsRoute.get('/:id', (req, res) => {
   const filteredSuperAdmin = superAdminJSON
     .filter((superAdmin) => superAdmin.id.toString() === id);
   if (filteredSuperAdmin.length === 0) {
-    res.send('Not found super admin');
+    return res.send('Not found super admin');
   }
-  res.send(filteredSuperAdmin);
+  return res.send(filteredSuperAdmin);
 });
 
 export default superAdminsRoute;
