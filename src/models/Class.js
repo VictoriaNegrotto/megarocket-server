@@ -5,10 +5,14 @@ const classSchema = new Schema({
   day: {
     type: String,
     required: true,
+    min: 6,
+    max: 9,
   },
   hour: {
     type: String,
     required: true,
+    min: 5,
+    max: 5,
   },
   trainer: {
     type: mongoose.Types.ObjectId,
