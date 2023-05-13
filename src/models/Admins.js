@@ -44,5 +44,9 @@ const adminsSchema = new Schema({
     maxLength: 20,
     required: true,
   },
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
 });
 export default mongoose.model('Admin', adminsSchema);
