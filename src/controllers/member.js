@@ -1,18 +1,66 @@
-import express from 'express';
+import memberSchema from '../models/Member';
 
-const fs = require('fs');
+const getMembers = async (req, res) => {
+  try {
+    const membersData = await memberSchema.find({ isActive: true });
+    if (membersData.length === 0) {
+      return res.status(200).json({
+        message: 'No members active',
+      });
+    }
+    return res.status(200).json({
+      message: 'Members found',
+      data: membersData,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: 'An error ocurred',
+      error,
+    });
+  }
+};
 
-const members = require('../data/member.json');
+const createMember = async (req, res) => {
+  try {
+    const {
+      firstName,
+      lastName,
+      dni,
+      phone,
+      email,
+      city,
+      birthDate,
+      postalCode,
+      isActive,
+      memberships,
+    } = req.body;
+    const memberCreate = await memberSchema.create({
+      firstName,
+      lastName,
+      dni,
+      phone,
+      email,
+      city,
+      birthDate,
+      postalCode,
+      isActive,
+      memberships,
+    });
+    return res.status(200).json({
+      message: 'Member created',
+      data: memberCreate,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: 'An error ocurred',
+      error,
+    });
+  }
+};
 
-const router = express.Router();
-
-const path = 'src/data/member.json';
-
-router.get('/', (req, resp) => {
-  resp.json({ members });
-});
-
-router.get('/:id', (req, res) => {
+/* router.get('/:id', (req, res) => {
   const { id } = req.params;
   const getMember = members.find((member) => member.id.toString() === id);
 
@@ -90,4 +138,10 @@ router.delete('/:id', (req, res) => {
   return {};
 });
 
-export default router;
+export default router; */
+const memberController = {
+  getMembers,
+  createMember,
+};
+
+export default memberController;
