@@ -1,30 +1,18 @@
-import { Router } from 'express';
-import fs from 'fs';
+const Subscription = require('../models/Subscription');
 
-const subscriptions = require('../data/subscription.json');
-
-const subscriptionsRouter = Router();
-
-subscriptionsRouter.get('/', (req, res) => {
-  res.json({
-    data: subscriptions,
-  });
-});
-
-subscriptionsRouter.get('/:id', (req, res) => {
-  const subscriptionId = req.params.id;
-  const foundSubsc = subscriptions.find((subsc) => subsc.id.toString() === subscriptionId);
-  if (foundSubsc) {
-    res.send(foundSubsc);
-  } else {
-    res.send('Subscription not found');
+const getSubscriptions = async (req, res) => {
+  try {
+    const subscriptionData = await Subscription.find();
+    res.send(subscriptionData);
+  } catch (error) {
+    console.log(error);
   }
-});
-
+};
+/*
 subscriptionsRouter.delete('/:id', (req, res) => {
   const subscriptionId = req.params.id;
-  const foundSubsc = subscriptions.filter((subsc) => subsc.id.toString() !== subscriptionId);
-  const deleteSubs = subscriptions.filter((subs) => subs.id.toString() === subscriptionId);
+  const foundSubsc = Subscription.filter((subsc) => subsc.id.toString() !== subscriptionId);
+  const deleteSubs = Subscription.filter((subs) => subs.id.toString() === subscriptionId);
 
   if (deleteSubs.length === 0) return res.send('Error! This id does not exist');
   fs.writeFile('src/data/subscription.json', JSON.stringify(foundSubsc, null, 2), (err) => {
@@ -45,13 +33,13 @@ subscriptionsRouter.post('/', (req, res) => {
     return res.json({ msg: 'Missing or empty required properties' });
   }
 
-  const lastSubs = subscriptions[subscriptions.length - 1];
+  const lastSubs = Subscription[Subscription.length - 1];
   const lastId = lastSubs.id + 1;
   const newSubs = {
     id: lastId, idMember, idClass, subscriptionDate, subscriptionState, stateEditionDate,
   };
-  subscriptions.push(newSubs);
-  fs.writeFile('src/data/subscription.json', JSON.stringify(subscriptions, null, 2), (err) => {
+  Subscription.push(newSubs);
+  fs.writeFile('src/data/subscription.json', JSON.stringify(Subscription, null, 2), (err) => {
     if (err) {
       res.send('Error! Subscription could not be created!');
     }
@@ -63,11 +51,11 @@ subscriptionsRouter.put('/:id', (req, res) => {
   const { id } = req.params;
   const updatedSubs = req.body;
   let foundSubs = false;
-  subscriptions.forEach((subs) => {
+  Subscription.forEach((subs) => {
     if (subs.id.toString() === id) {
       foundSubs = true;
       Object.assign(subs, updatedSubs);
-      fs.writeFile('src/data/subscription.json', JSON.stringify(subscriptions, null, 2), (err) => {
+      fs.writeFile('src/data/subscription.json', JSON.stringify(Subscription, null, 2), (err) => {
         if (err) {
           res.send('Error! Subscription could not be updated!');
         } else {
@@ -83,10 +71,13 @@ subscriptionsRouter.put('/:id', (req, res) => {
 
 subscriptionsRouter.get('/filter/:date', (req, res) => {
   const { date } = req.params;
-  const filterSubs = subscriptions.filter((subs) => subs.subscriptionDate.toString().split('/').join('-') === date);
+  const filterSubs = Subscription.filter((subs) =>
+  subs.subscriptionDate.toString().split('/').join('-') === date);
   res.json({
     data: filterSubs,
   });
 });
-
-export default subscriptionsRouter;
+*/
+module.exports = {
+  getSubscriptions,
+};
