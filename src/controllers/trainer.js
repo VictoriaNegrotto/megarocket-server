@@ -16,24 +16,6 @@ const getAllTrainers = async (req, res) => {
   }
 };
 
-const getTrainerById = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const foundTrainer = await trainerSchema.findById(id);
-    res.status(200).json({
-      message: 'Trainer found!',
-      data: foundTrainer,
-      error: false,
-    });
-  } catch (error) {
-    res.json(404).json({
-      message: 'An error ocurred',
-      data: undefined,
-      error,
-    });
-  }
-};
-
 const createTrainer = async (req, res) => {
   try {
     const {
@@ -74,7 +56,6 @@ const createTrainer = async (req, res) => {
 };
 
 const trainerControllers = {
-  getTrainerById,
   getAllTrainers,
   createTrainer,
 };

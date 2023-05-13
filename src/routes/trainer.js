@@ -6,7 +6,6 @@ const trainerRoute = Router();
 
 trainerRoute
   .get('/', trainerControllers.getAllTrainers)
-  .get('/:id', trainerControllers.getTrainerById)
   .post('/', validations.trainerCreate, trainerControllers.createTrainer);
 
 export default trainerRoute;
