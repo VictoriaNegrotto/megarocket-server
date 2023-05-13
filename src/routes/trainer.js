@@ -1,6 +1,10 @@
 import express from 'express';
+import validation from '../validations/trainer';
 import trainerController from '../controllers/trainer';
 
-const router = express.Router();
+const trainerRoute = express.Router();
 
-router.get('/', trainerController.get).get('/:id', trainerController.get);
+trainerRoute.get('/:id', trainerController.getTrainerById)
+  .put('/:id', validation.validateUpdate, trainerController.updateTrainer);
+
+export default trainerRoute;
