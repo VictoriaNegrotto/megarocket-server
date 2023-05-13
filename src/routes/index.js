@@ -1,5 +1,9 @@
-import { Router } from 'express';
+import subscriptionRouter from './subscription';
 
-const router = Router();
+const express = require('express');
+
+const router = express.Router();
+
+router.use('/subscriptions', subscriptionRouter);
 
 export default router;
