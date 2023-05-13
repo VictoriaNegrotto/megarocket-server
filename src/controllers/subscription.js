@@ -35,32 +35,32 @@ const getSubscriptionById = async (req, res) => {
   }
 };
 
-// const createSubscription = async (req, res) => {
-//   try {
-//     const { class, members, date } = req.body;
+const createSubscription = async (req, res) => {
+  try {
+    const { classInSubscription, members, date } = req.body;
 
-//     const newSubscription = await Subscription.create({
-//       class,
-//       members,
-//       date,
-//     })
-//     res.status(201).json({
-//       message: 'Subscription was created',
-//       data: newSubscription,
-//       error: false,
-//     })
-//   } catch (error) {
-//     res.status(400).json({
-//       message: 'Error creating subscription',
-//       error,
-//     })
-//   }
-// }
+    const newSubscription = await Subscription.create({
+      class: classInSubscription,
+      members,
+      date,
+    });
+    res.status(201).json({
+      message: 'Subscription was created',
+      data: newSubscription,
+      error: false,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: 'Error creating subscription',
+      error,
+    });
+  }
+};
 
 const subscriptionControllers = {
   getAllSubscriptions,
   getSubscriptionById,
-  // createSubscription,
+  createSubscription,
 };
 
 export default subscriptionControllers;
