@@ -5,8 +5,7 @@ const classSchema = new Schema({
   day: {
     type: String,
     required: true,
-    min: 6,
-    max: 9,
+    enum: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
   },
   hour: {
     type: String,
