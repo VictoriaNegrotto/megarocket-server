@@ -4,7 +4,7 @@ const validateCreate = (req, res, next) => {
   const subscriptionCreateValidation = Joi.object({
     class: Joi.string().min(3).required(),
     members: Joi.string().min(3).required(),
-    date: Joi.date().min('now').required(),
+    date: Joi.date().required(),
   });
 
   const createValidation = subscriptionCreateValidation.validate(req.body);
