@@ -118,15 +118,18 @@ const createTrainer = async (req, res) => {
 const deleteTrainer = async (req, res) => {
   try {
     const { id } = req.params;
-    const trainer = await Trainer.findByIdAndUpdate(id, { isActive: false }, { new: true });
 
-    if (!trainer) {
+    const trainerActive = await Trainer.findById(id);
+
+    if (!trainerActive.isActive) {
       return res.status(404).json({
         message: `Trainer with ID: ${id} was not found`,
         data: undefined,
         error: false,
       });
     }
+
+    const trainer = await Trainer.findByIdAndUpdate(id, { isActive: false }, { new: true });
 
     return res.status(200).json({
       message: 'Trainer deleted',
