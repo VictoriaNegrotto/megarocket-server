@@ -1,14 +1,18 @@
+import { Router } from 'express';
+import activityController from '../controllers/activity';
+import validations from '../validations/activity';
+
 // const express = require('express');
 
 // const activityController = require('../controllers/activity');
 
 // const validations = require('../validations/activity');
 
-// const router = express.Router();
+const activityRouter = Router();
 
-// router
-//   .get("/",activityController.getAllActivity);
-//   .get("/",activityController.getActivityById);
-//   .post("/",validations.validateCreation, activityController.createActivity);
+activityRouter
+  .get('/', activityController.getAllActivity)
+  .get('/', activityController.getActivityById)
+  .post('/', validations.validateCreation, activityController.createActivity);
 
-// module.exports = router
+export default activityRouter;
