@@ -53,10 +53,10 @@ const deleteActivity = async (req, res) => {
 const updateActivity = async (req, res) => {
   try {
     const { id } = req.params;
-    const { isActive } = req.params;
-    if (!isActive) {
+    const existActivity = await Activity.findOne({ _id: id });
+    if (!existActivity || !existActivity.isActive) {
       return res.status(404).json({
-        message: `Activity with ID ${id} is inactive and cannot be updated`,
+        message: `Activity with ID ${id} is inactive or does not exist and cannot be updated`,
         data: undefined,
         error: false,
       });
