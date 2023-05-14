@@ -1,29 +1,11 @@
-const Subscription = require('../models/Subscription');
+import Subscription from '../models/Subscription';
 
 const getAllSubscriptions = async (req, res) => {
   try {
-    const subscriptionData = await Subscription.find();
+    const subscriptionData = await Subscription.find({ isActive: true });
     res.status(200).json({
       message: 'Subscription list found',
       data: subscriptionData,
-      error: false,
-    });
-  } catch (error) {
-    res.status(400).json({
-      message: 'An error ocurred',
-      data: undefined,
-      error,
-    });
-  }
-};
-
-const getSubscriptionById = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const foundSubscription = await Subscription.findById(id);
-    res.status(200).json({
-      message: 'Subscription found!',
-      data: foundSubscription,
       error: false,
     });
   } catch (error) {
@@ -59,7 +41,6 @@ const createSubscription = async (req, res) => {
 
 const subscriptionControllers = {
   getAllSubscriptions,
-  getSubscriptionById,
   createSubscription,
 };
 
