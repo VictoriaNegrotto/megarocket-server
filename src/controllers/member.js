@@ -22,7 +22,7 @@ const getMemberById = async (req, res) => {
     return res.status(500).json({
       message: 'An error ocurred',
       data: undefined,
-      error,
+      error: true,
     });
   }
 };
@@ -52,7 +52,7 @@ const updateMember = async (req, res) => {
     return res.status(500).json({
       message: 'An error ocurred',
       data: undefined,
-      error,
+      error: true,
     });
   }
 };
@@ -79,7 +79,7 @@ const filterMember = async (req, res) => {
     return res.status(500).json({
       message: 'An error ocurred',
       data: undefined,
-      error,
+      error: true,
     });
   }
 };
@@ -108,7 +108,7 @@ const deleteMember = async (req, res) => {
     return res.status(500).json({
       message: 'An error ocurred',
       data: undefined,
-      error,
+      error: true,
     });
   }
 };
