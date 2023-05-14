@@ -1,42 +1,87 @@
 import Trainer from '../models/Trainer';
 
-const getTrainerById = (req, res) => {
-  const { id } = req.params;
-  Trainer.findById(id, 'firstName lastName dni phone email city password salary isActive')
-    .then((trainers) => res.status(200).json({
-      message: `The trainer with id: ${id} has been found`,
-      data: trainers,
+const getTrainerById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const trainer = await Trainer.findOne({ $and: [{ _id: id }, { isActive: true }] });
+
+    if (!trainer) {
+      return res.status(200).json({
+        message: 'Trainer not found',
+        data: [],
+        error: false,
+      });
+    }
+    return res.status(200).json({
+      message: 'Trainer found',
+      data: trainer,
       error: false,
-    })).catch((error) => res.status(500).json({
-      message: 'An error ocurred',
-      error,
-    }));
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: 'server error',
+      data: error,
+      error: true,
+    });
+  }
 };
 
-const updateTrainer = (req, res) => {
-  const { id } = req.params;
-  const {
-    firstName, lastName, dni, phone, email, city, password, salary, isActive,
-  } = req.body;
+const updateTrainer = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      firstName, lastName, dni, phone, email, city, password, salary,
+    } = req.body;
 
-  Trainer.findByIdAndUpdate(id, {
-    firstName, lastName, dni, phone, email, city, password, salary, isActive,
-  }, { new: true })
-    .then((result) => {
-      if (!result) {
-        return res.status(404).json({
-          message: `Trainer with id: ${id} was not found`,
-          error: true,
-        });
-      }
-      return res.status(200).json(result);
-    })
-    .catch((error) => res.status(400).json(error));
+    const trainer = await Trainer.findByIdAndUpdate(id, {
+      firstName, lastName, dni, phone, email, city, password, salary,
+    }, { new: true });
+
+    return res.status(200).json({
+      message: 'user updated',
+      data: trainer,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: 'server error',
+      data: error,
+      error: true,
+    });
+  }
+};
+
+const deleteTrainer = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const trainer = await Trainer.findByIdAndUpdate(id);
+
+    if (!trainer) {
+      return res.status(200).json({
+        message: 'Trainer ID not found',
+        data: [],
+        error: false,
+      });
+    }
+
+    return res.status(200).json({
+      message: 'Trainer deleted',
+      data: trainer,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: 'server error',
+      data: error,
+      error: true,
+    });
+  }
 };
 
 const trainerControllers = {
   getTrainerById,
   updateTrainer,
+  deleteTrainer,
 };
 
 export default trainerControllers;

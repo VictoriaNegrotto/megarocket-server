@@ -6,7 +6,7 @@ const validateUpdate = (req, res, next) => {
     lastName: Joi.string().min(3).max(20),
     dni: Joi.number().min(1000000).max(99999999),
     phone: Joi.number().max(99999999),
-    email: Joi.string().min(5).max(20).regex(/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/)
+    email: Joi.string().min(5).max(20).email()
       .lowercase(),
     city: Joi.string().min(3).max(20),
     password: Joi.string().min(3).max(20),
