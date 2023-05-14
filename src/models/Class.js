@@ -27,6 +27,10 @@ const classSchema = new Schema({
     min: 0,
     max: 30,
   },
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 export default mongoose.model('Class', classSchema);
