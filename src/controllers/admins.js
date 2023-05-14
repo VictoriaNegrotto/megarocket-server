@@ -3,30 +3,6 @@ import '../models/Admins';
 
 const Admin = mongoose.model('Admin');
 
-const handleError = (res, error, adminId) => {
-  if (error.name === 'CastError') {
-    return res.status(400).json({
-      message: `Invalid admin ID: ${adminId}`,
-      data: undefined,
-      error: true,
-    });
-  }
-  res.status(500).json({
-    message: `${error.message} (Admin ID: ${adminId})`,
-    data: undefined,
-    error: true,
-  });
-  return undefined;
-};
-
-const handleSuccess = (res, message, data) => {
-  res.status(200).json({
-    message,
-    data,
-    error: false,
-  });
-};
-
 export const getAdminById = async (req, res) => {
   const adminId = req.params.id;
   if (!mongoose.Types.ObjectId.isValid(adminId)) {
@@ -45,9 +21,24 @@ export const getAdminById = async (req, res) => {
         error: true,
       });
     }
-    handleSuccess(res, 'Admin found', foundAdmin);
+    res.status(200).json({
+      message: 'Admin found',
+      data: foundAdmin,
+      error: false,
+    });
   } catch (error) {
-    handleError(res, error, adminId);
+    if (error.name === 'CastError') {
+      return res.status(400).json({
+        message: `Invalid admin ID: ${adminId}`,
+        data: undefined,
+        error: true,
+      });
+    }
+    res.status(500).json({
+      message: `${error.message} (Admin ID: ${adminId})`,
+      data: undefined,
+      error: true,
+    });
   }
   return undefined;
 };
@@ -61,13 +52,6 @@ export const updateAdmin = async (req, res) => {
       error: true,
     });
   }
-  if (Object.keys(req.body).length === 0) {
-    return res.status(400).json({
-      message: 'Request body is empty',
-      data: undefined,
-      error: true,
-    });
-  }
   try {
     const existingAdmin = await Admin.findOne({ _id: adminId });
     if (!existingAdmin || !existingAdmin.isActive) {
@@ -77,20 +61,38 @@ export const updateAdmin = async (req, res) => {
         error: true,
       });
     }
-    const changesMade = Object.entries(req.body)
-      .some(([key, value]) => existingAdmin[key] !== value);
-    if (!changesMade) {
-      return res.status(200).json({
-        message: 'No changes have been made',
+    if (req.body.email) {
+      const emailExists = await Admin.findOne({
+        _id: { $ne: adminId },
+        email: req.body.email,
+      });
+      if (emailExists) {
+        return res.status(400).json({
+          message: 'Email already registered',
+          data: undefined,
+          error: true,
+        });
+      }
+    }
+    await Admin.findOneAndUpdate({ _id: adminId }, req.body);
+    res.status(200).json({
+      message: 'Admin updated',
+      data: req.body,
+      error: false,
+    });
+  } catch (error) {
+    if (error.name === 'CastError') {
+      return res.status(400).json({
+        message: `Invalid admin ID: ${adminId}`,
         data: undefined,
-        error: false,
+        error: true,
       });
     }
-
-    await Admin.findOneAndUpdate({ _id: adminId }, req.body);
-    handleSuccess(res, 'Admin updated', req.body);
-  } catch (error) {
-    handleError(res, error, adminId);
+    res.status(500).json({
+      message: `${error.message} (Admin ID:${adminId})`,
+      data: undefined,
+      error: true,
+    });
   }
   return undefined;
 };
@@ -114,9 +116,24 @@ export const deleteAdmin = async (req, res) => {
       });
     }
     await Admin.findOneAndUpdate({ _id: adminId }, { isActive: false });
-    handleSuccess(res, 'Admin deleted', undefined);
+    res.status(200).json({
+      message: 'Admin deleted',
+      data: undefined,
+      error: false,
+    });
   } catch (error) {
-    handleError(res, error, adminId);
+    if (error.name === 'CastError') {
+      return res.status(400).json({
+        message: `Invalid admin ID:${adminId}`,
+        data: undefined,
+        error: true,
+      });
+    }
+    res.status(500).json({
+      message: `${error.message} (Admin ID:${adminId})`,
+      data: undefined,
+      error: true,
+    });
   }
   return undefined;
 };

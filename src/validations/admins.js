@@ -34,7 +34,7 @@ const adminValidation = (req, res, next) => {
   const { error } = schema.validate(req.body);
 
   if (error) {
-    return res.status(400).json({
+    return res.status(500).json({
       message: error.details[0].message,
       data: undefined,
       error: true,
