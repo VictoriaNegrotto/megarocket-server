@@ -11,7 +11,7 @@ const validateUpdate = (req, res, next) => {
     city: Joi.string().min(2).max(20),
     birthDate: Joi.date(),
     postalCode: Joi.number().max(9999).integer(),
-    memberships: Joi.string().valid('Black', 'Classic', 'Only Classes').default('Classic'),
+    memberships: Joi.string().valid('Black', 'Classic', 'Only Classes'),
   });
 
   const validationUpdate = updateMemberValidate.validate(req.body);
