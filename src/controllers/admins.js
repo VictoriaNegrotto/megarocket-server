@@ -1,94 +1,122 @@
-import express from 'express';
-import fs from 'fs';
+import mongoose from 'mongoose';
+import '../models/Admins';
 
-const admins = require('../data/admins.json');
+const Admin = mongoose.model('Admin');
 
-const router = express.Router();
-
-router.post('/', (req, res) => {
-  const lastAdmin = admins[admins.length - 1];
-  const lastId = lastAdmin.id + 1;
-  const {
-    firstName, lastName, email, password,
-  } = req.body;
-  const newAdmin = {
-    lastId, firstName, lastName, email, password,
-  };
-
-  if (!(lastId && firstName && lastName && email && password)) {
-    return res.send('missing information');
+const handleError = (res, error, adminId) => {
+  if (error.name === 'CastError') {
+    return res.status(400).json({
+      message: `Invalid admin ID: ${adminId}`,
+      data: undefined,
+      error: true,
+    });
   }
-
-  admins.push(newAdmin);
-
-  fs.writeFile('src/data/admins.json', JSON.stringify(admins, null, 2), (error) => {
-    if (error) {
-      res.send('Error, admin cannot be created!');
-    } else {
-      res.send('Admin created!');
-    }
+  res.status(500).json({
+    message: `${error.message} (Admin ID: ${adminId})`,
+    data: undefined,
+    error: true,
   });
-  return (newAdmin);
-});
+  return undefined;
+};
 
-router.delete('/:id', (req, res) => {
+const handleSuccess = (res, message, data) => {
+  res.status(200).json({
+    message,
+    data,
+    error: false,
+  });
+};
+
+export const getAdminById = async (req, res) => {
   const adminId = req.params.id;
-  const filteredAdmins = admins.filter((admin) => admin.id.toString() !== adminId);
-  const adminIndex = admins.findIndex((admin) => admin.id.toString() === adminId);
-  if (adminIndex === -1) {
-    res.send('Id not found');
-  } else {
-    fs.writeFile('src/data/admins.json', JSON.stringify(filteredAdmins, null, 2), (error) => {
-      if (error) {
-        res.send('Error, admin cannot be deleted!');
-      } else {
-        res.send('Admin deleted!');
-      }
+  if (!mongoose.Types.ObjectId.isValid(adminId)) {
+    return res.status(400).json({
+      message: 'Invalid admin ID',
+      data: undefined,
+      error: true,
     });
   }
-});
-
-router.get('/filterByLastName/:lastname', (req, res) => {
-  const adminLastName = req.params.lastname;
-  const foundAdmin = admins.filter((admin) => admin.last_name === adminLastName);
-  if (foundAdmin.length === 0) return res.send('Admin not found');
-  return res.send(foundAdmin);
-});
-
-router.get('/', (req, res) => {
-  res.send(admins);
-});
-
-router.get('/:id', (req, res) => {
-  const adminId = req.params.id;
-  const foundAdmin = admins.find((admin) => admin.id.toString() === adminId);
-  if (!foundAdmin) return res.send('Admin not found');
-  return res.send(foundAdmin);
-});
-
-router.put('/:id', (req, res) => {
-  const adminId = req.params.id;
-  const editAdmin = req.body;
-  const index = admins.findIndex((admin) => admin.id.toString() === adminId);
-
-  if (index !== -1) {
-    admins[index] = { id: adminId, ...editAdmin };
-    fs.writeFile('src/data/admins.json', JSON.stringify(admins, null, 2), (err) => {
-      if (err) {
-        res.send(err);
-      }
-    });
-    res.send('Admin edited');
-  } else {
-    res.send('ID didn\'t match');
+  try {
+    const foundAdmin = await Admin.findOne({ _id: adminId, isActive: true });
+    if (!foundAdmin) {
+      return res.status(404).json({
+        message: 'Admin not found',
+        data: undefined,
+        error: true,
+      });
+    }
+    handleSuccess(res, 'Admin found', foundAdmin);
+  } catch (error) {
+    handleError(res, error, adminId);
   }
-});
+  return undefined;
+};
 
-router.get('/filterByName/:name', (req, res) => {
-  const adminName = req.params.name;
-  const foundAdmin = admins.filter((admin) => admin.first_name === adminName);
-  if (foundAdmin.length === 0) return res.send('Admin not found');
-  return res.send(foundAdmin);
-});
+export const updateAdmin = async (req, res) => {
+  const adminId = req.params.id;
+  if (!mongoose.Types.ObjectId.isValid(adminId)) {
+    return res.status(400).json({
+      message: 'Invalid admin ID',
+      data: undefined,
+      error: true,
+    });
+  }
+  if (Object.keys(req.body).length === 0) {
+    return res.status(400).json({
+      message: 'Request body is empty',
+      data: undefined,
+      error: true,
+    });
+  }
+  try {
+    const existingAdmin = await Admin.findOne({ _id: adminId });
+    if (!existingAdmin || !existingAdmin.isActive) {
+      return res.status(400).json({
+        message: 'Cannot update inactive admin',
+        data: undefined,
+        error: true,
+      });
+    }
+    const changesMade = Object.entries(req.body)
+      .some(([key, value]) => existingAdmin[key] !== value);
+    if (!changesMade) {
+      return res.status(200).json({
+        message: 'No changes have been made',
+        data: undefined,
+        error: false,
+      });
+    }
 
-export default router;
+    await Admin.findOneAndUpdate({ _id: adminId }, req.body);
+    handleSuccess(res, 'Admin updated', req.body);
+  } catch (error) {
+    handleError(res, error, adminId);
+  }
+  return undefined;
+};
+
+export const deleteAdmin = async (req, res) => {
+  const adminId = req.params.id;
+  if (!mongoose.Types.ObjectId.isValid(adminId)) {
+    return res.status(400).json({
+      message: 'Invalid admin ID',
+      data: undefined,
+      error: true,
+    });
+  }
+  try {
+    const existingAdmin = await Admin.findOne({ _id: adminId });
+    if (!existingAdmin || !existingAdmin.isActive) {
+      return res.status(400).json({
+        message: 'Cannot delete inactive admin',
+        data: undefined,
+        error: true,
+      });
+    }
+    await Admin.findOneAndUpdate({ _id: adminId }, { isActive: false });
+    handleSuccess(res, 'Admin deleted', undefined);
+  } catch (error) {
+    handleError(res, error, adminId);
+  }
+  return undefined;
+};
