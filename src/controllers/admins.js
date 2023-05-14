@@ -27,13 +27,6 @@ export const getAdminById = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    if (error.name === 'CastError') {
-      return res.status(400).json({
-        message: `Invalid admin ID: ${adminId}`,
-        data: undefined,
-        error: true,
-      });
-    }
     res.status(500).json({
       message: `${error.message} (Admin ID: ${adminId})`,
       data: undefined,
@@ -81,13 +74,6 @@ export const updateAdmin = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    if (error.name === 'CastError') {
-      return res.status(400).json({
-        message: `Invalid admin ID: ${adminId}`,
-        data: undefined,
-        error: true,
-      });
-    }
     res.status(500).json({
       message: `${error.message} (Admin ID:${adminId})`,
       data: undefined,
@@ -122,13 +108,6 @@ export const deleteAdmin = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    if (error.name === 'CastError') {
-      return res.status(400).json({
-        message: `Invalid admin ID:${adminId}`,
-        data: undefined,
-        error: true,
-      });
-    }
     res.status(500).json({
       message: `${error.message} (Admin ID:${adminId})`,
       data: undefined,
