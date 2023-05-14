@@ -9,7 +9,7 @@ const getTrainerById = async (req, res) => {
       return res.status(404).json({
         message: `Trainer with ID: ${id} was not found`,
         data: undefined,
-        error: false,
+        error: true,
       });
     }
     return res.status(200).json({
@@ -19,8 +19,8 @@ const getTrainerById = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({
-      message: 'error',
-      data: error,
+      message: error,
+      data: undefined,
       error: true,
     });
   }
@@ -49,13 +49,13 @@ const updateTrainer = async (req, res) => {
     const {
       firstName, lastName, dni, phone, email, city, password, salary,
     } = req.body;
-    const { isActive } = await Trainer.findById(id);
+    const trai = await Trainer.findById(id);
 
-    if (!isActive) {
+    if (!trai || !trai.isActive) {
       return res.status(404).json({
         message: `Trainer with ID: ${id} was not found`,
         data: undefined,
-        error: false,
+        error: true,
       });
     }
 
@@ -70,8 +70,8 @@ const updateTrainer = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({
-      message: 'error',
-      data: error,
+      message: error,
+      data: undefined,
       error: true,
     });
   }
@@ -125,7 +125,7 @@ const deleteTrainer = async (req, res) => {
       return res.status(404).json({
         message: `Trainer with ID: ${id} was not found`,
         data: undefined,
-        error: false,
+        error: true,
       });
     }
 
@@ -138,8 +138,8 @@ const deleteTrainer = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({
-      message: 'error',
-      data: error,
+      message: error,
+      data: undefined,
       error: true,
     });
   }
