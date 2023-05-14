@@ -6,7 +6,7 @@ const Admin = mongoose.model('Admin');
 export const getAdminById = async (req, res) => {
   const adminId = req.params.id;
   if (!mongoose.Types.ObjectId.isValid(adminId)) {
-    return res.status(400).json({
+    return res.status(404).json({
       message: 'Invalid admin ID',
       data: undefined,
       error: true,
@@ -39,7 +39,7 @@ export const getAdminById = async (req, res) => {
 export const updateAdmin = async (req, res) => {
   const adminId = req.params.id;
   if (!mongoose.Types.ObjectId.isValid(adminId)) {
-    return res.status(400).json({
+    return res.status(404).json({
       message: 'Invalid admin ID',
       data: undefined,
       error: true,
@@ -48,7 +48,7 @@ export const updateAdmin = async (req, res) => {
   try {
     const existingAdmin = await Admin.findOne({ _id: adminId });
     if (!existingAdmin || !existingAdmin.isActive) {
-      return res.status(400).json({
+      return res.status(404).json({
         message: 'Cannot update inactive admin',
         data: undefined,
         error: true,
@@ -86,7 +86,7 @@ export const updateAdmin = async (req, res) => {
 export const deleteAdmin = async (req, res) => {
   const adminId = req.params.id;
   if (!mongoose.Types.ObjectId.isValid(adminId)) {
-    return res.status(400).json({
+    return res.status(404).json({
       message: 'Invalid admin ID',
       data: undefined,
       error: true,
@@ -95,7 +95,7 @@ export const deleteAdmin = async (req, res) => {
   try {
     const existingAdmin = await Admin.findOne({ _id: adminId });
     if (!existingAdmin || !existingAdmin.isActive) {
-      return res.status(400).json({
+      return res.status(404).json({
         message: 'Cannot delete inactive admin',
         data: undefined,
         error: true,
