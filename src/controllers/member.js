@@ -20,7 +20,7 @@ const getMemberById = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({
-      message: 'An error ocurred',
+      message: `An error ocurred:\n ${error}`,
       data: undefined,
       error: true,
     });
@@ -50,7 +50,7 @@ const updateMember = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({
-      message: 'An error ocurred',
+      message: `An error ocurred:\n ${error}`,
       data: undefined,
       error: true,
     });
@@ -106,7 +106,7 @@ const deleteMember = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({
-      message: 'An error ocurred',
+      message: `An error ocurred:\n ${error}`,
       data: undefined,
       error: true,
     });
