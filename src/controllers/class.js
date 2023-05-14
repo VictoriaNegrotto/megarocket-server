@@ -3,19 +3,19 @@ import Class from '../models/Class';
 const getClassById = async (req, res) => {
   try {
     const { id } = req.params;
-    const idClass = await Class.findById(id);
+    const idClass = await Class.findOne({ $and: [{ _id: id }, { isActive: true }] });
     if (!idClass) {
-      return res.status(404).json({
+      return res.status(200).json({
         message: `Class with ID ${id} was not found`,
         error: true,
       });
     }
     return res.status(200).json({
-      message: `${idClass.id} class was found!`,
+      message: `Class with ID ${idClass.id} was found!`,
       data: idClass,
     });
   } catch (error) {
-    return res.status(400).json({
+    return res.status(500).json({
       message: 'an error has ocurred',
       error,
     });
@@ -23,12 +23,11 @@ const getClassById = async (req, res) => {
 };
 
 const updateClass = async (req, res) => {
-  const { id } = req.params;
-  const {
-    day, hour, trainer, activity, slots,
-  } = req.body;
-
   try {
+    const { id } = req.params;
+    const {
+      day, hour, trainer, activity, slots,
+    } = req.body;
     const result = await Class.findByIdAndUpdate(
       id,
       {
@@ -42,8 +41,8 @@ const updateClass = async (req, res) => {
     );
 
     if (!result) {
-      return res.status(404).json({
-        message: `Class with id: ${id} was not found`,
+      return res.status(200).json({
+        message: `Class with ID ${id} was not found`,
       });
     }
 
@@ -57,17 +56,17 @@ const deleteClass = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const classToDelete = await Class.findByIdAndDelete(id);
+    const classToDelete = await Class.findByIdAndUpdate(id, { isActive: false }, { new: true });
 
     if (!classToDelete) {
-      return res.status(404).json({
-        message: `Class with id: ${id} was not found`,
+      return res.status(200).json({
+        message: `Class with ID ${id} was not found`,
       });
     }
 
-    return res.sendStatus(204);
+    return res.status(200).json(classToDelete);
   } catch (error) {
-    return res.status(400).json({
+    return res.status(500).json({
       message: 'An error occurred',
       error,
     });

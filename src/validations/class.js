@@ -3,7 +3,7 @@ import Joi from 'joi';
 const validateUpdate = (req, res, next) => {
   const classUpdateValidation = Joi.object({
     day: Joi.string().valid('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'),
-    hour: Joi.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/),
+    hour: Joi.string().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/),
     trainer: Joi.string(),
     activity: Joi.string(),
     slots: Joi.number().min(0).max(30),
