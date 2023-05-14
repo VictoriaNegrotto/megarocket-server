@@ -11,7 +11,8 @@ const getAllTrainers = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: 'An error ocurred',
-      error,
+      data: undefined,
+      error: true,
     });
   }
 };
@@ -50,7 +51,8 @@ const createTrainer = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       message: 'Error creating trainer',
-      error,
+      data: undefined,
+      error: true,
     });
   }
 };
