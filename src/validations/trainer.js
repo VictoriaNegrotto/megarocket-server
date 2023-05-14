@@ -6,12 +6,12 @@ const validateUpdate = (req, res, next) => {
     lastName: Joi.string().min(3).max(20),
     dni: Joi.number().min(1000000).max(99999999),
     phone: Joi.number().max(99999999),
-    email: Joi.string().min(5).max(20).email()
+    email: Joi.string().min(5).max(30).email()
       .lowercase(),
     city: Joi.string().min(3).max(20),
     password: Joi.string().min(3).max(20),
     salary: Joi.number().min(0),
-    isActive: Joi.boolean().default(false),
+    isActive: Joi.boolean(),
   });
   const validation = trainerValidation.validate(req.body);
 

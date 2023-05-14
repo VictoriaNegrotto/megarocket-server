@@ -7,19 +7,19 @@ const getTrainerById = async (req, res) => {
 
     if (!trainer) {
       return res.status(200).json({
-        message: 'Trainer not found',
-        data: [],
+        message: `Trainer with ID: ${id} was not found`,
+        data: undefined,
         error: false,
       });
     }
     return res.status(200).json({
-      message: 'Trainer found',
+      message: `Trainer with ID: ${id} was found!`,
       data: trainer,
       error: false,
     });
   } catch (error) {
     return res.status(500).json({
-      message: 'server error',
+      message: 'error',
       data: error,
       error: true,
     });
@@ -32,19 +32,28 @@ const updateTrainer = async (req, res) => {
     const {
       firstName, lastName, dni, phone, email, city, password, salary,
     } = req.body;
+    const { isActive } = await Trainer.findById(id);
+
+    if (!isActive) {
+      return res.status(200).json({
+        message: `Trainer with ID: ${id} was not found`,
+        data: undefined,
+        error: false,
+      });
+    }
 
     const trainer = await Trainer.findByIdAndUpdate(id, {
       firstName, lastName, dni, phone, email, city, password, salary,
     }, { new: true });
 
     return res.status(200).json({
-      message: 'user updated',
+      message: `Trainer with ID: ${id} was updated!`,
       data: trainer,
       error: false,
     });
   } catch (error) {
     return res.status(500).json({
-      message: 'server error',
+      message: 'error',
       data: error,
       error: true,
     });
@@ -54,12 +63,12 @@ const updateTrainer = async (req, res) => {
 const deleteTrainer = async (req, res) => {
   try {
     const { id } = req.params;
-    const trainer = await Trainer.findByIdAndUpdate(id);
+    const trainer = await Trainer.findByIdAndUpdate(id, { isActive: false }, { new: true });
 
     if (!trainer) {
       return res.status(200).json({
-        message: 'Trainer ID not found',
-        data: [],
+        message: `Trainer with ID: ${id} was not found`,
+        data: undefined,
         error: false,
       });
     }
@@ -71,7 +80,7 @@ const deleteTrainer = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({
-      message: 'server error',
+      message: 'error',
       data: error,
       error: true,
     });
