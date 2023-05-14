@@ -55,7 +55,7 @@ const updateActivity = async (req, res) => {
     const { id } = req.params;
     const { isActive } = req.params;
     if (!isActive) {
-      return res.status(200).json({
+      return res.status(404).json({
         message: `Activity with ID ${id} is inactive and cannot be updated`,
         data: undefined,
         error: false,
