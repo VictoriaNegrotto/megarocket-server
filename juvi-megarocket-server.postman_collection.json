@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "4374d985-a5c6-4ea4-963b-2ed41e84f580",
+		"_postman_id": "a4e18311-1ed9-4e51-82fd-b64595e22d2c",
 		"name": "juvi-megarocket-server",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "27390074",
-		"_collection_link": "https://lively-robot-901821.postman.co/workspace/Team-Workspace~c5410be6-d490-45b2-8319-f283f16f94ae/collection/27390074-4374d985-a5c6-4ea4-963b-2ed41e84f580?action=share&creator=27390074&source=collection_link"
+		"_exporter_id": "25120874"
 	},
 	"item": [
 		{
@@ -17,7 +16,126 @@
 		},
 		{
 			"name": "Member",
-			"item": []
+			"item": [
+				{
+					"name": "Get member by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/member/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"member",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update member",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/member/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"member",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete member",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/member/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"member",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter member by Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/member/filter/:nameMember",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"member",
+								"filter",
+								":nameMember"
+							],
+							"variable": [
+								{
+									"key": "nameMember",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Trainer",
