@@ -3,6 +3,66 @@ import '../models/Admins';
 
 const Admin = mongoose.model('Admin');
 
+export const getAdmins = async (req, res) => {
+  try {
+    const foundAdmins = await Admin.find({ isActive: true });
+    if (!foundAdmins) {
+      return res.status(404).json({
+        message: 'Admin not found',
+        data: undefined,
+        error: true,
+      });
+    }
+    return res.status(200).json({
+      message: 'Admin found',
+      data: foundAdmins,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: `${error.message}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
+export const createAdmin = async (req, res) => {
+  try {
+    const {
+      firstName,
+      lastName,
+      dni,
+      phone,
+      email,
+      city,
+      password,
+    } = req.body;
+
+    const admin = await Admin.create({
+      firstName,
+      lastName,
+      dni,
+      phone,
+      email,
+      city,
+      password,
+    });
+
+    res.status(201).json({
+      message: `Admin ${admin.firstName} was created successfully!`,
+      data: admin,
+      error: false,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
 export const getAdminById = async (req, res) => {
   const adminId = req.params.id;
   if (!mongoose.Types.ObjectId.isValid(adminId)) {

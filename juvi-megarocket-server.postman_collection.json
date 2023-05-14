@@ -1,9 +1,8 @@
 {
 	"info": {
-		"_postman_id": "f21d1de0-c342-4ee5-8319-e22573030f62",
+		"_postman_id": "b919658f-2c89-402c-aaab-1368e2bf9955",
 		"name": "juvi-megarocket-server",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "27249682"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -106,6 +105,57 @@
 									"key": "id",
 									"value": "64609a45d0d1d59df8a79e6a"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get-admin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/admins/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"admins",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create-admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n      \"firstName\": \"Alejandro\",\r\n      \"lastName\": \"Schmidt\",\r\n      \"dni\": 12345678,\r\n      \"phone\": 1234567,\r\n      \"email\":\"ale@ale.com\",\r\n      \"city\": \"Montevideo\",\r\n      \"password\": \"Hola123!\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/admins/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"admins",
+								""
 							]
 						}
 					},
