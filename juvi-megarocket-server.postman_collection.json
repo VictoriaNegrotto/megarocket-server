@@ -1,16 +1,9 @@
 {
 	"info": {
-<<<<<<< HEAD
 		"_postman_id": "f21d1de0-c342-4ee5-8319-e22573030f62",
 		"name": "juvi-megarocket-server",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "27249682"
-=======
-		"_postman_id": "56b846eb-f6fe-4844-b724-0de77aaaa3d8",
-		"name": "juvi-megarocket-server",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "27282431"
->>>>>>> master
 	},
 	"item": [
 		{

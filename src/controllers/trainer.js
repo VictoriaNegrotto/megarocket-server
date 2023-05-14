@@ -10,7 +10,7 @@ const getAllTrainers = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      message: 'An error ocurred',
+      message: error,
       data: undefined,
       error: true,
     });
@@ -28,7 +28,6 @@ const createTrainer = async (req, res) => {
       city,
       password,
       salary,
-      isActive,
     } = req.body;
 
     const trainer = await trainerSchema.create({
@@ -40,7 +39,6 @@ const createTrainer = async (req, res) => {
       city,
       password,
       salary,
-      isActive,
     });
 
     res.status(201).json({
@@ -49,8 +47,8 @@ const createTrainer = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    res.status(400).json({
-      message: 'Error creating trainer',
+    res.status(500).json({
+      message: error,
       data: undefined,
       error: true,
     });
