@@ -1,10 +1,11 @@
 import { Router } from 'express';
-import subscriptionControllers from '../controllers/subscription';
 import validations from '../validations/subscription';
+import subscriptionControllers from '../controllers/subscription';
 
 const subscriptionRouter = Router();
 
-subscriptionRouter.get('/', subscriptionControllers.getAllSubscriptions);
-subscriptionRouter.post('/', validations.validateCreate, subscriptionControllers.createSubscription);
+subscriptionRouter
+  .get('/', subscriptionControllers.getAllSubscriptions)
+  .post('/', validations.validateCreate, subscriptionControllers.createSubscription);
 
 export default subscriptionRouter;

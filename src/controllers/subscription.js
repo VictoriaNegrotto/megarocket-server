@@ -9,10 +9,10 @@ const getAllSubscriptions = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    res.status(400).json({
+    res.status(500).json({
       message: 'An error ocurred',
       data: undefined,
-      error,
+      error: true,
     });
   }
 };
@@ -27,14 +27,15 @@ const createSubscription = async (req, res) => {
       date,
     });
     res.status(201).json({
-      message: 'Subscription was created',
+      message: 'Subscription was created successfully!',
       data: newSubscription,
       error: false,
     });
   } catch (error) {
-    res.status(400).json({
+    res.status(500).json({
       message: 'Error creating subscription',
-      error,
+      data: undefined,
+      error: true,
     });
   }
 };
