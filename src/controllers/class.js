@@ -7,17 +7,20 @@ const getClassById = async (req, res) => {
     if (!idClass) {
       return res.status(200).json({
         message: `Class with ID ${id} was not found`,
-        error: true,
+        data: undefined,
+        error: false,
       });
     }
     return res.status(200).json({
       message: `Class with ID ${idClass.id} was found!`,
       data: idClass,
+      error: false,
     });
   } catch (error) {
     return res.status(500).json({
-      message: 'an error has ocurred',
-      error,
+      message: error,
+      data: undefined,
+      error: true,
     });
   }
 };
@@ -30,6 +33,8 @@ const updateClass = async (req, res) => {
     if (!isActive) {
       return res.status(200).json({
         message: `Class with ID ${id} is inactive and cannot be updated`,
+        data: undefined,
+        error: false,
       });
     }
     const {
@@ -50,12 +55,22 @@ const updateClass = async (req, res) => {
     if (!result) {
       return res.status(200).json({
         message: `Class with ID ${id} was not found`,
+        data: undefined,
+        error: false,
       });
     }
 
-    return res.status(200).json(result);
+    return res.status(200).json({
+      message: `Class with ID ${id} updated!`,
+      data: result,
+      error: false,
+    });
   } catch (error) {
-    return res.status(500).json(error);
+    return res.status(500).json({
+      message: error,
+      data: undefined,
+      error: true,
+    });
   }
 };
 
@@ -68,14 +83,21 @@ const deleteClass = async (req, res) => {
     if (!classToDelete) {
       return res.status(200).json({
         message: `Class with ID ${id} was not found`,
+        data: undefined,
+        error: false,
       });
     }
 
-    return res.status(200).json(classToDelete);
+    return res.status(200).json({
+      message: `Class with ID ${id} deleted!`,
+      data: classToDelete,
+      error: false,
+    });
   } catch (error) {
     return res.status(500).json({
-      message: 'An error occurred',
-      error,
+      message: error,
+      data: undefined,
+      error: true,
     });
   }
 };
