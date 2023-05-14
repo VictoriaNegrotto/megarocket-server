@@ -25,6 +25,13 @@ const getClassById = async (req, res) => {
 const updateClass = async (req, res) => {
   try {
     const { id } = req.params;
+    const { isActive } = await Class.findById(id);
+
+    if (!isActive) {
+      return res.status(200).json({
+        message: `Class with ID ${id} is inactive and cannot be updated`,
+      });
+    }
     const {
       day, hour, trainer, activity, slots,
     } = req.body;

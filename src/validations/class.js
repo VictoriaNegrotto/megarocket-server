@@ -6,7 +6,7 @@ const validateUpdate = (req, res, next) => {
     hour: Joi.string().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/),
     trainer: Joi.string(),
     activity: Joi.string(),
-    slots: Joi.number().min(0).max(30),
+    slots: Joi.number().min(0).max(30).integer(),
   });
 
   const updateValidation = classUpdateValidation.validate(req.body);
