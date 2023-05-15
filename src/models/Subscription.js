@@ -7,7 +7,7 @@ const subscriptionSchema = new Schema({
     require: true,
   },
   members: {
-    type: mongoose.Types.ObjectId,
+    type: [mongoose.Types.ObjectId],
     require: true,
   },
   date: {
