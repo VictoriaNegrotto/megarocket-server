@@ -4,15 +4,16 @@ const validateCreate = (req, res, next) => {
   const createMemberValidate = Joi.object({
     firstName: Joi.string().min(3).max(20).required(),
     lastName: Joi.string().min(3).max(20).required(),
-    dni: Joi.number().min(1000000).max(99999999).required(),
-    phone: Joi.number().max(99999999).required(),
+    dni: Joi.number().min(1000000).max(99999999).integer()
+      .required(),
+    phone: Joi.number().max(99999999).interger().required(),
     email: Joi.string().email().min(5).max(30)
       .lowercase()
       .required(),
     city: Joi.string().min(2).max(20).required(),
     birthDate: Joi.date().required(),
     postalCode: Joi.number().max(9999).required(),
-    isActive: Joi.boolean().default(false).required(),
+    isActive: Joi.boolean().default(true).required(),
     memberships: Joi.string().valid('Black', 'Classic', 'Only Classes').default('Classic').required(),
   });
   const validation = createMemberValidate.validate(req.body);
