@@ -41,7 +41,8 @@ const updateMember = async (req, res) => {
       });
     }
 
-    const memberUpdated = await memberSchema.findByIdAndUpdate(id, newMemberData, { new: true });
+    const memberUpdated = await memberSchema
+      .findByIdAndUpdate(id, newMemberData, { new: true, runValidators: true });
 
     return res.status(200).json({
       message: 'Member updated!',

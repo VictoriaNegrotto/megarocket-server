@@ -61,7 +61,7 @@ const updateTrainer = async (req, res) => {
 
     const trainer = await Trainer.findByIdAndUpdate(id, {
       firstName, lastName, dni, phone, email, city, password, salary,
-    }, { new: true });
+    }, { new: true, runValidators: true });
 
     return res.status(200).json({
       message: `Trainer with ID: ${id} was updated!`,

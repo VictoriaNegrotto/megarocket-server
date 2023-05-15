@@ -105,7 +105,8 @@ const updateActivity = async (req, res) => {
       });
     }
     const { name, description } = req.body;
-    const updateAct = await Activity.findByIdAndUpdate(id, { name, description }, { new: true });
+    const updateAct = await Activity
+      .findByIdAndUpdate(id, { name, description }, { new: true, runValidators: true });
     if (updateAct) {
       return res.status(200).json({
         message: `Activity with ID ${id} was successfully updated`,

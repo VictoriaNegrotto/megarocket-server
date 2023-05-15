@@ -49,7 +49,7 @@ const updateClass = async (req, res) => {
         activity,
         slots,
       },
-      { new: true },
+      { new: true, runValidators: true },
     );
 
     if (!result) {

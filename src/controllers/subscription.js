@@ -20,7 +20,7 @@ const updateSubscription = async (req, res) => {
         members,
         date,
       },
-      { new: true },
+      { new: true, runValidators: true },
     );
     if (!suscriptionToUpdate) {
       return res.status(404).json({
