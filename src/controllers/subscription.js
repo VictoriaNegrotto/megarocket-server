@@ -10,7 +10,7 @@ const getAllSubscriptions = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      message: 'An error ocurred',
+      message: `An error ocurred:\n ${error}`,
       data: undefined,
       error: true,
     });
@@ -33,7 +33,7 @@ const createSubscription = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      message: 'Error creating subscription',
+      message: `An error ocurred:\n ${error}`,
       data: undefined,
       error: true,
     });
