@@ -28,7 +28,7 @@ const trainerSchema = new Schema({
   email: {
     type: String,
     minLength: 5,
-    maxLength: 20,
+    maxLength: 30,
     required: true,
     lowercase: true,
   },
@@ -51,7 +51,7 @@ const trainerSchema = new Schema({
   },
   isActive: {
     type: Boolean,
-    default: false,
+    default: true,
   },
 });
 

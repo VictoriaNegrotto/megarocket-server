@@ -47,14 +47,14 @@ const memberSchema = new Schema({
     required: true,
     max: 9999,
   },
-  isActive: {
-    type: Boolean,
-    default: false,
-  },
   memberships: {
     type: String,
     enum: ['Black', 'Classic', 'Only Classes'],
     default: 'Classic',
+  },
+  isActive: {
+    type: Boolean,
+    default: true,
   },
 });
 
