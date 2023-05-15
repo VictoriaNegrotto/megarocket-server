@@ -2,7 +2,7 @@ import Joi from 'joi';
 
 const validateUpdate = (req, res, next) => {
   const suscriptionUpdateValidation = Joi.object({
-    class: Joi.string(),
+    classSubs: Joi.string(),
     members: Joi.string(),
     date: Joi.date(),
     isActive: Joi.boolean().default(false),

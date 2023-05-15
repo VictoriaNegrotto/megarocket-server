@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "023cfe7a-1356-4a9b-8eb0-400702600049",
+		"_postman_id": "315c2a6f-3b01-4bd6-8644-d87dc9312c6f",
 		"name": "juvi-megarocket-server",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "27282418"
+		"_exporter_id": "27273301"
 	},
 	"item": [
 		{
@@ -457,7 +457,92 @@
 		},
 		{
 			"name": "Subscription",
-			"item": []
+			"item": [
+				{
+					"name": "Get Suscription By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/suscription/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"suscription",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6460e1e1fcdabcda82da209"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Suscription",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"classInSuscription\": \"6460e1e1fcdabcda82da201f\",\n    \"members\": \"6460189e983af4ac29b464c1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/suscription/6460e1e1fcdabcda82da209d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"suscription",
+								"6460e1e1fcdabcda82da209d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Suscription",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/suscription/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"suscription",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6460e1e1fcdabcda82da209d"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Class",

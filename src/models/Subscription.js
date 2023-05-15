@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const subscriptionSchema = new Schema({
-  class: {
+  classSubs: {
     type: mongoose.Types.ObjectId,
     require: true,
   },
@@ -21,4 +21,4 @@ const subscriptionSchema = new Schema({
   },
 });
 
-export default mongoose.Model('Subscription', subscriptionSchema);
+export default mongoose.model('Subscription', subscriptionSchema);

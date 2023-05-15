@@ -3,7 +3,6 @@ import Subscription from '../models/Subscription';
 const updateSuscription = async (req, res) => {
   try {
     const { id } = req.params;
-    const { classInSuscription, members, date } = req.body;
     const { isActive } = await Subscription.findById(id);
 
     if (!isActive) {
@@ -13,10 +12,11 @@ const updateSuscription = async (req, res) => {
         error: true,
       });
     }
+    const { classSubs, members, date } = req.body;
     const suscriptionToUpdate = await Subscription.findByIdAndUpdate(
       id,
       {
-        classInSuscription,
+        classSubs,
         members,
         date,
       },
@@ -90,6 +90,7 @@ const filterSuscriptionById = async (req, res) => {
     }
     return res.status(200).json({
       message: `Suscription Id: ${id} was found`,
+      data: suscripToFilter,
       error: false,
     });
   } catch (error) {

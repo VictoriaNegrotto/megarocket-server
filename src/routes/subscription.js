@@ -6,7 +6,7 @@ const suscriptionRoute = Router();
 
 suscriptionRoute
   .get('/:id', suscriptionController.filterSuscriptionById)
-  .put('/id:', validations.validateUpdate, suscriptionController.updateSuscription)
-  .delete('/id:', suscriptionController.deleteSusciption);
+  .put('/:id', validations.validateUpdate, suscriptionController.updateSuscription)
+  .delete('/:id', suscriptionController.deleteSusciption);
 
 export default suscriptionRoute;
