@@ -1,6 +1,6 @@
-# BaSP 2023 - [app name]
+# BaSP 2023 - MegaRocket
 
-[add app description]
+This project is an API of the MegaRocket gym, which contains all the activities, classes, subscriptions, super admins, admins, trianers and members resources.
 
 <br>
 
@@ -40,7 +40,6 @@ npm run lint:fix
 
 ### Members
 
-(example)
 | Name | Mail | Github
 | :-----: | :-----: | :-----: |
 Lorenzo Mauro | lorenzomauro59@gmail.com | [@lorenzomauro59](https://github.com/MaxiObregon)
