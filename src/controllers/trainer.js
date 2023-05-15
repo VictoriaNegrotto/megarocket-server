@@ -1,84 +1,156 @@
-import express from 'express';
+import Trainer from '../models/Trainer';
 
-const fs = require('fs');
-const trainers = require('../data/trainer.json');
+const getTrainerById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const trainer = await Trainer.findOne({ $and: [{ _id: id }, { isActive: true }] });
 
-const trainerRouter = express.Router();
-const path = 'src/data/trainer.json';
-
-trainerRouter.post('/', (req, res) => {
-  const newTrainer = req.body;
-  const camposRequeridos = ['firstName', 'lastName', 'gender', 'activity1', 'schedule'];
-  if (camposRequeridos.some((campo) => !newTrainer[campo])) {
-    return res.json({ msg: 'All fields is required' });
+    if (!trainer) {
+      return res.status(404).json({
+        message: `Trainer with ID: ${id} was not found`,
+        data: undefined,
+        error: true,
+      });
+    }
+    return res.status(200).json({
+      message: `Trainer with ID: ${id} was found!`,
+      data: trainer,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error,
+      data: undefined,
+      error: true,
+    });
   }
-  const lastTrainer = trainers[trainers.length - 1];
-  const lastId = lastTrainer.id + 1;
-  newTrainer.id = lastId;
-  trainers.push(newTrainer);
-  fs.writeFile(path, JSON.stringify(trainers, null, 2), (err) => {
-    if (err) res.send('Error creating trainer');
-  });
-  return res.json({ msg: 'Trainer created successfully', trainer: newTrainer });
-});
+};
 
-trainerRouter.put('/:id', (req, res) => {
-  const { id } = req.params;
-  const trainerIndex = trainers.findIndex((trainer) => trainer.id.toString() === id);
-  const trainerUpdate = req.body;
-  if (trainerIndex === -1) return res.json({ msg: `Trainer with id ${id} not found` });
-
-  const validProperties = ['firstName', 'lastName', 'gender', 'activity1', 'activity2', 'schedule'];
-  const editProperties = Object.keys(trainerUpdate);
-  const isValid = editProperties.every((property) => validProperties.includes(property));
-
-  if (!isValid) {
-    return res.send('Invalid properties');
+const getAllTrainers = async (req, res) => {
+  try {
+    const trainers = await Trainer.find({ isActive: true });
+    res.status(200).json({
+      message: 'Complete Trainer list',
+      data: trainers,
+      error: false,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error,
+      data: undefined,
+      error: true,
+    });
   }
+};
 
-  const trainer = trainers[trainerIndex];
-  trainers[trainerIndex] = {
-    ...trainer,
-    ...trainerUpdate,
-  };
-  fs.writeFile(path, JSON.stringify(trainers, null, 2), (err) => {
-    if (err) res.send('Error editing trainer');
-  });
-  return res.json({ msg: 'Trainer updated successfully', trainer: trainers[trainerIndex] });
-});
+const updateTrainer = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      firstName, lastName, dni, phone, email, city, password, salary,
+    } = req.body;
+    const trai = await Trainer.findById(id);
 
-trainerRouter.delete('/:id', (req, res) => {
-  const { id } = req.params;
-  const trainerIndex = trainers.findIndex((trainer) => trainer.id.toString() === id);
-  if (trainerIndex === -1) return res.json({ msg: `Trainer with id ${id} not found` });
-  trainers.splice(trainerIndex, 1);
-  fs.writeFile(path, JSON.stringify(trainers, null, 2), (err) => {
-    if (err) res.send('Error deleting trainer');
-  });
-  return res.send();
-});
+    if (!trai || !trai.isActive) {
+      return res.status(404).json({
+        message: `Trainer with ID: ${id} was not found`,
+        data: undefined,
+        error: true,
+      });
+    }
 
-trainerRouter.get('/', (req, resp) => {
-  resp.json({ trainers });
-});
+    const trainer = await Trainer.findByIdAndUpdate(id, {
+      firstName, lastName, dni, phone, email, city, password, salary,
+    }, { new: true });
 
-trainerRouter.get('/:id', (req, res) => {
-  const { id } = req.params;
-  const getTrainer = trainers.find((trainer) => trainer.id.toString() === id);
+    return res.status(200).json({
+      message: `Trainer with ID: ${id} was updated!`,
+      data: trainer,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error,
+      data: undefined,
+      error: true,
+    });
+  }
+};
 
-  if (!getTrainer) return res.json({ msg: `No trainer with the id of ${id}` });
+const createTrainer = async (req, res) => {
+  try {
+    const {
+      firstName,
+      lastName,
+      dni,
+      phone,
+      email,
+      city,
+      password,
+      salary,
+    } = req.body;
 
-  return res.json({ data: getTrainer });
-});
+    const trainer = await Trainer.create({
+      firstName,
+      lastName,
+      dni,
+      phone,
+      email,
+      city,
+      password,
+      salary,
+    });
 
-trainerRouter.get('/filter/:activity', (req, res) => {
-  const { activity } = req.params;
-  const getTrainer = trainers.filter((trainer) => trainer.activity1 === activity
-   || trainer.activity2 === activity);
+    res.status(201).json({
+      message: `Trainer ${trainer.firstName} was created successfully!`,
+      data: trainer,
+      error: false,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error,
+      data: undefined,
+      error: true,
+    });
+  }
+};
 
-  if (!getTrainer) return res.json({ msg: `No trainer with the activity of ${activity}` });
+const deleteTrainer = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-  return res.json({ data: getTrainer });
-});
+    const trainerActive = await Trainer.findById(id);
 
-export default trainerRouter;
+    if (!trainerActive.isActive) {
+      return res.status(404).json({
+        message: `Trainer with ID: ${id} was not found`,
+        data: undefined,
+        error: true,
+      });
+    }
+
+    const trainer = await Trainer.findByIdAndUpdate(id, { isActive: false }, { new: true });
+
+    return res.status(200).json({
+      message: 'Trainer deleted',
+      data: trainer,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
+const trainerControllers = {
+  getAllTrainers,
+  createTrainer,
+  getTrainerById,
+  updateTrainer,
+  deleteTrainer,
+};
+
+export default trainerControllers;

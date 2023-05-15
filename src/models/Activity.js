@@ -17,8 +17,8 @@ const activitySchema = new Schema({
   },
   isActive: {
     type: Boolean,
-    default: false,
+    default: true,
   },
 });
 
-export default mongoose.Model('Activity', activitySchema);
+export default mongoose.model('Activity', activitySchema);
