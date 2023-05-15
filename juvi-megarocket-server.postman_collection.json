@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "cc5313ee-5ee1-4a84-b7f7-5e8e41dd69f3",
+		"_postman_id": "a34094c6-ff2d-48a7-b3ce-008f7be66566",
 		"name": "juvi-megarocket-server",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23499954",
-		"_collection_link": "https://martian-flare-461362.postman.co/workspace/juvi-megarocket~949f6454-5789-4b71-bd1d-1fbb570561bf/collection/23499954-cc5313ee-5ee1-4a84-b7f7-5e8e41dd69f3?action=share&creator=23499954&source=collection_link"
+		"_exporter_id": "27273301"
 	},
 	"item": [
 		{
@@ -189,6 +188,33 @@
 					"response": []
 				},
 				{
+					"name": "Get SuperAdmin by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/superadmin/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"superadmin",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create SuperAdmin",
 					"request": {
 						"method": "POST",
@@ -212,6 +238,97 @@
 							"path": [
 								"api",
 								"superadmin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update SuperAdmin",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/superadmin/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"superadmin",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete SuperAdmin",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/superadmin/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"superadmin",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get SuperAdmin by Email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/superadmin/filter/:emailFilter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"superadmin",
+								"filter",
+								":emailFilter"
+							],
+							"variable": [
+								{
+									"key": "emailFilter",
+									"value": ""
+								}
 							]
 						}
 					},
@@ -682,6 +799,90 @@
 							"path": [
 								"api",
 								"subscriptions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Suscription",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/suscription/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"suscription",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6460e1e1fcdabcda82da209d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Suscription",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"classInSuscription\": \"6460e1e1fcdabcda82da201f\",\n    \"members\": \"6460189e983af4ac29b464c1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/suscription/6460e1e1fcdabcda82da209d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"suscription",
+								"6460e1e1fcdabcda82da209d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Suscription By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/suscription/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"suscription",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6460e1e1fcdabcda82da209"
+								}
 							]
 						}
 					},
