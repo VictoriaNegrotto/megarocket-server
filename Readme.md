@@ -1,4 +1,4 @@
-# BaSP 2023 - Juvi MegaRocket Server
+# BaSP 2023 - MegaRocket
 
 This project is an API of the MegaRocket gym, which contains all the activities, classes, subscriptions, super admins, admins, trianers and members resources.
 
