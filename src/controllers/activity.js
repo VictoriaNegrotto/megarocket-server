@@ -1,5 +1,48 @@
 import Activity from '../models/Activity';
 
+const getAllActivity = async (req, res) => {
+  try {
+    const activity = await Activity.find({ isActive: true });
+    res.status(200).json({
+      message: 'Complete Activity list',
+      data: activity,
+      error: false,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
+const createActivity = async (req, res) => {
+  try {
+    const {
+      name,
+      description,
+    } = req.body;
+
+    const activity = await Activity.create({
+      name,
+      description,
+    });
+
+    res.status(201).json({
+      message: `Activity ${activity.name} was created successfully!`,
+      data: activity,
+      error: false,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
 const getActivityById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -111,6 +154,8 @@ const getActivityByName = async (req, res) => {
 };
 
 const activityController = {
+  getAllActivity,
+  createActivity,
   getActivityById,
   deleteActivity,
   updateActivity,

@@ -13,7 +13,6 @@ const validateCreate = (req, res, next) => {
     city: Joi.string().min(2).max(20).required(),
     birthDate: Joi.date().required(),
     postalCode: Joi.number().max(9999).required(),
-    isActive: Joi.boolean().default(true).required(),
     memberships: Joi.string().valid('Black', 'Classic', 'Only Classes').default('Classic').required(),
   });
   const validation = createMemberValidate.validate(req.body);

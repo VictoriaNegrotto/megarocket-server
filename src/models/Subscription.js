@@ -1,14 +1,13 @@
 import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
-
 const subscriptionSchema = new Schema({
   class: {
     type: mongoose.Types.ObjectId,
     require: true,
   },
   members: {
-    type: mongoose.Types.ObjectId,
+    type: [mongoose.Types.ObjectId],
     require: true,
   },
   date: {
@@ -21,4 +20,4 @@ const subscriptionSchema = new Schema({
   },
 });
 
-export default mongoose.Model('Subscription', subscriptionSchema);
+export default mongoose.model('Subscription', subscriptionSchema);

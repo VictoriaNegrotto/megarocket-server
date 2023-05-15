@@ -32,8 +32,8 @@ const updateMember = async (req, res) => {
     const { id } = req.params;
     const newMemberData = req.body;
 
-    const newMember = await memberSchema.findById(id);
-    if (!newMember) {
+    const newMember = await memberSchema.findOne({ _id: id });
+    if (!newMember || !newMember.isActive) {
       return res.status(404).json({
         message: 'Member not found!. Id not exists',
         data: undefined,
@@ -148,7 +148,6 @@ const createMember = async (req, res) => {
       city,
       birthDate,
       postalCode,
-      isActive,
       memberships,
     } = req.body;
     const memberCreate = await memberSchema.create({
@@ -160,7 +159,6 @@ const createMember = async (req, res) => {
       city,
       birthDate,
       postalCode,
-      isActive,
       memberships,
     });
     return res.status(201).json({
