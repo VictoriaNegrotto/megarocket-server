@@ -6,7 +6,7 @@ const activityRouter = Router();
 
 activityRouter
   .get('/', activityController.getAllActivity)
-  .post('/', validations.validateUpdate, activityController.createActivity)
+  .post('/', validations.validateCreation, activityController.createActivity)
   .put('/:id', validations.validateUpdate, activityController.updateActivity)
   .delete('/:id', activityController.deleteActivity)
   .get('/:id', activityController.getActivityById)

@@ -11,6 +11,8 @@ const getAllActivity = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: error,
+      data: undefined,
+      error: true,
     });
   }
 };
