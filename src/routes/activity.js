@@ -5,6 +5,8 @@ import validations from '../validations/activity';
 const activityRouter = Router();
 
 activityRouter
+  .get('/', activityController.getAllActivity)
+  .post('/', validations.validateCreation, activityController.createActivity)
   .put('/:id', validations.validateUpdate, activityController.updateActivity)
   .delete('/:id', activityController.deleteActivity)
   .get('/:id', activityController.getActivityById)
