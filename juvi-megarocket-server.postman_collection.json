@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "db668478-1ed8-431e-aee1-7c462e139bb2",
+		"_postman_id": "cc5313ee-5ee1-4a84-b7f7-5e8e41dd69f3",
 		"name": "juvi-megarocket-server",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "27254805",
-		"_collection_link": "https://winter-astronaut-718718.postman.co/workspace/Team-Workspace~064ecf1c-fcb4-45f9-858b-a1ae7a00766e/collection/27254805-db668478-1ed8-431e-aee1-7c462e139bb2?action=share&creator=27254805&source=collection_link"
+		"_exporter_id": "23499954",
+		"_collection_link": "https://martian-flare-461362.postman.co/workspace/juvi-megarocket~949f6454-5789-4b71-bd1d-1fbb570561bf/collection/23499954-cc5313ee-5ee1-4a84-b7f7-5e8e41dd69f3?action=share&creator=23499954&source=collection_link"
 	},
 	"item": [
 		{
@@ -581,6 +581,53 @@
 									"key": "name",
 									"value": null
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create activity",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n      \"name\": \"Crossfit\",\r\n      \"description\": \"training technique that connects movements from different disciplines\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/activity",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"activity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all activities",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/activity",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"activity"
 							]
 						}
 					},
