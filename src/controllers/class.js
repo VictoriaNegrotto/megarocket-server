@@ -5,7 +5,7 @@ const getClassById = async (req, res) => {
     const { id } = req.params;
     const idClass = await Class.findOne({ $and: [{ _id: id }, { isActive: true }] });
     if (!idClass) {
-      return res.status(200).json({
+      return res.status(404).json({
         message: `Class with ID ${id} was not found`,
         data: undefined,
         error: false,
@@ -31,7 +31,7 @@ const updateClass = async (req, res) => {
     const { isActive } = await Class.findById(id);
 
     if (!isActive) {
-      return res.status(200).json({
+      return res.status(404).json({
         message: `Class with ID ${id} is inactive and cannot be updated`,
         data: undefined,
         error: false,
@@ -53,7 +53,7 @@ const updateClass = async (req, res) => {
     );
 
     if (!result) {
-      return res.status(200).json({
+      return res.status(404).json({
         message: `Class with ID ${id} was not found`,
         data: undefined,
         error: false,
@@ -81,7 +81,7 @@ const deleteClass = async (req, res) => {
     const classToDelete = await Class.findByIdAndUpdate(id, { isActive: false }, { new: true });
 
     if (!classToDelete) {
-      return res.status(200).json({
+      return res.status(404).json({
         message: `Class with ID ${id} was not found`,
         data: undefined,
         error: false,
