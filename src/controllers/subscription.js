@@ -1,22 +1,22 @@
 import Subscription from '../models/Subscription';
 
-const updateSuscription = async (req, res) => {
+const updateSubscription = async (req, res) => {
   try {
     const { id } = req.params;
     const { isActive } = await Subscription.findById(id);
 
     if (!isActive) {
       return res.status(404).json({
-        message: `Suscription Id: ${id} inactive, can not be updated`,
+        message: `Subscription Id: ${id} inactive, can not be updated`,
         data: undefined,
         error: true,
       });
     }
-    const { classSubs, members, date } = req.body;
+    const { classInSubscription, members, date } = req.body;
     const suscriptionToUpdate = await Subscription.findByIdAndUpdate(
       id,
       {
-        classSubs,
+        class: classInSubscription,
         members,
         date,
       },
@@ -24,14 +24,14 @@ const updateSuscription = async (req, res) => {
     );
     if (!suscriptionToUpdate) {
       return res.status(404).json({
-        message: `Suscription Id: ${id} was not found`,
+        message: `Subscription Id: ${id} was not found`,
         data: undefined,
         error: true,
       });
     }
 
     return res.status(200).json({
-      message: `Suscription Id: ${id} Updated!`,
+      message: `Subscription Id: ${id} Updated!`,
       data: suscriptionToUpdate,
       error: false,
     });
@@ -44,26 +44,43 @@ const updateSuscription = async (req, res) => {
   }
 };
 
-const deleteSusciption = async (req, res) => {
+const getAllSubscriptions = async (req, res) => {
+  try {
+    const subscriptionData = await Subscription.find({ isActive: true });
+    res.status(200).json({
+      message: 'Subscription list found',
+      data: subscriptionData,
+      error: false,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: `An error ocurred:\n ${error}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
+const deleteSubscription = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const suscriptionToDelete = await Subscription.findByIdAndUpdate(
+    const subscriptionToDelete = await Subscription.findByIdAndUpdate(
       id,
       { isActive: false },
       { new: true },
     );
 
-    if (!suscriptionToDelete) {
+    if (!subscriptionToDelete) {
       return res.status(404).json({
-        message: `Suscription Id: ${id} was not found`,
+        message: `Subscription Id: ${id} was not found`,
         data: undefined,
         error: true,
       });
     }
     return res.status(200).json({
-      message: `Suscription Id: ${id} deleted`,
-      data: suscriptionToDelete,
+      message: `Subscription Id: ${id} deleted`,
+      data: subscriptionToDelete,
       error: false,
     });
   } catch (error) {
@@ -75,22 +92,22 @@ const deleteSusciption = async (req, res) => {
   }
 };
 
-const filterSuscriptionById = async (req, res) => {
+const filterSubscriptionById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const suscripToFilter = await Subscription.findOne({ $and: [{ _id: id }, { isActive: true }] });
+    const subsToFilter = await Subscription.findOne({ $and: [{ _id: id }, { isActive: true }] });
 
-    if (!suscripToFilter) {
+    if (!subsToFilter) {
       res.status(404).json({
-        message: `Suscription Id: ${id} was not found`,
+        message: `Subscription Id: ${id} was not found`,
         data: undefined,
         error: true,
       });
     }
     return res.status(200).json({
-      message: `Suscription Id: ${id} was found`,
-      data: suscripToFilter,
+      message: `Subscription Id: ${id} was found`,
+      data: subsToFilter,
       error: false,
     });
   } catch (error) {
@@ -102,10 +119,35 @@ const filterSuscriptionById = async (req, res) => {
   }
 };
 
-const subscriptionControllers = {
-  updateSuscription,
-  deleteSusciption,
-  filterSuscriptionById,
+const createSubscription = async (req, res) => {
+  try {
+    const { classInSubscription, members, date } = req.body;
+
+    const newSubscription = await Subscription.create({
+      class: classInSubscription,
+      members,
+      date,
+    });
+    res.status(201).json({
+      message: 'Subscription was created successfully!',
+      data: newSubscription,
+      error: false,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: `An error ocurred:\n ${error}`,
+      data: undefined,
+      error: true,
+    });
+  }
 };
 
-export default subscriptionControllers;
+const subscriptionController = {
+  updateSubscription,
+  deleteSubscription,
+  filterSubscriptionById,
+  getAllSubscriptions,
+  createSubscription,
+};
+
+export default subscriptionController;

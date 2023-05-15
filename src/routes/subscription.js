@@ -1,12 +1,14 @@
 import { Router } from 'express';
 import validations from '../validations/subscription';
-import suscriptionController from '../controllers/subscription';
+import subscriptionController from '../controllers/subscription';
 
-const suscriptionRoute = Router();
+const subscriptionRouter = Router();
 
-suscriptionRoute
-  .get('/:id', suscriptionController.filterSuscriptionById)
-  .put('/:id', validations.validateUpdate, suscriptionController.updateSuscription)
-  .delete('/:id', suscriptionController.deleteSusciption);
+subscriptionRouter
+  .get('/:id', subscriptionController.filterSubscriptionById)
+  .put('/:id', validations.validateUpdate, subscriptionController.updateSubscription)
+  .delete('/:id', subscriptionController.deleteSubscription)
+  .get('/', subscriptionController.getAllSubscriptions)
+  .post('/', validations.validateCreate, subscriptionController.createSubscription);
 
-export default suscriptionRoute;
+export default subscriptionRouter;
