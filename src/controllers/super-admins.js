@@ -85,7 +85,7 @@ const updateSuperAdmin = async (req, res) => {
     }
 
     const updatedSuperAdmin = await SuperAdmin
-      .findByIdAndUpdate(id, newSuperAdminData, { new: true });
+      .findByIdAndUpdate(id, newSuperAdminData, { new: true, runValidators: true });
 
     return res.status(200).json({
       message: 'SuperAdmin Updated!',

@@ -127,7 +127,7 @@ const updateAdmin = async (req, res) => {
         });
       }
     }
-    await Admin.findOneAndUpdate({ _id: adminId }, req.body);
+    await Admin.findOneAndUpdate({ _id: adminId }, req.body, { runValidators: true });
     res.status(200).json({
       message: 'Admin updated',
       data: req.body,
