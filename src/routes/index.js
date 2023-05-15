@@ -8,6 +8,7 @@ import classRoute from './class';
 import superAdminRoute from './super-admins';
 
 const router = Router();
+router.use('/member', memberRouter);
 
 router.use('/subscriptions', subscriptionRouter);
 
