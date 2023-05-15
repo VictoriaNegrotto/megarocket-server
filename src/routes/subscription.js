@@ -5,7 +5,7 @@ import suscriptionController from '../controllers/subscription';
 const suscriptionRoute = Router();
 
 suscriptionRoute
-  .get('/:id', suscriptionController.getSuscriptionById)
+  .get('/:id', suscriptionController.filterSuscriptionById)
   .put('/id:', validations.validateUpdate, suscriptionController.updateSuscription)
   .delete('/id:', suscriptionController.deleteSusciption);
 

@@ -13,7 +13,7 @@ const updateSuscription = async (req, res) => {
         error: true,
       });
     }
-    const result = await Subscription.findByIdAndUpdate(
+    const suscriptionToUpdate = await Subscription.findByIdAndUpdate(
       id,
       {
         classInSuscription,
@@ -22,7 +22,7 @@ const updateSuscription = async (req, res) => {
       },
       { new: true },
     );
-    if (!result) {
+    if (!suscriptionToUpdate) {
       return res.status(404).json({
         message: `Suscription Id: ${id} was not found`,
         data: undefined,
@@ -32,7 +32,7 @@ const updateSuscription = async (req, res) => {
 
     return res.status(200).json({
       message: `Suscription Id: ${id} Updated!`,
-      data: result,
+      data: suscriptionToUpdate,
       error: false,
     });
   } catch (error) {
@@ -75,9 +75,36 @@ const deleteSusciption = async (req, res) => {
   }
 };
 
+const filterSuscriptionById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const suscripToFilter = await Subscription.findOne({ $and: [{ _id: id }, { isActive: true }] });
+
+    if (!suscripToFilter) {
+      res.status(404).json({
+        message: `Suscription Id: ${id} was not found`,
+        data: undefined,
+        error: true,
+      });
+    }
+    return res.status(200).json({
+      message: `Suscription Id: ${id} was found`,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: `An error ocurred:\n ${error}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
 const subscriptionControllers = {
   updateSuscription,
   deleteSusciption,
+  filterSuscriptionById,
 };
 
 export default subscriptionControllers;
