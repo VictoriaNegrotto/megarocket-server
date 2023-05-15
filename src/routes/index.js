@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import subscriptionRouter from './subscription';
 import activityRouter from './activity';
 import trainerRoute from './trainer';
 import adminsRouter from './admins';
@@ -7,6 +8,8 @@ import classRoute from './class';
 import superAdminRoute from './super-admins';
 
 const router = Router();
+
+router.use('/subscriptions', subscriptionRouter);
 
 router.use('/activity', activityRouter);
 router.use('/trainer', trainerRoute);
