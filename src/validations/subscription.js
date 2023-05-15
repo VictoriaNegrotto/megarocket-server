@@ -5,7 +5,6 @@ const validateUpdate = (req, res, next) => {
     classSubs: Joi.string(),
     members: Joi.string(),
     date: Joi.date(),
-    isActive: Joi.boolean().default(false),
   });
 
   const updateValidation = suscriptionUpdateValidation.validate(req.body);

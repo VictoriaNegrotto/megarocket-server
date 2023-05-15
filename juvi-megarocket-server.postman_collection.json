@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "315c2a6f-3b01-4bd6-8644-d87dc9312c6f",
+		"_postman_id": "943b2c66-613f-46e1-a1c7-d0d50ba2cd93",
 		"name": "juvi-megarocket-server",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "27273301"
@@ -106,6 +106,57 @@
 									"key": "id",
 									"value": "64609a45d0d1d59df8a79e6a"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get-admin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/admins/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"admins",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create-admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n      \"firstName\": \"Alejandro\",\r\n      \"lastName\": \"Schmidt\",\r\n      \"dni\": 12345678,\r\n      \"phone\": 1234567,\r\n      \"email\":\"ale@ale.com\",\r\n      \"city\": \"Montevideo\",\r\n      \"password\": \"Hola123!\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/admins/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"admins",
+								""
 							]
 						}
 					},
@@ -342,6 +393,87 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get-By-ID-Trainer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/trainer/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"trainer",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update-Trainer",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/trainer/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"trainer",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete-Trainer",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/trainer/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"trainer",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -459,9 +591,9 @@
 			"name": "Subscription",
 			"item": [
 				{
-					"name": "Get Suscription By Id",
+					"name": "Delete Suscription",
 					"request": {
-						"method": "GET",
+						"method": "DELETE",
 						"header": [],
 						"url": {
 							"raw": "http://localhost:4000/api/suscription/:id",
@@ -478,7 +610,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "6460e1e1fcdabcda82da209"
+									"value": "6460e1e1fcdabcda82da209d"
 								}
 							]
 						}
@@ -516,9 +648,9 @@
 					"response": []
 				},
 				{
-					"name": "Delete Suscription",
+					"name": "Get Suscription By Id",
 					"request": {
-						"method": "DELETE",
+						"method": "GET",
 						"header": [],
 						"url": {
 							"raw": "http://localhost:4000/api/suscription/:id",
@@ -535,7 +667,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "6460e1e1fcdabcda82da209d"
+									"value": "6460e1e1fcdabcda82da209"
 								}
 							]
 						}
