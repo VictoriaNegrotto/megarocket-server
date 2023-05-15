@@ -16,6 +16,7 @@ router.use('/trainer', trainerRoute);
 router.use('/member', memberRouter);
 router.use('/admins', adminsRouter);
 router.use('/class', classRoute);
+router.use('/suscription', subscriptionRouter);
 
 router.use('/superadmin', superAdminRoute);
 
