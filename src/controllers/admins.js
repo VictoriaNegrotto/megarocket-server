@@ -3,7 +3,7 @@ import '../models/Admins';
 
 const Admin = mongoose.model('Admin');
 
-export const getAdmins = async (req, res) => {
+const getAdmins = async (req, res) => {
   try {
     const foundAdmins = await Admin.find({ isActive: true });
     if (!foundAdmins) {
@@ -27,7 +27,7 @@ export const getAdmins = async (req, res) => {
   }
 };
 
-export const createAdmin = async (req, res) => {
+const createAdmin = async (req, res) => {
   try {
     const {
       firstName,
@@ -63,7 +63,7 @@ export const createAdmin = async (req, res) => {
   }
 };
 
-export const getAdminById = async (req, res) => {
+const getAdminById = async (req, res) => {
   const adminId = req.params.id;
   if (!mongoose.Types.ObjectId.isValid(adminId)) {
     return res.status(404).json({
@@ -96,7 +96,7 @@ export const getAdminById = async (req, res) => {
   return undefined;
 };
 
-export const updateAdmin = async (req, res) => {
+const updateAdmin = async (req, res) => {
   const adminId = req.params.id;
   if (!mongoose.Types.ObjectId.isValid(adminId)) {
     return res.status(404).json({
@@ -143,7 +143,7 @@ export const updateAdmin = async (req, res) => {
   return undefined;
 };
 
-export const deleteAdmin = async (req, res) => {
+const deleteAdmin = async (req, res) => {
   const adminId = req.params.id;
   if (!mongoose.Types.ObjectId.isValid(adminId)) {
     return res.status(404).json({
@@ -176,3 +176,13 @@ export const deleteAdmin = async (req, res) => {
   }
   return undefined;
 };
+
+const adminsControllers = {
+  getAdmins,
+  createAdmin,
+  getAdminById,
+  updateAdmin,
+  deleteAdmin,
+};
+
+export default adminsControllers;
