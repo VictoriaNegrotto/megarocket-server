@@ -8,7 +8,7 @@ const getClassById = async (req, res) => {
       return res.status(404).json({
         message: `Class with ID ${id} was not found`,
         data: undefined,
-        error: false,
+        error: true,
       });
     }
     return res.status(200).json({
@@ -34,7 +34,7 @@ const updateClass = async (req, res) => {
       return res.status(404).json({
         message: `Class with ID ${id} is inactive and cannot be updated`,
         data: undefined,
-        error: false,
+        error: true,
       });
     }
     const {
@@ -56,7 +56,7 @@ const updateClass = async (req, res) => {
       return res.status(404).json({
         message: `Class with ID ${id} was not found`,
         data: undefined,
-        error: false,
+        error: true,
       });
     }
 
@@ -84,7 +84,7 @@ const deleteClass = async (req, res) => {
       return res.status(404).json({
         message: `Class with ID ${id} was not found`,
         data: undefined,
-        error: false,
+        error: true,
       });
     }
 

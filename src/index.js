@@ -16,7 +16,7 @@ app.use('/api', router);
 const DB_URL = 'mongodb+srv://juvi-team:bPKvUATQZFxqh2A7@megarocket-databases.inpprte.mongodb.net/juvi-database';
 
 mongoose
-  .connect(DB_URL)
+  .connect(DB_URL, { maxPoolSize: process.env.MONGO_POOLSIZE || 1 })
   .then(() => console.log('DB Connected'))
   .catch((err) => console.log('Error: ', err));
 
