@@ -3,7 +3,7 @@ import Joi from 'joi';
 const validateUpdate = (req, res, next) => {
   const suscriptionUpdateValidation = Joi.object({
     class: Joi.string(),
-    members: Joi.string(),
+    members: Joi.array().items(Joi.string()),
     date: Joi.date(),
   });
 
@@ -17,8 +17,8 @@ const validateUpdate = (req, res, next) => {
 
 const validateCreate = (req, res, next) => {
   const subscriptionCreateValidation = Joi.object({
-    class: Joi.string().min(3).required(),
-    members: Joi.string().min(3).required(),
+    class: Joi.string().required(),
+    members: Joi.array().items(Joi.string()).required(),
     date: Joi.date().required(),
   });
 
