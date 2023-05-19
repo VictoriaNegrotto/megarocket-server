@@ -1,30 +1,26 @@
-// use "import" to import libraries
-import express from 'express';
-import cors from 'cors';
+import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import router from './routes';
+import app from './app';
 
-// use "require" to import JSON files
+dotenv.config();
 
-const app = express();
-const port = process.env.PORT || 4000;
-
-app.use(cors());
-app.use(express.json());
-app.use('/api', router);
-
-const DB_URL = 'mongodb+srv://juvi-team:bPKvUATQZFxqh2A7@megarocket-databases.inpprte.mongodb.net/juvi-database';
-
-mongoose
-  .connect(DB_URL, { maxPoolSize: process.env.MONGO_POOLSIZE || 1 })
-  .then(() => console.log('DB Connected'))
-  .catch((err) => console.log('Error: ', err));
+mongoose.connect(process.env.MONGO_DB_CONNECT_URL)
+ // eslint-disable-next-line no-console
+ .then(() => console.log('MongoDB connected'))
+ // eslint-disable-next-line no-console
+ .catch((e) => console.log(e));
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+ res.send('Hello World!');
 });
 
-app.listen(port, () => {
-  // eslint-disable-next-line no-console
-  console.log(`Example app listening on port ${port}`);
-});
+try {
+ app.listen(process.env.PORT, (err) => {
+   if (err) throw err;
+   // eslint-disable-next-line no-console
+   console.log(`server listening on port: ${process.env.PORT}`);
+ });
+} catch (err) {
+ // eslint-disable-next-line no-console
+ console.log('There was an error starting the server: ', err);
+}

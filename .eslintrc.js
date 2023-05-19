@@ -2,6 +2,7 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
+    'jest/globals': true,
   },
   extends: [
     'airbnb-base',
@@ -12,6 +13,7 @@ module.exports = {
   },
   rules: {
     'linebreak-style': ['error', process.platform === 'win32' ? 'windows' : 'unix'],
-    'no-param-reassign': 'off',
   },
+  plugins: ['jest'],
 };
+
