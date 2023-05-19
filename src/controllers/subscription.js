@@ -46,7 +46,9 @@ const updateSubscription = async (req, res) => {
 
 const getAllSubscriptions = async (req, res) => {
   try {
-    const subscriptionData = await Subscription.find({ isActive: true });
+    const subscriptionData = await Subscription.find({ isActive: true })
+      .populate('classes')
+      .populate('members');
     res.status(200).json({
       message: 'Subscription list found',
       data: subscriptionData,
@@ -96,7 +98,9 @@ const filterSubscriptionById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const subsToFilter = await Subscription.findOne({ $and: [{ _id: id }, { isActive: true }] });
+    const subsToFilter = await Subscription.findOne({ $and: [{ _id: id }, { isActive: true }] })
+      .populate('classes')
+      .populate('members');
 
     if (!subsToFilter) {
       res.status(404).json({

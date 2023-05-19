@@ -3,7 +3,9 @@ import Class from '../models/Class';
 const getClassById = async (req, res) => {
   try {
     const { id } = req.params;
-    const idClass = await Class.findOne({ $and: [{ _id: id }, { isActive: true }] });
+    const idClass = await Class.findOne({ $and: [{ _id: id }, { isActive: true }] })
+      .populate('trainer')
+      .populate('activity');
     if (!idClass) {
       return res.status(404).json({
         message: `Class with ID ${id} was not found`,
@@ -132,7 +134,9 @@ const createClass = async (req, res) => {
 
 const getAllClasses = async (req, res) => {
   try {
-    const classes = await Class.find({ isActive: true });
+    const classes = await Class.find({ isActive: true })
+      .populate('trainer')
+      .populate('activity');
     if (classes.length === 0) {
       return res.status(404).json({
         message: 'Classes not found',
