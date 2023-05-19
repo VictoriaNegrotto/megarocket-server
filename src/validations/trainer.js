@@ -25,8 +25,7 @@ const validateUpdate = (req, res, next) => {
 
 const trainerCreate = (req, res, next) => {
   const trainerValidation = Joi.object({
-    firstName: Joi.string().min(3).max(20).regex()
-      .required(),
+    firstName: Joi.string().min(3).max(20).required(),
     lastName: Joi.string().min(3).max(20).required(),
     dni: Joi.number().integer().min(1000000).max(99999999)
       .required(),
