@@ -6,7 +6,7 @@ const validateCreate = (req, res, next) => {
     lastName: Joi.string().min(3).max(20).required(),
     dni: Joi.number().min(1000000).max(99999999).integer()
       .required(),
-    phone: Joi.number().max(99999999).interger().required(),
+    phone: Joi.number().max(99999999).integer().required(),
     email: Joi.string().email().min(5).max(30)
       .lowercase()
       .required(),
