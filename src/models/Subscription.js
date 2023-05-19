@@ -5,10 +5,12 @@ const subscriptionSchema = new Schema({
   class: {
     type: mongoose.Types.ObjectId,
     require: true,
+    ref: 'Class',
   },
   members: {
     type: [mongoose.Types.ObjectId],
     require: true,
+    ref: 'Member',
   },
   date: {
     type: Date,

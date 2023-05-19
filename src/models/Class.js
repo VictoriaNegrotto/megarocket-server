@@ -16,10 +16,12 @@ const classSchema = new Schema({
   trainer: {
     type: mongoose.Types.ObjectId,
     required: true,
+    ref: 'Trainer',
   },
   activity: {
     type: mongoose.Types.ObjectId,
     required: true,
+    ref: 'Activity',
   },
   slots: {
     type: Number,
