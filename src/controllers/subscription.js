@@ -99,7 +99,7 @@ const filterSubscriptionById = async (req, res) => {
     const subsToFilter = await Subscription.findOne({ $and: [{ _id: id }, { isActive: true }] });
 
     if (!subsToFilter) {
-      res.status(404).json({
+      return res.status(404).json({
         message: `Subscription Id: ${id} was not found`,
         data: undefined,
         error: true,
