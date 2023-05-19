@@ -12,11 +12,11 @@ const updateSubscription = async (req, res) => {
         error: true,
       });
     }
-    const { classInSubscription, members, date } = req.body;
+    const { classes, members, date } = req.body;
     const suscriptionToUpdate = await Subscription.findByIdAndUpdate(
       id,
       {
-        class: classInSubscription,
+        classes,
         members,
         date,
       },
@@ -103,7 +103,7 @@ const filterSubscriptionById = async (req, res) => {
       .populate('members');
 
     if (!subsToFilter) {
-      res.status(404).json({
+      return res.status(404).json({
         message: `Subscription Id: ${id} was not found`,
         data: undefined,
         error: true,
@@ -125,10 +125,10 @@ const filterSubscriptionById = async (req, res) => {
 
 const createSubscription = async (req, res) => {
   try {
-    const { classInSubscription, members, date } = req.body;
+    const { classes, members, date } = req.body;
 
     const newSubscription = await Subscription.create({
-      class: classInSubscription,
+      classes,
       members,
       date,
     });
