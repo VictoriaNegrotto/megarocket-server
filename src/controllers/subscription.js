@@ -12,11 +12,11 @@ const updateSubscription = async (req, res) => {
         error: true,
       });
     }
-    const { classInSubscription, members, date } = req.body;
+    const { classes, members, date } = req.body;
     const suscriptionToUpdate = await Subscription.findByIdAndUpdate(
       id,
       {
-        class: classInSubscription,
+        classes,
         members,
         date,
       },
@@ -121,10 +121,10 @@ const filterSubscriptionById = async (req, res) => {
 
 const createSubscription = async (req, res) => {
   try {
-    const { classInSubscription, members, date } = req.body;
+    const { classes, members, date } = req.body;
 
     const newSubscription = await Subscription.create({
-      class: classInSubscription,
+      classes,
       members,
       date,
     });

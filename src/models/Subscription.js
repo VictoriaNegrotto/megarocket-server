@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 const subscriptionSchema = new Schema({
-  class: {
+  classes: {
     type: mongoose.Types.ObjectId,
     require: true,
   },
