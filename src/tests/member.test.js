@@ -31,6 +31,34 @@ describe('getMemberById /api/member/:id', () => {
   });
 });
 
+describe('filterMember /api/member/:id', () => {
+  test('should return status 200 and filtered members when members exist', async () => {
+    const memberName = 'Milagros';
+    const response = await request(app).get(`/api/member/filter/${memberName}`).send();
+    expect(response.status).toBe(200);
+    expect(response.body.error).toBe(false);
+    expect(response.body.data).toBeDefined();
+    expect(Array.isArray(response.body.data)).toBe(true);
+  });
+
+  test('should return status 404 when members do not exist', async () => {
+    const memberName = 'InvalidName';
+    const response = await request(app).get(`/api/member/filter/${memberName}`).send();
+    expect(response.status).toBe(404);
+    expect(response.body.error).toBe(true);
+    expect(response.body.data).toBeUndefined();
+  });
+
+  test('should return status 500 when an error occurs', async () => {
+    jest.spyOn(Member, 'find').mockRejectedValueOnce(new Error('database error'));
+    const memberName = 'Milagros';
+    const response = await request(app).get(`/api/member/filter/${memberName}`).send();
+    expect(response.status).toBe(500);
+    expect(response.body.error).toBe(true);
+    expect(response.body.data).toBeUndefined();
+  });
+});
+
 describe('updateMember /api/member/:id', () => {
   test('should return status 200 and updated member data when member exists', async () => {
     const updatedData = { firstName: 'Mili', lastName: 'Cerro' };
