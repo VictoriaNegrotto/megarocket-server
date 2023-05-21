@@ -27,4 +27,13 @@ describe('getAllActivity /api/activity', () => {
     expect(response.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
   });
+
+  test('should return error response status 500 when there is a database error', async () => {
+    jest.spyOn(Activity, 'find').mockRejectedValueOnce(new Error('Database error'));
+    const response = await request(app).get('/api/activity').send();
+    expect(response.status).toBe(500);
+    expect(response.error.message).toEqual('cannot GET /api/activity (500)');
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.data).toBeUndefined();
+  });
 });
