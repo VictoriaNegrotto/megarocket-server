@@ -3,6 +3,17 @@ import app from '../app';
 import Trainer from '../models/Trainer';
 import trainerSeed from '../seeds/trainer';
 
+const mockTrainer = {
+  firstName: 'Franco',
+  lastName: 'Lopez',
+  dni: 42653789,
+  phone: 34165383,
+  email: 'mauro@sdfs.com',
+  city: 'Firmat',
+  password: 'password545424',
+  salary: 10000000,
+};
+
 beforeAll(async () => {
   await Trainer.collection.insertMany(trainerSeed);
 });
@@ -42,5 +53,19 @@ describe('getAllTrainers /api/trainer', () => {
     expect(response.body.error).toBeTruthy();
     expect(response.body.message).toStrictEqual({});
     expect(response.body.data).toBeUndefined();
+  });
+});
+
+describe('createTrainer /api/trainer', () => {
+  test('Should return status 201 when create a new trainer', async () => {
+    const response = await request(app).post('/api/trainer').send(mockTrainer);
+    // eslint-disable-next-line no-underscore-dangle
+    const mockTrainerId = response.body.data._id;
+    expect(response.status).toBe(201);
+    expect(response.body.error).toBe(false);
+    expect(response.body.message).toBe(`Trainer ${mockTrainer.firstName} was created successfully!`);
+    expect(response.body.data).toStrictEqual({
+      ...mockTrainer, _id: mockTrainerId, isActive: true, __v: 0,
+    });
   });
 });
