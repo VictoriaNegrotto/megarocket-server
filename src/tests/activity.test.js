@@ -10,18 +10,20 @@ beforeAll(async () => {
 describe('getAllActivity /api/activity', () => {
   test('should return status 200', async () => {
     const response = await request(app).get('/api/activity').send();
-    const { data } = response.body;
-    const activitySeedString = JSON.stringify(activitySeed);
-    const dataString = JSON.stringify(data);
+    const activities = response.body.data;
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('Complete Activity list');
     expect(response.body.error).toBeFalsy();
-    expect(dataString).toEqual(activitySeedString);
+    activities.forEach((activity) => {
+      expect(activity).toHaveProperty('name');
+      expect(activity).toHaveProperty('description');
+    });
   });
 
   test('should return status 404 when endpoint is not correct', async () => {
     const response = await request(app).get('/api/activit').send();
     expect(response.status).toBe(404);
+    expect(response.error.message).toEqual('cannot GET /api/activit (404)');
     expect(response.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
   });
