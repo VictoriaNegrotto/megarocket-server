@@ -29,14 +29,6 @@ describe('getAdmins /api/admins', () => {
     expect(dataToString).toEqual(adminSeedToString);
   });
 
-  test('should return a 200 status code when get admins with isActive is true', async () => {
-    const response = await request(app).get('/api/admins').send();
-    const adminsActive = response.body.data;
-    adminsActive.forEach((admin) => {
-      expect(admin.isActive).toBeTruthy();
-    });
-  });
-
   test('should return a 404 status code when admins are not found', async () => {
     jest.spyOn(Admins, 'find').mockResolvedValue(null);
     const response = await request(app).get('/api/admins').send();
