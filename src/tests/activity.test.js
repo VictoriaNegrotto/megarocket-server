@@ -7,6 +7,11 @@ beforeAll(async () => {
   await Activity.collection.insertMany(activitySeed);
 });
 
+const activityData = {
+  name: 'Pilates',
+  description: 'A class to strengthen your posture muscles and improve your flexibility, stability and balance',
+};
+
 describe('getAllActivity /api/activity', () => {
   test('should return status 200', async () => {
     const response = await request(app).get('/api/activity').send();
@@ -35,5 +40,19 @@ describe('getAllActivity /api/activity', () => {
     expect(response.error.message).toEqual('cannot GET /api/activity (500)');
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
+  });
+});
+
+describe('createActivity /api/activity', () => {
+  test('should return status 201 when create an activity', async () => {
+    const response = await request(app).post('/api/activity').send(activityData);
+    // eslint-disable-next-line no-underscore-dangle
+    const activityDataId = response.body.data._id;
+    expect(response.status).toBe(201);
+    expect(response.body.message).toEqual(`Activity ${activityData.name} was created successfully!`);
+    expect(response.body.error).toBeFalsy();
+    expect(response.body.data).toStrictEqual({
+      ...activityData, _id: activityDataId, isActive: true, __v: 0,
+    });
   });
 });
