@@ -27,4 +27,10 @@ describe('getAllTrainers /api/trainer', () => {
     expect(response.error).toBe(false);
     expect(response.body.message).toBe('Complete Trainer list');
   });
+
+  test('Should return status 404 when route not exists', async () => {
+    const response = await request(app).post('/api/trainers').send();
+    expect(response.status).toBe(404);
+    expect(response.body).toStrictEqual({});
+  });
 });
