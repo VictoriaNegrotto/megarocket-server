@@ -74,4 +74,14 @@ describe('createTrainer /api/trainer', () => {
     expect(response.status).toBe(404);
     expect(response.body).toStrictEqual({});
   });
+
+  test('Should return status 500', async () => {
+    jest.spyOn(Trainer, 'create').mockRejectedValueOnce(new Error('Simulate Error'));
+    const response = await request(app).post('/api/trainer').send(mockTrainer);
+    expect(response.error.message).toBe('cannot POST /api/trainer (500)');
+    expect(response.status).toBe(500);
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.message).toStrictEqual({});
+    expect(response.body.data).toBeUndefined();
+  });
 });
