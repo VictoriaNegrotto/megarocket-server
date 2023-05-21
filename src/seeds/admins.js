@@ -34,4 +34,15 @@ export default [
     password: 'Ads123!',
     isActive: true,
   },
+  {
+    _id: new mongoose.Types.ObjectId('6462b798eb92c75e0c1040a4'),
+    firstName: 'Julieta',
+    lastName: 'Cobos',
+    dni: 12345678,
+    phone: 12345679890,
+    email: 'juli@gmail.com',
+    city: 'Rosario',
+    password: 'Ads123!',
+    isActive: false,
+  },
 ];
