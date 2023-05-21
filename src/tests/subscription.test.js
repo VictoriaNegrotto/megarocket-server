@@ -17,13 +17,26 @@ describe('getAllSubscriptions /api/subscriptions', () => {
   test('should return status 200', async () => {
     const response = await request(app).get('/api/subscriptions').send();
     expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Subscription list found');
     expect(response.error).toBeFalsy();
+    expect(response.body.data).toBeDefined();
   });
 
   test('should return status 404', async () => {
     const response = await request(app).get('/api/subscription').send();
     expect(response.status).toBe(404);
+    expect(response.body.message).toBeUndefined();
     expect(response.error).toBeTruthy();
+    expect(response.data).toBeUndefined();
+  });
+
+  test('should return status 500', async () => {
+    jest.spyOn(Subscription, 'find').mockImplementation(new Error('Error'));
+    const response = await request(app).get('/api/subscriptions').send();
+    expect(response.status).toBe(500);
+    expect(response.error.message).toEqual('cannot GET /api/subscriptions (500)');
+    expect(response.error).toBeTruthy();
+    expect(response.body.data).toBeUndefined();
   });
 });
 
