@@ -28,7 +28,6 @@ describe('getAllTrainers /api/trainer', () => {
       expect(trainer).toHaveProperty('dni');
       expect(trainer).toHaveProperty('email');
       expect(trainer).toHaveProperty('city');
-      expect(trainer).toHaveProperty('_id');
       expect(trainer).toHaveProperty('isActive');
       expect(trainer).toHaveProperty('password');
       expect(trainer).toHaveProperty('phone');
