@@ -55,4 +55,12 @@ describe('createActivity /api/activity', () => {
       ...activityData, _id: activityDataId, isActive: true, __v: 0,
     });
   });
+
+  test('should return status 404 when endpoint is not correct', async () => {
+    const response = await request(app).post('/api/activit').send(activityData);
+    expect(response.status).toBe(404);
+    expect(response.error.message).toEqual('cannot POST /api/activit (404)');
+    expect(response.error).toBeTruthy();
+    expect(response.body.data).toBeUndefined();
+  });
 });
