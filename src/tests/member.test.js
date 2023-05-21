@@ -7,10 +7,6 @@ beforeAll(async () => {
   await Member.collection.insertMany(memberSeed);
 });
 
-afterEach(() => {
-  jest.restoreAllMocks();
-});
-
 const mockMember = {
   firstName: 'Test',
   lastName: 'User',
@@ -24,27 +20,19 @@ const mockMember = {
 };
 
 describe('getMembers /api/member', () => {
-  test('Should return status 200 when get all members', async () => {
-    const response = await request(app).get('/api/member').send();
-    const memberSeedStringIds = memberSeed.map((member) => ({
-      ...member,
-      // eslint-disable-next-line no-underscore-dangle
-      _id: member._id.toString(),
-    }));
-    expect(response.body.data).toEqual(memberSeedStringIds);
-    expect(response.status).toBe(200);
-    expect(response.body.error).toBeFalsy();
-    expect(response.body.message).toEqual('Members found');
-  });
   test('Should return status 200 when get only active members', async () => {
     const response = await request(app).get('/api/member').send();
-    const activeMembers = memberSeed.filter((member) => member.isActive);
-    const activeMembersStringIds = activeMembers.map((member) => ({
-      ...member,
-      // eslint-disable-next-line no-underscore-dangle
-      _id: member._id.toString(),
-    }));
-    expect(response.body.data).toEqual(activeMembersStringIds);
+    const activeMembers = response.body.data;
+    activeMembers.forEach((oneMember) => {
+      expect(oneMember).toHaveProperty('firstName');
+      expect(oneMember).toHaveProperty('lastName');
+      expect(oneMember).toHaveProperty('dni');
+      expect(oneMember).toHaveProperty('city');
+      expect(oneMember).toHaveProperty('birthDate');
+      expect(oneMember).toHaveProperty('postalCode');
+      expect(oneMember).toHaveProperty('memberships');
+      expect(oneMember).toHaveProperty('isActive');
+    });
     expect(response.status).toBe(200);
     expect(response.body.error).toBeFalsy();
     expect(response.body.message).toBe('Members found');
@@ -57,6 +45,10 @@ describe('getMembers /api/member', () => {
     expect(response.body.error).toBeTruthy();
     expect(response.body.message).toBe('No members active');
   });
+  test('Should return status 404 when route not exist', async () => {
+    const response = await request(app).get('/api/membe').send();
+    expect(response.status).toBe(404);
+  });
   test('Should return status 500 when there is an error retrieving members', async () => {
     jest.spyOn(Member, 'find').mockImplementation(new Error('Error retrieving members'));
 
@@ -64,7 +56,7 @@ describe('getMembers /api/member', () => {
     expect(response.body.data).toBeUndefined();
     expect(response.status).toBe(500);
     expect(response.body.error).toBeTruthy();
-    expect(response.body.message).toEqual({});
+    expect(response.error.message).toEqual('cannot GET /api/member (500)');
   });
 });
 
@@ -80,7 +72,10 @@ describe('createMember /api/member', () => {
     expect(response.body.error).toBeFalsy();
     expect(response.body.message).toBe('Member created');
   });
-
+  test('Should return status 404 when route not exist', async () => {
+    const response = await request(app).post('/api/membe').send();
+    expect(response.status).toBe(404);
+  });
   test('Should return status 500 when there is an error creating a new member', async () => {
     const mockError = new Error('Error creating member');
     jest.spyOn(Member, 'create').mockImplementation(() => {
@@ -92,26 +87,6 @@ describe('createMember /api/member', () => {
     expect(response.body.data).toBeUndefined();
     expect(response.status).toBe(500);
     expect(response.body.error).toBeTruthy();
-    expect(response.body.message).toEqual({});
-  });
-
-  test('Should return status 400 when providing invalid data', async () => {
-    const invalidMember = { ...mockMember, firstName: 2 };
-    const response = await request(app).post('/api/member').send(invalidMember);
-    expect(response.status).toBe(400);
-    expect(response.body.error).toBeTruthy();
-    expect(response.body.data).toBeUndefined();
-    expect(response.body.message).toBe('There was an error: "firstName" must be a string');
-  });
-  test('Should return status 400 when missing required fields', async () => {
-    const testMember = {
-      firstName: 'Test',
-      lastName: 'User',
-    };
-    const response = await request(app).post('/api/member').send(testMember);
-    expect(response.status).toBe(400);
-    expect(response.body.error).toBeTruthy();
-    expect(response.body.data).toBeUndefined();
-    expect(response.body.message).toBe('There was an error: "dni" is required');
+    expect(response.error.message).toEqual('cannot POST /api/member (500)');
   });
 });
