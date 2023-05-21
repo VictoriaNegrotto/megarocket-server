@@ -32,6 +32,6 @@ export default [
     email: 'glevide@gmail.com',
     city: 'Rosario',
     password: 'glevide$test%admin',
-    isActive: true,
+    isActive: false,
   },
 ];
