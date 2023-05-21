@@ -13,7 +13,7 @@ const activityData = {
 };
 
 describe('getAllActivity /api/activity', () => {
-  test('should return status 200', async () => {
+  test('should return status 200 when request all activities list', async () => {
     const response = await request(app).get('/api/activity').send();
     const activities = response.body.data;
     expect(response.status).toBe(200);
@@ -34,7 +34,7 @@ describe('getAllActivity /api/activity', () => {
   });
 
   test('should return error response status 500 when there is a database error', async () => {
-    jest.spyOn(Activity, 'find').mockRejectedValueOnce(new Error('Database error'));
+    jest.spyOn(Activity, 'find').mockRejectedValueOnce();
     const response = await request(app).get('/api/activity').send();
     expect(response.status).toBe(500);
     expect(response.error.message).toEqual('cannot GET /api/activity (500)');
@@ -61,6 +61,15 @@ describe('createActivity /api/activity', () => {
     expect(response.status).toBe(404);
     expect(response.error.message).toEqual('cannot POST /api/activit (404)');
     expect(response.error).toBeTruthy();
+    expect(response.body.data).toBeUndefined();
+  });
+
+  test('should return error response status 500 when there is a database error', async () => {
+    jest.spyOn(Activity, 'create').mockRejectedValueOnce();
+    const response = await request(app).post('/api/activity').send(activityData);
+    expect(response.status).toBe(500);
+    expect(response.error.message).toEqual('cannot POST /api/activity (500)');
+    expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
   });
 });
