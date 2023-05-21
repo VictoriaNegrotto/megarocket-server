@@ -13,6 +13,7 @@ describe('getMemberById /api/member/:id', () => {
     expect(response.status).toBe(200);
     expect(response.body.error).toBe(false);
     expect(response.body.data).toBeDefined();
+    expect(response.body.message).toContain('Member found!');
   });
 
   test('should return status 404 when member does not exist', async () => {
@@ -20,6 +21,7 @@ describe('getMemberById /api/member/:id', () => {
     expect(response.status).toBe(404);
     expect(response.body.error).toBe(true);
     expect(response.body.data).toBeUndefined();
+    expect(response.body.message).toBe('Member not found!. Id not exists');
   });
 
   test('should return status 500 when an error occurs', async () => {
@@ -28,6 +30,7 @@ describe('getMemberById /api/member/:id', () => {
     expect(response.status).toBe(500);
     expect(response.body.error).toBe(true);
     expect(response.body.data).toBeUndefined();
+    expect(response.body.message).toContain('An error ocurred');
   });
 });
 
@@ -38,7 +41,7 @@ describe('filterMember /api/member/:id', () => {
     expect(response.status).toBe(200);
     expect(response.body.error).toBe(false);
     expect(response.body.data).toBeDefined();
-    expect(Array.isArray(response.body.data)).toBe(true);
+    expect(response.body.message).toEqual('Member found!');
   });
 
   test('should return status 404 when members do not exist', async () => {
@@ -47,6 +50,7 @@ describe('filterMember /api/member/:id', () => {
     expect(response.status).toBe(404);
     expect(response.body.error).toBe(true);
     expect(response.body.data).toBeUndefined();
+    expect(response.body.message).toEqual('Member not found!. Name not exists');
   });
 
   test('should return status 500 when an error occurs', async () => {
@@ -56,6 +60,7 @@ describe('filterMember /api/member/:id', () => {
     expect(response.status).toBe(500);
     expect(response.body.error).toBe(true);
     expect(response.body.data).toBeUndefined();
+    expect(response.body.message).toEqual('An error ocurred');
   });
 });
 
@@ -68,6 +73,7 @@ describe('updateMember /api/member/:id', () => {
     expect(response.body.data).toBeDefined();
     expect(response.body.data.firstName).toBe(updatedData.firstName);
     expect(response.body.data.lastName).toBe(updatedData.lastName);
+    expect(response.body.message).toEqual('Member updated!');
   });
 
   test('should return status 404 when member does not exist', async () => {
@@ -76,6 +82,7 @@ describe('updateMember /api/member/:id', () => {
     expect(response.status).toBe(404);
     expect(response.body.error).toBe(true);
     expect(response.body.data).toBeUndefined();
+    expect(response.body.message).toEqual('Member not found!. Id not exists');
   });
 
   test('should return status 500 when an error occurs', async () => {
@@ -85,6 +92,7 @@ describe('updateMember /api/member/:id', () => {
     expect(response.status).toBe(500);
     expect(response.body.error).toBe(true);
     expect(response.body.data).toBeUndefined();
+    expect(response.body.message).toContain('An error ocurred');
   });
 });
 
@@ -101,7 +109,7 @@ describe('deleteMember /api/member/:id', () => {
     const response = await request(app).delete('/api/member/646015ffa877f6e5fb0e5de3').send();
     expect(response.status).toBe(404);
     expect(response.body.error).toBe(true);
-    expect(response.body.message).toBe('Member not found!');
+    expect(response.body.message).toEqual('Member not found!');
     expect(response.body.data).toBeUndefined();
   });
 
