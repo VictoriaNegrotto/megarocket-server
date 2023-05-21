@@ -35,6 +35,7 @@ describe('getAdmins /api/admins', () => {
     expect(response.status).toBe(404);
     expect(response.body.error).toBeTruthy();
     expect(response.body.message).toBe('Admin not found');
+    expect(response.body.data).toBeUndefined();
   });
 
   test('should return a 500 status code when gets a database error', async () => {
