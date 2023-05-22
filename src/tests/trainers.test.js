@@ -95,18 +95,17 @@ describe('updateTrainer /api/trainer/:id', () => {
     expect(response.body.data).toBeDefined();
   });
   test('should return status 404 when endpoint is not correct', async () => {
-    const response = await request(app).put('/api/trainers').send();
+    const trainerId = '6460077410adc8f3ed4e623c';
+    const response = await request(app).put(`/api/trainers/${trainerId}`).send();
     expect(response.status).toBe(404);
-    expect(response.error.message).toEqual('cannot PUT /api/trainers (404)');
+    expect(response.error.message).toEqual(`cannot PUT /api/trainers/${trainerId} (404)`);
     expect(response.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
   });
 
   test('should return status 404 for non-existent or inactive trainer', async () => {
     const nonExistentId = '6460077410adc8f3ed4e6233';
-
     const response = await request(app).put(`/api/trainer/${nonExistentId}`).send();
-
     expect(response.status).toBe(404);
     expect(response.body.message).toBe(`Trainer with ID: ${nonExistentId} was not found`);
     expect(response.body.error).toBeTruthy();
@@ -145,9 +144,10 @@ describe('deleteTrainer /api/trainer/:id', () => {
   });
 
   test('should return status 404 when endpoint is not correct', async () => {
-    const response = await request(app).delete('/api/trainers').send();
+    const trainerId = '6460077410adc8f3ed4e623c';
+    const response = await request(app).delete(`/api/trainers/${trainerId}`).send();
     expect(response.status).toBe(404);
-    expect(response.error.message).toEqual('cannot DELETE /api/trainers (404)');
+    expect(response.error.message).toEqual(`cannot DELETE /api/trainers/${trainerId} (404)`);
     expect(response.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
   });
@@ -160,5 +160,15 @@ describe('deleteTrainer /api/trainer/:id', () => {
     expect(response.error.message).toEqual(`cannot DELETE /api/trainer/${trainerId} (500)`);
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
+  });
+});
+
+describe('getTrainersById /api/trainer/:id', () => {
+  test('should return status 200 when a trainer is found', async () => {
+    const trainerId = '6460077410adc8f3ed4e623c';
+    const response = await request(app).get(`/api/trainer/${trainerId}`).send();
+    expect(response.status).toBe(200);
+    expect(response.body.error).toBeFalsy();
+    expect(response.body.data).toBeDefined();
   });
 });
