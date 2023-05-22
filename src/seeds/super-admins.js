@@ -19,12 +19,29 @@ export default [
     email: 'glevi@gmail.com',
     password: 'delgado123',
     isActive: true,
-    __v: 0,
   },
   {
     _id: new mongoose.Types.ObjectId('6461553b0aa90c4527db6f0c'),
     email: 'francoa@gmail.com',
     password: 'franco123',
     isActive: false,
+  },
+  {
+    _id: new mongoose.Types.ObjectId('646154d30aa90c4527db6f06'),
+    email: 'superAdmin@gmail.com',
+    password: 'abc123456',
+    isActive: 'true',
+  },
+  {
+    _id: new mongoose.Types.ObjectId('646154d30aa90c4527db6f07'),
+    email: 'secondSuperAdmin@gmail.com',
+    password: 'qwert987654',
+    isActive: 'true',
+  },
+  {
+    _id: new mongoose.Types.ObjectId('646154d30aa90c4527db6f08'),
+    email: 'thirdSuperAdmin@gmail.com',
+    password: 'zxc123321',
+    isActive: 'false',
   },
 ];
