@@ -84,3 +84,119 @@ describe('createTrainer /api/trainer', () => {
     expect(response.body.data).toBeUndefined();
   });
 });
+
+describe('updateTrainer /api/trainer/:id', () => {
+  test('should return status 200 when a trainer can be successfully updated', async () => {
+    const trainerId = '6460077410adc8f3ed4e623b';
+    const trainerUpdateData = { firstName: 'Mauro', lastName: 'Caffesse', email: 'mauro.caffesse@gmail.com' };
+    const response = await request(app).put(`/api/trainer/${trainerId}`).send(trainerUpdateData);
+    expect(response.status).toBe(200);
+    expect(response.body.error).toBeFalsy();
+    expect(response.body.data).toBeDefined();
+  });
+  test('should return status 404 when endpoint is not correct', async () => {
+    const trainerId = '6460077410adc8f3ed4e623c';
+    const response = await request(app).put(`/api/trainers/${trainerId}`).send();
+    expect(response.status).toBe(404);
+    expect(response.error.message).toEqual(`cannot PUT /api/trainers/${trainerId} (404)`);
+    expect(response.error).toBeTruthy();
+    expect(response.body.data).toBeUndefined();
+  });
+
+  test('should return status 404 for non-existent or inactive trainer', async () => {
+    const nonExistentId = '6460077410adc8f3ed4e6233';
+    const response = await request(app).put(`/api/trainer/${nonExistentId}`).send();
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe(`Trainer with ID: ${nonExistentId} was not found`);
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.data).toBeUndefined();
+  });
+
+  test('should return status 500 for database error', async () => {
+    jest.spyOn(Trainer, 'findByIdAndUpdate').mockRejectedValueOnce();
+    const trainerId = '6460077410adc8f3ed4e623b';
+    const updatedTrainer = { firstName: 'Mauro', email: 'mauro.caffesse@gmail.com' };
+    const response = await request(app).put(`/api/trainer/${trainerId}`).send(updatedTrainer);
+    expect(response.status).toBe(500);
+    expect(response.error.message).toEqual(`cannot PUT /api/trainer/${trainerId} (500)`);
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.data).toBeUndefined();
+  });
+});
+
+describe('deleteTrainer /api/trainer/:id', () => {
+  test('should return status 200 when a trainer is successfully deleted', async () => {
+    const trainerId = '6460077410adc8f3ed4e623b';
+    const response = await request(app).delete(`/api/trainer/${trainerId}`).send();
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Trainer deleted');
+    expect(response.body.error).toBeFalsy();
+    expect(response.body.data).toBeDefined();
+  });
+
+  test('should return status 404 when trying to delete an inactive trainer', async () => {
+    const inactiveTrainerId = '6460077410adc8f3ed4e623f';
+    const response = await request(app).delete(`/api/trainer/${inactiveTrainerId}`).send();
+    expect(response.status).toBe(404);
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.message).toBe(`Trainer with ID: ${inactiveTrainerId} was not found`);
+    expect(response.body.data).toBeUndefined();
+  });
+
+  test('should return status 404 when endpoint is not correct', async () => {
+    const trainerId = '6460077410adc8f3ed4e623c';
+    const response = await request(app).delete(`/api/trainers/${trainerId}`).send();
+    expect(response.status).toBe(404);
+    expect(response.error.message).toEqual(`cannot DELETE /api/trainers/${trainerId} (404)`);
+    expect(response.error).toBeTruthy();
+    expect(response.body.data).toBeUndefined();
+  });
+
+  test('should return status 500 when there is a database error', async () => {
+    const trainerId = '6460077410adc8f3ed4e623a';
+    jest.spyOn(Trainer, 'findById').mockRejectedValueOnce();
+    const response = await request(app).delete(`/api/trainer/${trainerId}`).send();
+    expect(response.status).toBe(500);
+    expect(response.error.message).toEqual(`cannot DELETE /api/trainer/${trainerId} (500)`);
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.data).toBeUndefined();
+  });
+});
+
+describe('getTrainersById /api/trainer/:id', () => {
+  test('should return status 200 when a trainer is found', async () => {
+    const trainerId = '6460077410adc8f3ed4e623c';
+    const response = await request(app).get(`/api/trainer/${trainerId}`).send();
+    expect(response.status).toBe(200);
+    expect(response.body.error).toBeFalsy();
+    expect(response.body.data).toBeDefined();
+  });
+
+  test('should return status 404 when is an inactive trainer ', async () => {
+    const inactiveTrainerId = '6460077410adc8f3ed4e623f';
+    const response = await request(app).get(`/api/trainer/${inactiveTrainerId}`).send();
+    expect(response.status).toBe(404);
+    expect(response.error.message).toEqual(`cannot GET /api/trainer/${inactiveTrainerId} (404)`);
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.data).toBeUndefined();
+  });
+
+  test('should return status 404 when endpoint is not correct', async () => {
+    const trainerId = '6460077410adc8f3ed4e623c';
+    const response = await request(app).get(`/api/trainers/${trainerId}`).send();
+    expect(response.status).toBe(404);
+    expect(response.error.message).toEqual(`cannot GET /api/trainers/${trainerId} (404)`);
+    expect(response.error).toBeTruthy();
+    expect(response.body.data).toBeUndefined();
+  });
+
+  test('should return status 500 when there is an error getting an trainer', async () => {
+    const trainerId = '6460077410adc8f3ed4e623c';
+    jest.spyOn(Trainer, 'findOne').mockRejectedValueOnce();
+    const response = await request(app).get(`/api/trainer/${trainerId}`).send();
+    expect(response.status).toBe(500);
+    expect(response.error.message).toEqual(`cannot GET /api/trainer/${trainerId} (500)`);
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.data).toBeUndefined();
+  });
+});
