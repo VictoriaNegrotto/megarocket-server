@@ -151,4 +151,14 @@ describe('deleteTrainer /api/trainer/:id', () => {
     expect(response.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
   });
+
+  test('should return status 500 when there is a database error', async () => {
+    const trainerId = '6460077410adc8f3ed4e623a';
+    jest.spyOn(Trainer, 'findById').mockRejectedValueOnce();
+    const response = await request(app).delete(`/api/trainer/${trainerId}`).send();
+    expect(response.status).toBe(500);
+    expect(response.error.message).toEqual(`cannot DELETE /api/trainer/${trainerId} (500)`);
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.data).toBeUndefined();
+  });
 });
