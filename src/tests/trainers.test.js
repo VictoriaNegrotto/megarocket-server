@@ -84,3 +84,14 @@ describe('createTrainer /api/trainer', () => {
     expect(response.body.data).toBeUndefined();
   });
 });
+
+describe('updateTrainer /api/trainer/:id', () => {
+  test('should return status 200 when a trainer can be successfully updated', async () => {
+    const trainerId = '6460077410adc8f3ed4e623b';
+    const trainerUpdateData = { firstName: 'Mauro', lastName: 'Caffesse', email: 'mauro.caffesse@gmail.com' };
+    const response = await request(app).put(`/api/trainer/${trainerId}`).send(trainerUpdateData);
+    expect(response.status).toBe(200);
+    expect(response.body.error).toBeFalsy();
+    expect(response.body.data).toBeDefined();
+  });
+});
