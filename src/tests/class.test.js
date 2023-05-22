@@ -6,6 +6,7 @@ import classSeed from '../seeds/class';
 beforeAll(async () => {
   await Class.collection.insertMany(classSeed);
 });
+afterEach(() => { jest.restoreAllMocks(); });
 
 describe('getClassById /api/class/:id', () => {
   test('should return status 200 when id exists', async () => {
@@ -32,13 +33,54 @@ describe('getClassById /api/class/:id', () => {
     expect(response.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
   });
-  test('should return status 500 when there is a database error', async () => {
-    const id = '646004aff33f9c83d28ed954';
-    jest.spyOn(Class, 'findOne').mockImplementation();
+  test('should return status 500 when there is an error updating a class', async () => {
+    const id = '646004aff33f9c83d28ed952';
+    jest.spyOn(Class, 'findOne').mockImplementation(() => {
+      throw new Error('Simulate Error');
+    });
     const response = await request(app).get(`/api/class/${id}`).send();
     expect(response.status).toBe(500);
-    expect(response.error.message).toEqual(`cannot GET /api/class/${id} (500)`);
-    expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
+    expect(response.body.error).toBeTruthy();
+    expect(response.error.message).toEqual(`cannot GET /api/class/${id} (500)`);
+  });
+});
+describe('updateClass /api/class/:id', () => {
+  test('should return status 200 when an class can be successfully updated', async () => {
+    const id = '646004aff33f9c83d28ed954';
+    const updateData = { day: 'Monday', slots: 20 };
+    const response = await request(app).put(`/api/class/${id}`).send(updateData);
+    expect(response.status).toBe(200);
+    expect(response.body.data).toBeDefined();
+    expect(response.body.error).toBeFalsy();
+    expect(response.body.message).toBe(`Class with ID ${id} updated!`);
+  });
+  test('should return status 404 when class id is invalid', async () => {
+    const invalidID = '646004aff33f9c83d28ed950';
+    const updateData = { day: 'Monday', slots: 20 };
+    const response = await request(app).put(`/api/class/${invalidID}`).send(updateData);
+    expect(response.status).toBe(500);
+    expect(response.body.data).toBeUndefined();
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.message).toBeDefined();
+  });
+  test('should return status 404 when class is inactive ', async () => {
+    const inactiveID = '646004aff33f9c83d28ed959';
+    const updateData = { day: 'Monday', slots: 20 };
+    const response = await request(app).put(`/api/class/${inactiveID}`).send(updateData);
+    expect(response.status).toBe(404);
+    expect(response.body.data).toBeUndefined();
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.message).toBe(`Class with ID ${inactiveID} is inactive and cannot be updated`);
+  });
+  test('should return status 500 when there is an error updating a class', async () => {
+    jest.spyOn(Class, 'findOneAndUpdate').mockRejectedValueOnce(new Error('Database error'));
+    const id = '646004aff33f9c83d28ed954';
+    const updateData = { day: 'Monday', slots: 20 };
+    const response = await request(app).put(`/api/class/${id}`).send(updateData);
+    expect(response.status).toBe(500);
+    expect(response.body.data).toBeUndefined();
+    expect(response.body.error).toBeTruthy();
+    expect(response.error.message).toEqual(`cannot PUT /api/class/${id} (500)`);
   });
 });
