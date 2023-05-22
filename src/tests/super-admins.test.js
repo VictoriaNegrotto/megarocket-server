@@ -49,3 +49,28 @@ describe('updateSuperAdmin/api/superadmin/:id', () => {
     expect(response.body.error).toBeTruthy();
   });
 });
+
+describe('getSuperSuperAdminById/api/superadmins/:id', () => {
+  test('should return status 200 when a super admin is found', async () => {
+    const response = await request(app).get(`/api/superadmin/${superAdminIdIsActiveTrue}`).send();
+    expect(response.status).toBe(200);
+    expect(response.body.error).toBeFalsy();
+    expect(response.body.message).toBe('Super Admin found!');
+  });
+
+  test('should return status 404 when is an invalid super admin id', async () => {
+    const response = await request(app).get(`/api/superadmin/${superAdminIdInvalid}`).send();
+    expect(response.status).toBe(404);
+    expect(response.body.data).toBeUndefined();
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.message).toBe('Super Admin not found!');
+  });
+
+  test('should return status 500 when there is an error getting a super admin by id', async () => {
+    jest.spyOn(Superadmin, 'findOne').mockRejectedValueOnce(new Error('Database error'));
+    const response = await request(app).get(`/api/superadmin/${superAdminIdIsActiveTrue}`).send();
+    expect(response.status).toBe(500);
+    expect(response.body.data).toBeUndefined();
+    expect(response.body.error).toBeTruthy();
+  });
+});
