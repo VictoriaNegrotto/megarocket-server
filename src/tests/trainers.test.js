@@ -171,4 +171,22 @@ describe('getTrainersById /api/trainer/:id', () => {
     expect(response.body.error).toBeFalsy();
     expect(response.body.data).toBeDefined();
   });
+
+  test('should return status 404 when is an inactive trainer ', async () => {
+    const inactiveTrainerId = '6460077410adc8f3ed4e623f';
+    const response = await request(app).get(`/api/trainer/${inactiveTrainerId}`).send();
+    expect(response.status).toBe(404);
+    expect(response.error.message).toEqual(`cannot GET /api/trainer/${inactiveTrainerId} (404)`);
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.data).toBeUndefined();
+  });
+
+  test('should return status 404 when endpoint is not correct', async () => {
+    const trainerId = '6460077410adc8f3ed4e623c';
+    const response = await request(app).get(`/api/trainers/${trainerId}`).send();
+    expect(response.status).toBe(404);
+    expect(response.error.message).toEqual(`cannot GET /api/trainers/${trainerId} (404)`);
+    expect(response.error).toBeTruthy();
+    expect(response.body.data).toBeUndefined();
+  });
 });
