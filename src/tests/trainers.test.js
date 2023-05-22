@@ -134,4 +134,21 @@ describe('deleteTrainer /api/trainer/:id', () => {
     expect(response.body.error).toBeFalsy();
     expect(response.body.data).toBeDefined();
   });
+
+  test('should return status 404 when trying to delete an inactive trainer', async () => {
+    const inactiveTrainerId = '6460077410adc8f3ed4e623f';
+    const response = await request(app).delete(`/api/trainer/${inactiveTrainerId}`).send();
+    expect(response.status).toBe(404);
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.message).toBe(`Trainer with ID: ${inactiveTrainerId} was not found`);
+    expect(response.body.data).toBeUndefined();
+  });
+
+  test('should return status 404 when endpoint is not correct', async () => {
+    const response = await request(app).delete('/api/trainers').send();
+    expect(response.status).toBe(404);
+    expect(response.error.message).toEqual('cannot DELETE /api/trainers (404)');
+    expect(response.error).toBeTruthy();
+    expect(response.body.data).toBeUndefined();
+  });
 });
