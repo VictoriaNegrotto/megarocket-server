@@ -20,7 +20,7 @@ beforeAll(async () => {
 });
 
 describe('updateSuperAdmin/api/superadmin/:id', () => {
-  test('return status 200 when a super admin can be successfully updated', async () => {
+  test('return status 200 when a super admin can be successfully updated  by id', async () => {
     const response = await request(app).put(`/api/superadmin/${superAdminIdIsActiveTrue}`).send(mockSuperAdmin);
     expect(response.status).toBe(200);
     expect(response.body.data).toBeDefined();
@@ -44,7 +44,7 @@ describe('updateSuperAdmin/api/superadmin/:id', () => {
     expect(response.body.message).toBe('SuperAdmin not found');
   });
 
-  test('should return status 500 when there is an error updating a super admin id', async () => {
+  test('should return status 500 when there is an error updating a super admin by id', async () => {
     jest.spyOn(Superadmin, 'findOneAndUpdate').mockRejectedValueOnce(new Error('Database error'));
     const response = await request(app).put(`/api/superadmin/${superAdminIdIsActiveTrue}`).send(mockSuperAdmin);
     expect(response.status).toBe(500);
@@ -54,14 +54,14 @@ describe('updateSuperAdmin/api/superadmin/:id', () => {
 });
 
 describe('getSuperSuperAdminById/api/superadmins/:id', () => {
-  test('should return status 200 when a super admin is found', async () => {
+  test('should return status 200 when a super admin is found by id', async () => {
     const response = await request(app).get(`/api/superadmin/${superAdminIdIsActiveTrue}`).send();
     expect(response.status).toBe(200);
     expect(response.body.error).toBeFalsy();
     expect(response.body.message).toBe('Super Admin found!');
   });
 
-  test('should return status 404 when is an invalid super admin id', async () => {
+  test('should return status 404 when there is an invalid super admin id', async () => {
     const response = await request(app).get(`/api/superadmin/${superAdminIdInvalid}`).send();
     expect(response.status).toBe(404);
     expect(response.body.data).toBeUndefined();
@@ -79,7 +79,7 @@ describe('getSuperSuperAdminById/api/superadmins/:id', () => {
 });
 
 describe('getSuperSuperAdminByEmail/api/superadmins/:email', () => {
-  test('should return status 200 when a super admin is found', async () => {
+  test('should return status 200 when a super admin is found by email', async () => {
     const response = await request(app).get(`/api/superadmin/filter/${superAdminValidEmail}`).send();
     expect(response.status).toBe(200);
     expect(response.body.error).toBeFalsy();
@@ -97,6 +97,39 @@ describe('getSuperSuperAdminByEmail/api/superadmins/:email', () => {
   test('should return status 500 when there is an error getting a super admin by email', async () => {
     jest.spyOn(Superadmin, 'findOne').mockRejectedValueOnce(new Error('Database error'));
     const response = await request(app).get(`/api/superadmin/filter${superAdminValidEmail}`).send();
+    expect(response.status).toBe(500);
+    expect(response.body.data).toBeUndefined();
+    expect(response.body.error).toBeTruthy();
+  });
+});
+
+describe('deleteSuperAdmin/api/superadmin/:id', () => {
+  test('should return status 200 when a super admin is deleted by id', async () => {
+    const response = await request(app).delete(`/api/superadmin/${superAdminIdIsActiveTrue}`).send();
+    expect(response.status).toBe(200);
+    expect(response.body.error).toBeFalsy();
+    expect(response.body.message).toBe('Super Admin deleted!');
+  });
+
+  test('should return status 404 when can not delete an invalid super admin by id', async () => {
+    const response = await request(app).delete(`/api/superadmin/${superAdminIdInvalid}`).send();
+    expect(response.status).toBe(404);
+    expect(response.body.data).toBeUndefined();
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.message).toBe('Super Admin not found!');
+  });
+
+  test('should return status 404 when can not delete an inactive super admin by id', async () => {
+    const response = await request(app).delete(`/api/superadmin/${superAdminIdIsActiveFalse}`).send();
+    expect(response.status).toBe(404);
+    expect(response.body.data).toBeUndefined();
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.message).toBe('Super Admin not found!');
+  });
+
+  test('should return status 500 when there is an error deleting a super admin by id', async () => {
+    jest.spyOn(Superadmin, 'findOne').mockRejectedValueOnce(new Error('Database error'));
+    const response = await request(app).delete(`/api/superadmin/${superAdminIdIsActiveTrue}`).send();
     expect(response.status).toBe(500);
     expect(response.body.data).toBeUndefined();
     expect(response.body.error).toBeTruthy();
