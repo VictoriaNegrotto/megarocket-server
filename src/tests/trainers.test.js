@@ -112,4 +112,15 @@ describe('updateTrainer /api/trainer/:id', () => {
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
   });
+
+  test('should return status 500 for database error', async () => {
+    jest.spyOn(Trainer, 'findByIdAndUpdate').mockRejectedValueOnce();
+    const trainerId = '6460077410adc8f3ed4e623b';
+    const updatedTrainer = { firstName: 'Mauro', email: 'mauro.caffesse@gmail.com' };
+    const response = await request(app).put(`/api/trainer/${trainerId}`).send(updatedTrainer);
+    expect(response.status).toBe(500);
+    expect(response.error.message).toEqual(`cannot PUT /api/trainer/${trainerId} (500)`);
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.data).toBeUndefined();
+  });
 });
