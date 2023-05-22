@@ -12,6 +12,9 @@ const superAdminIdIsActiveTrue = '646154d30aa90c4527db6f09';
 const superAdminIdIsActiveFalse = '6461553b0aa90c4527db6f0c';
 const superAdminIdInvalid = '6461553b0aa90c4527db6f0c';
 
+const superAdminValidEmail = 'juvi@gmail.com';
+const superAdminInvalidEmail = 'hola@hola.com';
+
 beforeAll(async () => {
   await Superadmin.collection.insertMany(superAdminSeed);
 });
@@ -69,6 +72,31 @@ describe('getSuperSuperAdminById/api/superadmins/:id', () => {
   test('should return status 500 when there is an error getting a super admin by id', async () => {
     jest.spyOn(Superadmin, 'findOne').mockRejectedValueOnce(new Error('Database error'));
     const response = await request(app).get(`/api/superadmin/${superAdminIdIsActiveTrue}`).send();
+    expect(response.status).toBe(500);
+    expect(response.body.data).toBeUndefined();
+    expect(response.body.error).toBeTruthy();
+  });
+});
+
+describe('getSuperSuperAdminByEmail/api/superadmins/:email', () => {
+  test('should return status 200 when a super admin is found', async () => {
+    const response = await request(app).get(`/api/superadmin/filter/${superAdminValidEmail}`).send();
+    expect(response.status).toBe(200);
+    expect(response.body.error).toBeFalsy();
+    expect(response.body.message).toBe('SuperAdmins found!');
+  });
+
+  test('should return status 404 when there is an invalid super admin email', async () => {
+    const response = await request(app).get(`/api/superadmin/filter/${superAdminInvalidEmail}`).send();
+    expect(response.status).toBe(404);
+    expect(response.body.data).toBeUndefined();
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.message).toBe('SuperAdmins not found');
+  });
+
+  test('should return status 500 when there is an error getting a super admin by email', async () => {
+    jest.spyOn(Superadmin, 'findOne').mockRejectedValueOnce(new Error('Database error'));
+    const response = await request(app).get(`/api/superadmin/filter${superAdminValidEmail}`).send();
     expect(response.status).toBe(500);
     expect(response.body.data).toBeUndefined();
     expect(response.body.error).toBeTruthy();
