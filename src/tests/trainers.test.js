@@ -124,3 +124,14 @@ describe('updateTrainer /api/trainer/:id', () => {
     expect(response.body.data).toBeUndefined();
   });
 });
+
+describe('deleteTrainer /api/trainer/:id', () => {
+  test('should return status 200 when a trainer is successfully deleted', async () => {
+    const trainerId = '6460077410adc8f3ed4e623b';
+    const response = await request(app).delete(`/api/trainer/${trainerId}`).send();
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Trainer deleted');
+    expect(response.body.error).toBeFalsy();
+    expect(response.body.data).toBeDefined();
+  });
+});
