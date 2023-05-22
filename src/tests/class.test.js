@@ -84,3 +84,38 @@ describe('updateClass /api/class/:id', () => {
     expect(response.error.message).toEqual(`cannot PUT /api/class/${id} (500)`);
   });
 });
+describe('deleteClass /api/class/:id', () => {
+  test('Should return status 200 when delete class successfully', async () => {
+    const id = '646004aff33f9c83d28ed958';
+    const response = await request(app).delete(`/api/class/${id}`).send();
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe(`Class with ID ${id} deleted!`);
+    expect(response.body.error).toBeFalsy();
+    expect(response.body.data).toBeDefined();
+  });
+  test('should return status 404 when the class is incative', async () => {
+    const invalidID = '6460077410adc8f3ed4e623f';
+    const response = await request(app).delete(`/api/class/${invalidID}`).send();
+    expect(response.status).toBe(404);
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.message).toBe(`Class with ID ${invalidID} was not found`);
+    expect(response.body.data).toBeUndefined();
+  });
+  test('should return status 404 when endpoint is not correct', async () => {
+    const id = '646004aff33f9c83d28ed954';
+    const response = await request(app).delete(`/api/classes/${id}`).send();
+    expect(response.status).toBe(404);
+    expect(response.error.message).toEqual(`cannot DELETE /api/classes/${id} (404)`);
+    expect(response.error).toBeTruthy();
+    expect(response.body.data).toBeUndefined();
+  });
+  test('should return status 500 when there is a database error', async () => {
+    const id = '646004aff33f9c83d28ed954';
+    jest.spyOn(Class, 'findByIdAndUpdate').mockRejectedValueOnce();
+    const response = await request(app).delete(`/api/class/${id}`).send();
+    expect(response.status).toBe(500);
+    expect(response.error.message).toEqual(`cannot DELETE /api/class/${id} (500)`);
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.data).toBeUndefined();
+  });
+});
