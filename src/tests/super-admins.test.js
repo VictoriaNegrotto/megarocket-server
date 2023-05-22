@@ -50,6 +50,7 @@ describe('updateSuperAdmin/api/superadmin/:id', () => {
     expect(response.status).toBe(500);
     expect(response.body.data).toBeUndefined();
     expect(response.body.error).toBeTruthy();
+    expect(response.error.message).toEqual(`cannot PUT /api/superadmin/${superAdminIdIsActiveTrue} (500)`);
   });
 });
 
@@ -57,6 +58,7 @@ describe('getSuperSuperAdminById/api/superadmins/:id', () => {
   test('should return status 200 when a super admin is found by id', async () => {
     const response = await request(app).get(`/api/superadmin/${superAdminIdIsActiveTrue}`).send();
     expect(response.status).toBe(200);
+    expect(response.body.data).toBeDefined();
     expect(response.body.error).toBeFalsy();
     expect(response.body.message).toBe('Super Admin found!');
   });
@@ -75,6 +77,7 @@ describe('getSuperSuperAdminById/api/superadmins/:id', () => {
     expect(response.status).toBe(500);
     expect(response.body.data).toBeUndefined();
     expect(response.body.error).toBeTruthy();
+    expect(response.error.message).toEqual(`cannot GET /api/superadmin/${superAdminIdIsActiveTrue} (500)`);
   });
 });
 
@@ -82,6 +85,7 @@ describe('getSuperSuperAdminByEmail/api/superadmins/:email', () => {
   test('should return status 200 when a super admin is found by email', async () => {
     const response = await request(app).get(`/api/superadmin/filter/${superAdminValidEmail}`).send();
     expect(response.status).toBe(200);
+    expect(response.body.data).toBeDefined();
     expect(response.body.error).toBeFalsy();
     expect(response.body.message).toBe('SuperAdmins found!');
   });
@@ -100,6 +104,7 @@ describe('getSuperSuperAdminByEmail/api/superadmins/:email', () => {
     expect(response.status).toBe(500);
     expect(response.body.data).toBeUndefined();
     expect(response.body.error).toBeTruthy();
+    expect(response.error.message).toEqual(`cannot GET /api/superadmin/filter${superAdminValidEmail} (500)`);
   });
 });
 
@@ -107,6 +112,7 @@ describe('deleteSuperAdmin/api/superadmin/:id', () => {
   test('should return status 200 when a super admin is deleted by id', async () => {
     const response = await request(app).delete(`/api/superadmin/${superAdminIdIsActiveTrue}`).send();
     expect(response.status).toBe(200);
+    expect(response.body.data).toBeDefined();
     expect(response.body.error).toBeFalsy();
     expect(response.body.message).toBe('Super Admin deleted!');
   });
@@ -133,5 +139,6 @@ describe('deleteSuperAdmin/api/superadmin/:id', () => {
     expect(response.status).toBe(500);
     expect(response.body.data).toBeUndefined();
     expect(response.body.error).toBeTruthy();
+    expect(response.error.message).toEqual(`cannot DELETE /api/superadmin/${superAdminIdIsActiveTrue} (500)`);
   });
 });
