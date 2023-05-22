@@ -78,4 +78,12 @@ export default [
     password: 'glevide$test%admin',
     isActive: false,
   },
+  {
+
+    _id: new mongoose.Types.ObjectId('6461553b0aa90c4527db6f0c'),
+    email: 'francoa@gmail.com',
+    password: 'franco123',
+    isActive: false,
+    __v: 0,
+  },
 ];
