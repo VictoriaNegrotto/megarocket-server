@@ -16,4 +16,13 @@ describe('getClassById /api/class/:id', () => {
     expect(response.body.data).toBeDefined();
     expect(response.body.message).toContain(`Class with ID ${id} was found!`);
   });
+  test('should return status 404 when id doesnt exists', async () => {
+    const invalidID = '646004aff33f9c83d28ed953';
+    const response = await request(app).get(`/api/class/${invalidID}`).send();
+    expect(response.status).toBe(404);
+    expect(response.error.message).toEqual(`cannot GET /api/class/${invalidID} (404)`);
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.data).toBeUndefined();
+    expect(response.body.message).toContain(`Class with ID ${invalidID} was not found`);
+  });
 });
