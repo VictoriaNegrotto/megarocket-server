@@ -189,4 +189,14 @@ describe('getTrainersById /api/trainer/:id', () => {
     expect(response.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
   });
+
+  test('should return status 500 when there is an error getting an trainer', async () => {
+    const trainerId = '6460077410adc8f3ed4e623c';
+    jest.spyOn(Trainer, 'findOne').mockRejectedValueOnce();
+    const response = await request(app).get(`/api/trainer/${trainerId}`).send();
+    expect(response.status).toBe(500);
+    expect(response.error.message).toEqual(`cannot GET /api/trainer/${trainerId} (500)`);
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.data).toBeUndefined();
+  });
 });
