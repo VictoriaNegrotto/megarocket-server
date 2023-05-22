@@ -4,14 +4,14 @@ import Subscription from '../models/Subscription';
 import subscriptionSeed from '../seeds/subscription';
 
 const mockSubscription = {
-  classes: '646004aef33f9c83d28ed950',
-  members: ['646004aff33f9c83d28ed950'],
-  date: '2023-06-15T14:57:14.000+00:00',
+  classes: '6462c6beeca7042f29eb1164',
+  members: ['646004aff33f9c83d28ed958'],
+  date: '2023-06-15T14:57:14.000Z',
 };
 
 const failedMockSubscription = {
   classes: '646004aef33f9c83d28ed950',
-  date: '2023-06-15T14:57:14.000+00:00',
+  date: '2023-06-15T14:57:14.000Z',
 };
 
 beforeAll(async () => {
@@ -20,11 +20,17 @@ beforeAll(async () => {
 
 describe('getAllSubscriptions /api/subscriptions', () => {
   test('should return status 200', async () => {
+    const trueSubscription = subscriptionSeed
+      .filter((oneSubscription) => oneSubscription.isActive === true);
     const response = await request(app).get('/api/subscriptions').send();
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('Subscription list found');
     expect(response.error).toBeFalsy();
-    expect(response.body.data).toBeDefined();
+    trueSubscription.forEach((activity) => {
+      expect(activity).toHaveProperty('classes');
+      expect(activity).toHaveProperty('members');
+      expect(activity).toHaveProperty('date');
+    });
   });
 
   test('should return status 404', async () => {
@@ -48,10 +54,14 @@ describe('getAllSubscriptions /api/subscriptions', () => {
 describe('createSubscription /api/subscriptions', () => {
   test('should create a subscription and return status 201', async () => {
     const response = await request(app).post('/api/subscriptions').send(mockSubscription);
+    // eslint-disable-next-line no-underscore-dangle
+    const mockSubscriptionID = response.body.data._id;
     expect(response.status).toBe(201);
     expect(response.body.message).toBe('Subscription was created successfully!');
     expect(response.error).toBeFalsy();
-    expect(response.body.data).toBeDefined();
+    expect(response.body.data).toStrictEqual({
+      ...mockSubscription, _id: mockSubscriptionID, isActive: true, __v: 0,
+    });
   });
 
   test('should return status 404', async () => {
