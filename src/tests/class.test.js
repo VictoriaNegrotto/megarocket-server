@@ -44,7 +44,7 @@ describe('getAllClass /api/class', () => {
     jest.spyOn(Class, 'find').mockImplementation(() => { throw new Error('Database error'); });
     const response = await request(app).get('/api/class').send();
     expect(response.status).toBe(500);
-    expect(response.error.message).toBe('cannot GET /api/admins (500)');
+    expect(response.error.message).toBe('cannot GET /api/class (500)');
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
   });
@@ -63,10 +63,10 @@ describe('createClass /api/class', () => {
     });
   });
   test('should be return status 500 when database error has ocurred', async () => {
-    jest.spyOn(Class, 'find').mockImplementation(() => { throw new Error('Database error'); });
-    const response = await request(app).get('/api/class').send(mockClass);
+    jest.spyOn(Class, 'create').mockImplementation(() => { throw new Error('Database error'); });
+    const response = await request(app).post('/api/class').send(mockClass);
     expect(response.status).toBe(500);
-    expect(response.error.message).toBe('cannot GET /api/class (500)');
+    expect(response.error.message).toBe('cannot POST /api/class (500)');
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
   });
