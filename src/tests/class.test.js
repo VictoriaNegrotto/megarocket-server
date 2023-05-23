@@ -62,4 +62,12 @@ describe('createClass /api/class', () => {
       ...mockClass, _id: mockClassId, isActive: true, __v: 0,
     });
   });
+  test('should be return status 500 when database error has ocurred', async () => {
+    jest.spyOn(Class, 'find').mockImplementation(() => { throw new Error('Database error'); });
+    const response = await request(app).get('/api/class').send(mockClass);
+    expect(response.status).toBe(500);
+    expect(response.error.message).toBe('cannot GET /api/class (500)');
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.data).toBeUndefined();
+  });
 });
