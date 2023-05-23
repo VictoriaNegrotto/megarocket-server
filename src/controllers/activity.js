@@ -49,13 +49,13 @@ const getActivityById = async (req, res) => {
     const idActivity = await Activity.findOne({ $and: [{ _id: id }, { isActive: true }] });
     if (idActivity) {
       return res.status(200).json({
-        message: `Activity with ID ${id} was found`,
+        message: `activity with ID ${id} was found`,
         data: idActivity,
         error: false,
       });
     }
     return res.status(404).json({
-      message: `Activity with ID ${id} was not found`,
+      message: `activity with ID ${id} was not found`,
       data: undefined,
       error: true,
     });
