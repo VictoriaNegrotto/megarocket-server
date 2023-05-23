@@ -13,4 +13,10 @@ export default [
     description: 'gluteus, abs and legs work',
     isActive: true,
   },
+  {
+    _id: new mongoose.Types.ObjectId('64616a9e5648cb86adad2765'),
+    name: 'cap',
+    description: 'gluteus, abs and legs work',
+    isActive: false,
+  },
 ];
