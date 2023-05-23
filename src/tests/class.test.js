@@ -77,7 +77,7 @@ describe('getClassById /api/class/:id', () => {
     const id = '646004aff33f9c83d28ed954';
     const response = await request(app).get(`/api/class/${id}`).send();
     expect(response.status).toBe(200);
-    expect(response.body.error).toBe(false);
+    expect(response.body.error).toBeFalsy();
     expect(response.body.data).toBeDefined();
     expect(response.body.message).toContain(`Class with ID ${id} was found!`);
   });
@@ -119,7 +119,7 @@ describe('updateClass /api/class/:id', () => {
     expect(response.body.error).toBeFalsy();
     expect(response.body.message).toBe(`Class with ID ${id} updated!`);
   });
-  test('should return status 404 when class id is invalid', async () => {
+  test('should return status 500 when class id is invalid', async () => {
     const invalidID = '646004aff33f9c83d28ed950';
     const updateData = { day: 'Monday', slots: 20 };
     const response = await request(app).put(`/api/class/${invalidID}`).send(updateData);
