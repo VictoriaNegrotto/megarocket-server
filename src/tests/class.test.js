@@ -24,4 +24,12 @@ describe('getAllClass /api/class', () => {
       expect(forClass).toHaveProperty('slots');
     });
   });
+  test('should be return status 404 when not found active classes', async () => {
+    await Class.collection.deleteMany({});
+    const response = await request(app).get('/api/class').send();
+    expect(response.status).toBe(404);
+    expect(response.body.error).toBeTruthy();
+    expect(response.body.data).toBeUndefined();
+    await Class.collection.insertMany(classSeed);
+  });
 });
