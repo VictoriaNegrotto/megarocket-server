@@ -145,7 +145,7 @@ const deleteSuperAdmin = async (req, res) => {
       .findByIdAndUpdate(id, { isActive: false }, { new: true });
 
     return res.status(200).json({
-      message: 'Super Admin delete!',
+      message: 'Super Admin deleted!',
       data: superAdminDelete,
       error: false,
     });

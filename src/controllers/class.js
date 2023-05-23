@@ -109,18 +109,17 @@ const createClass = async (req, res) => {
     const {
       day, hour, trainer, activity, slots,
     } = req.body;
-    const newClass = new Class({
+    const newClass = await Class.create({
       day,
       hour,
       trainer,
       activity,
       slots,
     });
-    const result = await newClass.save();
 
     return res.status(201).json({
-      message: `Class with ID ${result.id} created!`,
-      data: result,
+      message: `Class with ID ${newClass.id} created!`,
+      data: newClass,
       error: false,
     });
   } catch (error) {
