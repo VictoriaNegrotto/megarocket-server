@@ -8,6 +8,14 @@ beforeAll(async () => {
 });
 afterEach(() => { jest.restoreAllMocks(); });
 
+const mockClass = {
+  day: 'Monday',
+  hour: '12:30',
+  trainer: '646004aff33f9e83d28ef958',
+  activity: '646004aff33f9c83d28ef958',
+  slots: 8,
+};
+
 describe('getAllClass /api/class', () => {
   test('should return status 200 when request all class list', async () => {
     const response = await request(app).get('/api/class').send();
@@ -39,5 +47,19 @@ describe('getAllClass /api/class', () => {
     expect(response.error.message).toBe('cannot GET /api/admins (500)');
     expect(response.body.error).toBeTruthy();
     expect(response.body.data).toBeUndefined();
+  });
+});
+
+describe('createClass /api/class', () => {
+  test('should return status 201 when class is created', async () => {
+    const response = await request(app).post('/api/class').send(mockClass);
+    // eslint-disable-next-line no-underscore-dangle
+    const mockClassId = response.body.data._id;
+    expect(response.status).toBe(201);
+    expect(response.body.error).toBeFalsy();
+    expect(response.body.message).toBe(`Class with ID ${mockClassId} created!`);
+    expect(response.body.data).toStrictEqual({
+      ...mockClass, _id: mockClassId, isActive: true, __v: 0,
+    });
   });
 });
