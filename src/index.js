@@ -1,22 +1,12 @@
-import dotenv from 'dotenv';
+/* eslint-disable no-console */
 import mongoose from 'mongoose';
 import app from './app';
 
-dotenv.config();
+require('dotenv').config();
+
+const PORT = process.env.PORT || 3000;
 
 mongoose.connect(process.env.MONGO_DB_CONNECT_URL, { maxPoolSize: process.env.MONGO_POOLSIZE || 1 })
-// eslint-disable-next-line no-console
-  .then(() => console.log('MongoDB connected'))
-  .then(() => {
-    app.listen(process.env.PORT, (err) => {
-      if (err) throw err;
-      // eslint-disable-next-line no-console
-      console.log(`server listening on port: ${process.env.PORT}`);
-    });
-  })
-// eslint-disable-next-line no-console
-  .catch((e) => console.log(e));
-
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+  .then(() => console.log('🟢 DB Connected!'))
+  .then(() => app.listen(PORT, () => console.log(`🚀 Server started on port ${PORT}!`)))
+  .catch((error) => console.log('🔴 There was an error on the DB connection method.', error));
