@@ -44,6 +44,26 @@ const updateClass = async (req, res) => {
     const {
       day, hour, trainer, activity, slots,
     } = req.body;
+    if (trainer) {
+      const trainerExist = await Trainer.findById(trainer);
+      if (trainerExist === null) {
+        return res.status(404).json({
+          message: 'There is no Trainer with that ID',
+          data: undefined,
+          error: true,
+        });
+      }
+    }
+    if (activity) {
+      const activityExist = await Activity.findById(activity);
+      if (activityExist === null) {
+        return res.status(404).json({
+          message: 'There is no Activity with that ID',
+          data: undefined,
+          error: true,
+        });
+      }
+    }
     const result = await Class.findByIdAndUpdate(
       id,
       {
@@ -112,7 +132,7 @@ const createClass = async (req, res) => {
       day, hour, trainer, activity, slots,
     } = req.body;
     const trainerExist = await Trainer.findById(trainer);
-    if (!trainerExist) {
+    if (trainerExist === null) {
       return res.status(404).json({
         message: 'There is no Trainer with that ID',
         data: undefined,
@@ -120,7 +140,7 @@ const createClass = async (req, res) => {
       });
     }
     const activityExist = await Activity.findById(activity);
-    if (!activityExist) {
+    if (activityExist === null) {
       return res.status(404).json({
         message: 'There is no Activity with that ID',
         data: undefined,

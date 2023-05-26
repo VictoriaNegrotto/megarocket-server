@@ -1,18 +1,24 @@
 import request from 'supertest';
 import app from '../app';
 import Class from '../models/Class';
+import Activity from '../models/Activity';
+import Trainer from '../models/Trainer';
 import classSeed from '../seeds/class';
+import activitySeed from '../seeds/activity';
+import trainerSeed from '../seeds/trainer';
 
 beforeAll(async () => {
   await Class.collection.insertMany(classSeed);
+  await Activity.collection.insertMany(activitySeed);
+  await Trainer.collection.insertMany(trainerSeed);
 });
 afterEach(() => { jest.restoreAllMocks(); });
 
 const mockClass = {
   day: 'Monday',
   hour: '12:30',
-  trainer: '646004aff33f9e83d28ef958',
-  activity: '646004aff33f9c83d28ef958',
+  trainer: '6460077410adc8f3ed4e623f',
+  activity: '64616a9e5648cb86adad2758',
   slots: 8,
 };
 
