@@ -14,10 +14,10 @@ const validateUpdate = (req, res, next) => {
     hour: Joi.string().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/),
     trainer: Joi.string().custom(isObjectId).messages({
       invalid: 'The Trainer id must be a valid ObjectId',
-    }).required(),
+    }),
     activity: Joi.string().custom(isObjectId).messages({
       invalid: 'The Activity id must be a valid ObjectId',
-    }).required(),
+    }),
     slots: Joi.number().min(0).max(30).integer(),
   });
 

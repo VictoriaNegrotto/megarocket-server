@@ -1,4 +1,6 @@
 import Class from '../models/Class';
+import Trainer from '../models/Trainer';
+import Activity from '../models/Activity';
 
 const getClassById = async (req, res) => {
   try {
@@ -109,6 +111,22 @@ const createClass = async (req, res) => {
     const {
       day, hour, trainer, activity, slots,
     } = req.body;
+    const trainerExist = await Trainer.findById(trainer);
+    if (!trainerExist) {
+      return res.status(404).json({
+        message: 'There is no Trainer with that ID',
+        data: undefined,
+        error: true,
+      });
+    }
+    const activityExist = await Activity.findById(activity);
+    if (!activityExist) {
+      return res.status(404).json({
+        message: 'There is no Activity with that ID',
+        data: undefined,
+        error: true,
+      });
+    }
     const newClass = await Class.create({
       day,
       hour,
