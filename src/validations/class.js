@@ -1,11 +1,23 @@
 import Joi from 'joi';
+import mongoose from 'mongoose';
+
+const isObjectId = (value, helpers) => {
+  if (!mongoose.Types.ObjectId.isValid(value)) {
+    return helpers.error('invalid');
+  }
+  return value;
+};
 
 const validateUpdate = (req, res, next) => {
   const classUpdateValidation = Joi.object({
     day: Joi.string().valid('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'),
     hour: Joi.string().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/),
-    trainer: Joi.string(),
-    activity: Joi.string(),
+    trainer: Joi.string().custom(isObjectId).messages({
+      invalid: 'The Trainer id must be a valid ObjectId',
+    }),
+    activity: Joi.string().custom(isObjectId).messages({
+      invalid: 'The Activity id must be a valid ObjectId',
+    }),
     slots: Joi.number().min(0).max(30).integer(),
   });
 
@@ -23,8 +35,12 @@ const validateCreate = (req, res, next) => {
   const classValidation = Joi.object({
     day: Joi.string().valid('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday').required(),
     hour: Joi.string().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/).required(),
-    activity: Joi.string().required(),
-    trainer: Joi.string().required(),
+    trainer: Joi.string().custom(isObjectId).messages({
+      invalid: 'The Trainer id must be a valid ObjectId',
+    }).required(),
+    activity: Joi.string().custom(isObjectId).messages({
+      invalid: 'The Activity id must be a valid ObjectId',
+    }).required(),
     slots: Joi.number().min(0).max(30).integer()
       .required(),
   });
