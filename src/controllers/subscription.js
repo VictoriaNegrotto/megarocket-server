@@ -1,9 +1,23 @@
 import Subscription from '../models/Subscription';
+import Class from '../models/Class';
+import Member from '../models/Member';
+import member from '../seeds/member';
 
 const updateSubscription = async (req, res) => {
   try {
     const { id } = req.params;
     const { isActive } = await Subscription.findById(id);
+
+    if (member) {
+      const memberExist = await Member.findById(member);
+      if (memberExist === null) {
+        return res.status(404).json({
+          message: 'There is no Member with that ID',
+          data: undefined,
+          error: true,
+        });
+      }
+    }
 
     if (!isActive) {
       return res.status(404).json({
@@ -13,6 +27,26 @@ const updateSubscription = async (req, res) => {
       });
     }
     const { classes, members, date } = req.body;
+    if (classes) {
+      const classExist = await Class.findById(classes);
+      if (classExist === null) {
+        return res.status(404).json({
+          message: 'There is no Class with that ID',
+          data: undefined,
+          error: true,
+        });
+      }
+    }
+    if (members) {
+      const memberExist = await Member.findById(member);
+      if (memberExist === null) {
+        return res.status(404).json({
+          message: 'There is no Member with that ID',
+          data: undefined,
+          error: true,
+        });
+      }
+    }
     const suscriptionToUpdate = await Subscription.findByIdAndUpdate(
       id,
       {
@@ -126,19 +160,35 @@ const filterSubscriptionById = async (req, res) => {
 const createSubscription = async (req, res) => {
   try {
     const { classes, members, date } = req.body;
+    const classExist = await Class.findById(classes);
+    if (classExist === null) {
+      return res.status(404).json({
+        message: 'There is no Class with that ID',
+        data: undefined,
+        error: true,
+      });
+    }
+    const memberExist = await Member.findById(members);
+    if (memberExist === null) {
+      return res.status(404).json({
+        message: 'There is no Member with that ID',
+        data: undefined,
+        error: true,
+      });
+    }
 
     const newSubscription = await Subscription.create({
       classes,
       members,
       date,
     });
-    res.status(201).json({
+    return res.status(201).json({
       message: 'Subscription was created successfully!',
       data: newSubscription,
       error: false,
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: `An error ocurred:\n ${error}`,
       data: undefined,
       error: true,

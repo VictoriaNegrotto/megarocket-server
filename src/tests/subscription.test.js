@@ -2,10 +2,14 @@ import request from 'supertest';
 import app from '../app';
 import Subscription from '../models/Subscription';
 import subscriptionSeed from '../seeds/subscription';
+import Class from '../models/Class';
+import Member from '../models/Member';
+import classSeed from '../seeds/class';
+import memberSeed from '../seeds/member';
 
 const mockSubscription = {
-  classes: '6462c6beeca7042f29eb1164',
-  members: ['646004aff33f9c83d28ed958'],
+  classes: '646004aff33f9c83d28ed958',
+  members: ['646015ffa877f6e5fb0e5de3'],
   date: '2023-06-15T14:57:14.000Z',
 };
 
@@ -16,6 +20,8 @@ const failedMockSubscription = {
 
 beforeAll(async () => {
   await Subscription.collection.insertMany(subscriptionSeed);
+  await Class.collection.insertMany(classSeed);
+  await Member.collection.insertMany(memberSeed);
 });
 
 afterEach(() => {
@@ -71,7 +77,6 @@ describe('createSubscription /api/subscriptions', () => {
       ...mockSubscription, _id: mockSubscriptionID, isActive: true, __v: 0,
     });
   });
-
   test('should return status 404 the path is wrong', async () => {
     const response = await request(app).post('/api/subscription').send(mockSubscription);
     expect(response.status).toBe(404);
