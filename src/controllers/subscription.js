@@ -8,17 +8,6 @@ const updateSubscription = async (req, res) => {
     const { id } = req.params;
     const { isActive } = await Subscription.findById(id);
 
-    if (member) {
-      const memberExist = await Member.findById(member);
-      if (memberExist === null) {
-        return res.status(404).json({
-          message: 'There is no Member with that ID',
-          data: undefined,
-          error: true,
-        });
-      }
-    }
-
     if (!isActive) {
       return res.status(404).json({
         message: `Subscription Id: ${id} inactive, can not be updated`,
