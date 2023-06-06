@@ -118,6 +118,7 @@ const updateAdmin = async (req, res) => {
       const emailExists = await Admin.findOne({
         _id: { $ne: adminId },
         email: req.body.email,
+        isActive: { $ne: false },
       });
       if (emailExists) {
         return res.status(400).json({
