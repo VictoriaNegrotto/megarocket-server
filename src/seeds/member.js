@@ -12,6 +12,7 @@ export default [
     birthDate: '2000-08-01T00:00:00.000+00:00',
     postalCode: 2000,
     memberships: 'Black',
+    password: '12345678',
     isActive: true,
   },
   {
@@ -25,6 +26,7 @@ export default [
     birthDate: '1990-02-13T02:00:00.000+00:00',
     postalCode: 2000,
     memberships: 'Classic',
+    password: '12345678',
     isActive: true,
   },
   {
@@ -38,6 +40,7 @@ export default [
     birthDate: '2000-08-01T00:00:00.000Z',
     postalCode: 4000,
     memberships: 'Black',
+    password: '12345678',
     isActive: true,
   },
   {
@@ -51,6 +54,7 @@ export default [
     birthDate: '2000-08-01T00:00:00.000Z',
     postalCode: 4000,
     memberships: 'Black',
+    password: '12345678',
     isActive: true,
   },
   {
@@ -64,6 +68,7 @@ export default [
     birthDate: '2000-08-01T00:00:00.000Z',
     postalCode: 4000,
     memberships: 'Black',
+    password: '12345678',
     isActive: false,
   },
 ];

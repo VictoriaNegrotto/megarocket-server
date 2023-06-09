@@ -14,6 +14,7 @@ const validateCreate = (req, res, next) => {
     birthDate: Joi.date().required(),
     postalCode: Joi.number().max(9999).required(),
     memberships: Joi.string().valid('Black', 'Classic', 'Only Classes').default('Classic').required(),
+    password: Joi.string().min(8).max(12).required(),
   });
   const validation = createMemberValidate.validate(req.body);
   if (!validation.error) return next();
@@ -36,6 +37,7 @@ const validateUpdate = (req, res, next) => {
     birthDate: Joi.date(),
     postalCode: Joi.number().max(9999).integer(),
     memberships: Joi.string().valid('Black', 'Classic', 'Only Classes'),
+    password: Joi.string().min(8).max(12),
   });
 
   const validationUpdate = updateMemberValidate.validate(req.body);

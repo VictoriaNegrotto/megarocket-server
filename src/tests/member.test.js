@@ -133,6 +133,7 @@ const mockMember = {
   birthDate: '2000-01-01T00:00:00.000Z',
   postalCode: 2000,
   memberships: 'Black',
+  password: 'asdasdasd',
 };
 
 describe('getMembers /api/member', () => {
@@ -147,6 +148,7 @@ describe('getMembers /api/member', () => {
       expect(oneMember).toHaveProperty('birthDate');
       expect(oneMember).toHaveProperty('postalCode');
       expect(oneMember).toHaveProperty('memberships');
+      expect(oneMember).toHaveProperty('password');
       expect(oneMember).toHaveProperty('isActive');
     });
     expect(response.status).toBe(200);

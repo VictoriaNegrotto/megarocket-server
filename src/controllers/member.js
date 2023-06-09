@@ -150,6 +150,7 @@ const createMember = async (req, res) => {
       birthDate,
       postalCode,
       memberships,
+      password,
     } = req.body;
     const memberCreate = await memberSchema.create({
       firstName,
@@ -161,6 +162,7 @@ const createMember = async (req, res) => {
       birthDate,
       postalCode,
       memberships,
+      password,
     });
     return res.status(201).json({
       message: 'Member created',
