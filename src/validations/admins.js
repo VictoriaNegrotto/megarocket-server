@@ -18,7 +18,7 @@ const adminValidation = (req, res, next) => {
       }),
     email: Joi.string()
       .min(5)
-      .email()
+      .regex(/^(?!\.)(?!.*\.\.)[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-z-]+)*(\.[a-z]{2,4})$/)
       .email(),
     password: Joi.string()
       .min(3)

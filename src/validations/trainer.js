@@ -12,7 +12,7 @@ const validateUpdate = (req, res, next) => {
       }),
     dni: Joi.number().min(1000000).max(99999999).integer(),
     phone: Joi.number().min(1000000000).max(9999999999).integer(),
-    email: Joi.string().min(5).email()
+    email: Joi.string().min(5).regex(/^(?!\.)(?!.*\.\.)[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-z-]+)*(\.[a-z]{2,4})$/)
       .lowercase(),
     city: Joi.string().min(3).max(20).regex(/^[a-zA-Z]+(?:[\s-][A-Za-z]+)*$/)
       .messages({
@@ -51,7 +51,7 @@ const trainerCreate = (req, res, next) => {
       .required(),
     phone: Joi.number().integer().min(1000000000).max(9999999999)
       .required(),
-    email: Joi.string().min(5).email()
+    email: Joi.string().min(5).regex(/^(?!\.)(?!.*\.\.)[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-z-]+)*(\.[a-z]{2,4})$/)
       .lowercase()
       .required(),
     city: Joi.string().min(3).max(20).regex(/^[a-zA-Z]+(?:[\s-][A-Za-z]+)*$/)
