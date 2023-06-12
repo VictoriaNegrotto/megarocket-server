@@ -23,7 +23,8 @@ const memberSchema = new Schema({
   },
   phone: {
     type: Number,
-    max: 99999999,
+    min: 1000000000,
+    max: 9999999999,
   },
   email: {
     type: String,

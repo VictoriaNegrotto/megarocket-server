@@ -127,7 +127,7 @@ const mockMember = {
   firstName: 'Test',
   lastName: 'User',
   dni: 32248076,
-  phone: 34130071,
+  phone: 3413007100,
   email: 'test23@example.com',
   city: 'Test City',
   birthDate: '2000-01-01T00:00:00.000Z',
