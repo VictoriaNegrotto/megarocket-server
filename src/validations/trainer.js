@@ -5,7 +5,7 @@ const validateUpdate = (req, res, next) => {
     firstName: Joi.string().min(3).max(20),
     lastName: Joi.string().min(3).max(20),
     dni: Joi.number().min(1000000).max(99999999).integer(),
-    phone: Joi.number().max(99999999).integer(),
+    phone: Joi.number().min(1000000000).max(9999999999).integer(),
     email: Joi.string().min(5).max(30).email()
       .lowercase(),
     city: Joi.string().min(3).max(20),
@@ -31,7 +31,7 @@ const trainerCreate = (req, res, next) => {
       .required(),
     dni: Joi.number().integer().min(1000000).max(99999999)
       .required(),
-    phone: Joi.number().integer().min(1000000).max(99999999)
+    phone: Joi.number().integer().min(1000000000).max(9999999999)
       .required(),
     email: Joi.string().min(5).max(30).email()
       .lowercase()
