@@ -2,23 +2,24 @@ import Joi from 'joi';
 
 const validateCreate = (req, res, next) => {
   const createMemberValidate = Joi.object({
-    firstName: Joi.string().min(3).max(20).pattern(/[a-zA-Z ]+$/)
+    firstName: Joi.string().min(3).max(20).pattern(/^[a-zA-Z]+$/)
       .required(),
-    lastName: Joi.string().min(3).max(20).pattern(/[a-zA-Z ]+$/)
+    lastName: Joi.string().min(3).max(20).pattern(/^[a-zA-Z]+$/)
       .required(),
     dni: Joi.number().min(1000000).max(99999999).integer()
       .required(),
     phone: Joi.number().min(1000000000).max(9999999999).integer()
       .required(),
-    email: Joi.string().email().min(5).max(30)
+    email: Joi.string().regex(/^[^@]+@[^@]+.[a-zA-Z]{2,}$/).min(5).max(30)
       .lowercase()
       .required(),
-    city: Joi.string().min(2).max(20).pattern(/[a-zA-Z ]+$/)
+    city: Joi.string().min(2).max(20).regex(/^[a-zA-Z]+(?:[\s-][A-Za-z]+)*$/)
       .required(),
     birthDate: Joi.date().required(),
     postalCode: Joi.number().max(9999).required(),
     memberships: Joi.string().valid('Black', 'Classic', 'Only Classes').default('Classic').required(),
-    password: Joi.string().min(8).max(12).required(),
+    password: Joi.string().min(8).max(12).regex(/^(?!.*\s)[A-Za-z\d!@#$%^&*]+$/)
+      .required(),
   });
   const validation = createMemberValidate.validate(req.body);
   if (!validation.error) return next();
@@ -31,17 +32,18 @@ const validateCreate = (req, res, next) => {
 
 const validateUpdate = (req, res, next) => {
   const updateMemberValidate = Joi.object({
-    firstName: Joi.string().min(3).max(20).pattern(/[a-zA-Z ]+$/),
-    lastName: Joi.string().min(3).max(20).pattern(/[a-zA-Z ]+$/),
+    firstName: Joi.string().min(3).max(20).pattern(/^[a-zA-Z]+$/),
+    lastName: Joi.string().min(3).max(20).pattern(/^[a-zA-Z]+$/),
     dni: Joi.number().min(1000000).max(99999999).integer(),
     phone: Joi.number().min(1000000000).max(9999999999).integer(),
     email: Joi.string().email().min(5).max(30)
+      .regex(/^[^@]+@[^@]+.[a-zA-Z]{2,}$/)
       .lowercase(),
-    city: Joi.string().min(2).max(20).pattern(/[a-zA-Z ]+$/),
+    city: Joi.string().min(2).max(20).regex(/^[a-zA-Z]+(?:[\s-][A-Za-z]+)*$/),
     birthDate: Joi.date(),
     postalCode: Joi.number().max(9999).integer(),
     memberships: Joi.string().valid('Black', 'Classic', 'Only Classes'),
-    password: Joi.string().min(8).max(12),
+    password: Joi.string().min(8).max(12).regex(/^(?!.*\s)[A-Za-z\d!@#$%^&*]+$/),
   });
 
   const validationUpdate = updateMemberValidate.validate(req.body);
