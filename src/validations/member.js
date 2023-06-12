@@ -16,7 +16,9 @@ const validateCreate = (req, res, next) => {
       .required(),
     phone: Joi.number().min(1000000000).max(9999999999).integer()
       .required(),
-    email: Joi.string().regex(/^(?!\.)(?!.*\.\.)[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-z-]+)*(\.[a-z]{2,4})$/).min(5)
+    email: Joi.string().regex(/^(?!\.)(?!.*\.\.)[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-z-]+)*(\.[a-z]{2,4})$/).min(5).messages({
+      'string.pattern.base': 'Email is not valid, muy contain only one @ and a valid domain',
+    })
       .lowercase()
       .required(),
     city: Joi.string().min(2).max(20).regex(/^[a-zA-Z]+(?:[\s-][A-Za-z]+)*$/)
@@ -55,7 +57,9 @@ const validateUpdate = (req, res, next) => {
     dni: Joi.number().min(1000000).max(99999999).integer(),
     phone: Joi.number().min(1000000000).max(9999999999).integer(),
     email: Joi.string().regex(/^(?!\.)(?!.*\.\.)[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-z-]+)*(\.[a-z]{2,4})$/).min(5)
-      .email()
+      .messages({
+        'string.pattern.base': 'Email is not valid, muy contain only one @ and a valid domain',
+      })
       .lowercase(),
     city: Joi.string().min(2).max(20).regex(/^[a-zA-Z]+(?:[\s-][A-Za-z]+)*$/)
       .messages({
