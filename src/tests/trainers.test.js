@@ -7,7 +7,7 @@ const mockTrainer = {
   firstName: 'Franco',
   lastName: 'Lopez',
   dni: 42653789,
-  phone: 34165383,
+  phone: 3416538300,
   email: 'mauro@sdfs.com',
   city: 'Firmat',
   password: 'password545424',

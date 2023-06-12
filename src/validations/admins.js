@@ -5,14 +5,14 @@ const adminValidation = (req, res, next) => {
     firstName: Joi.string()
       .min(3)
       .max(20)
-      .regex(/^[A-Z][a-z]+$/),
+      .regex(/^[a-zA-Z]+(?: [a-zA-Z]+)?$/),
     lastName: Joi.string()
       .min(3)
       .max(20)
-      .regex(/^[A-Z][a-z]+$/),
+      .regex(/^[a-zA-Z]+(?: [a-zA-Z]+)?$/),
     email: Joi.string()
       .min(5)
-      .max(30)
+      .max(30).regex(/^[^@]+@[^@]+.[a-zA-Z]{2,}$/)
       .email(),
     password: Joi.string()
       .min(3)
@@ -23,12 +23,13 @@ const adminValidation = (req, res, next) => {
       .max(99999999)
       .integer(),
     phone: Joi.number()
+      .min(1000000000)
       .max(9999999999)
       .integer(),
     city: Joi.string()
       .min(3)
       .max(20)
-      .regex(/^[A-Z][a-z]+(?:[\s-][A-Za-z]+)*$/),
+      .regex(/^[a-zA-Z]+(?:[\s-][A-Za-z]+)*$/),
   });
 
   const { error } = schema.validate(req.body);

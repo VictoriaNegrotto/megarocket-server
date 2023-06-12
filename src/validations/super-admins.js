@@ -2,10 +2,11 @@ import Joi from 'joi';
 
 const validateCreate = (req, res, next) => {
   const superAdminCreateValidation = Joi.object({
-    email: Joi.string().email().min(5).max(30)
+    email: Joi.string().regex(/^[^@]+@[^@]+.[a-zA-Z]{2,}$/).min(5).max(30)
       .lowercase()
       .required(),
-    password: Joi.string().min(8).max(20).required(),
+    password: Joi.string().min(8).max(20).regex(/^(?!.*\s)[A-Za-z\d!@#$%^&*]+$/)
+      .required(),
   });
 
   const createValidation = superAdminCreateValidation.validate(req.body);
@@ -21,8 +22,9 @@ const validateCreate = (req, res, next) => {
 const validateUpdate = (req, res, next) => {
   const superAdminUpdateValidation = Joi.object({
     email: Joi.string().email().min(5).max(30)
+      .regex(/^[^@]+@[^@]+.[a-zA-Z]{2,}$/)
       .lowercase(),
-    password: Joi.string().min(8).max(20),
+    password: Joi.string().min(8).max(20).regex(/^(?!.*\s)[A-Za-z\d!@#$%^&*]+$/),
   });
 
   const updateValidation = superAdminUpdateValidation.validate(req.body);

@@ -2,14 +2,14 @@ import Joi from 'joi';
 
 const validateUpdate = (req, res, next) => {
   const trainerValidation = Joi.object({
-    firstName: Joi.string().min(3).max(20),
-    lastName: Joi.string().min(3).max(20),
+    firstName: Joi.string().min(3).max(20).regex(/^[a-zA-Z]+(?: [a-zA-Z]+)?$/),
+    lastName: Joi.string().min(3).max(20).regex(/^[a-zA-Z]+(?: [a-zA-Z]+)?$/),
     dni: Joi.number().min(1000000).max(99999999).integer(),
-    phone: Joi.number().max(99999999).integer(),
-    email: Joi.string().min(5).max(30).email()
+    phone: Joi.number().min(1000000000).max(9999999999).integer(),
+    email: Joi.string().min(5).max(30).regex(/^[^@]+@[^@]+.[a-zA-Z]{2,}$/)
       .lowercase(),
-    city: Joi.string().min(3).max(20),
-    password: Joi.string().min(3).max(20),
+    city: Joi.string().min(3).max(20).regex(/^[a-zA-Z]+(?:[\s-][A-Za-z]+)*$/),
+    password: Joi.string().min(3).max(20).regex(/^(?!.*\s)[A-Za-z\d!@#$%^&*]+$/),
     salary: Joi.number().min(0),
   });
 
@@ -25,16 +25,20 @@ const validateUpdate = (req, res, next) => {
 
 const trainerCreate = (req, res, next) => {
   const trainerValidation = Joi.object({
-    firstName: Joi.string().min(3).max(20).required(),
-    lastName: Joi.string().min(3).max(20).required(),
+    firstName: Joi.string().min(3).max(20).regex(/^[a-zA-Z]+(?: [a-zA-Z]+)?$/)
+      .required(),
+    lastName: Joi.string().min(3).max(20).regex(/^[a-zA-Z]+(?: [a-zA-Z]+)?$/)
+      .required(),
     dni: Joi.number().integer().min(1000000).max(99999999)
       .required(),
-    phone: Joi.number().integer().min(1000000).max(99999999)
+    phone: Joi.number().integer().min(1000000000).max(9999999999)
       .required(),
-    email: Joi.string().email().lowercase()
+    email: Joi.string().min(5).max(30).regex(/^[^@]+@[^@]+.[a-zA-Z]{2,}$/)
+      .lowercase()
       .required(),
-    city: Joi.string().min(3).max(20).required(),
-    password: Joi.string().min(8).required(),
+    city: Joi.string().min(3).max(20).regex(/^[a-zA-Z]+(?:[\s-][A-Za-z]+)*$/)
+      .required(),
+    password: Joi.string().min(8).regex(/^(?!.*\s)[A-Za-z\d!@#$%^&*]+$/).required(),
     salary: Joi.number().required(),
   });
 

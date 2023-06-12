@@ -6,11 +6,11 @@ import adminSeed from '../seeds/admins';
 const mockAdmin = {
   firstName: 'Manuel',
   lastName: 'Cornet',
-  dni: 48632849,
-  phone: 34184609,
   email: 'manu@gmail.com',
-  city: 'Rosario',
   password: 'manu$test%admin',
+  dni: 48632849,
+  phone: 3418460900,
+  city: 'Rosario',
 };
 
 beforeAll(async () => {

@@ -23,7 +23,7 @@ const adminsSchema = new Schema({
   phone: {
     type: Number,
     required: true,
-    max: 99999999,
+    max: 9999999999,
   },
   email: {
     type: String,
