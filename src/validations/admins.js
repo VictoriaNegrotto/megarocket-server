@@ -5,11 +5,11 @@ const adminValidation = (req, res, next) => {
     firstName: Joi.string()
       .min(3)
       .max(20)
-      .regex(/^[a-zA-Z]+$/),
+      .regex(/^[a-zA-Z]+(?: [a-zA-Z]+)?$/),
     lastName: Joi.string()
       .min(3)
       .max(20)
-      .regex(/^[a-zA-Z]+$/),
+      .regex(/^[a-zA-Z]+(?: [a-zA-Z]+)?$/),
     email: Joi.string()
       .min(5)
       .max(30).regex(/^[^@]+@[^@]+.[a-zA-Z]{2,}$/)

@@ -2,9 +2,9 @@ import Joi from 'joi';
 
 const validateCreate = (req, res, next) => {
   const createMemberValidate = Joi.object({
-    firstName: Joi.string().min(3).max(20).pattern(/^[a-zA-Z]+$/)
+    firstName: Joi.string().min(3).max(20).pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)?$/)
       .required(),
-    lastName: Joi.string().min(3).max(20).pattern(/^[a-zA-Z]+$/)
+    lastName: Joi.string().min(3).max(20).pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)?$/)
       .required(),
     dni: Joi.number().min(1000000).max(99999999).integer()
       .required(),
@@ -32,8 +32,8 @@ const validateCreate = (req, res, next) => {
 
 const validateUpdate = (req, res, next) => {
   const updateMemberValidate = Joi.object({
-    firstName: Joi.string().min(3).max(20).pattern(/^[a-zA-Z]+$/),
-    lastName: Joi.string().min(3).max(20).pattern(/^[a-zA-Z]+$/),
+    firstName: Joi.string().min(3).max(20).pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)?$/),
+    lastName: Joi.string().min(3).max(20).pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)?$/),
     dni: Joi.number().min(1000000).max(99999999).integer(),
     phone: Joi.number().min(1000000000).max(9999999999).integer(),
     email: Joi.string().email().min(5).max(30)
