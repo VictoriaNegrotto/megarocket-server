@@ -25,13 +25,16 @@ const validateUpdate = (req, res, next) => {
 
 const trainerCreate = (req, res, next) => {
   const trainerValidation = Joi.object({
-    firstName: Joi.string().min(3).max(20).required(),
-    lastName: Joi.string().min(3).max(20).required(),
+    firstName: Joi.string().min(3).max(20).regex(/^[A-Z][a-z]+$/)
+      .required(),
+    lastName: Joi.string().min(3).max(20).regex(/^[A-Z][a-z]+$/)
+      .required(),
     dni: Joi.number().integer().min(1000000).max(99999999)
       .required(),
     phone: Joi.number().integer().min(1000000).max(99999999)
       .required(),
-    email: Joi.string().email().lowercase()
+    email: Joi.string().min(5).max(30).email()
+      .lowercase()
       .required(),
     city: Joi.string().min(3).max(20).required(),
     password: Joi.string().min(8).required(),
