@@ -17,7 +17,7 @@ const validateCreate = (req, res, next) => {
     phone: Joi.number().min(1000000000).max(9999999999).integer()
       .required(),
     email: Joi.string().regex(/^(?!\.)(?!.*\.\.)[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-z-]+)*(\.[a-z]{2,4})$/).min(5).messages({
-      'string.pattern.base': 'Email is not valid, muy contain only one @ and a valid domain',
+      'string.pattern.base': 'Email is not valid, must contain only one @ and a valid domain',
     })
       .lowercase()
       .required(),
@@ -58,12 +58,12 @@ const validateUpdate = (req, res, next) => {
     phone: Joi.number().min(1000000000).max(9999999999).integer(),
     email: Joi.string().regex(/^(?!\.)(?!.*\.\.)[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-z-]+)*(\.[a-z]{2,4})$/).min(5)
       .messages({
-        'string.pattern.base': 'Email is not valid, muy contain only one @ and a valid domain',
+        'string.pattern.base': 'Email is not valid, must contain only one @ and a valid domain',
       })
       .lowercase(),
     city: Joi.string().min(2).max(20).regex(/^[a-zA-Z]+(?:[\s-][A-Za-z]+)*$/)
       .messages({
-        'string.pattern.base': 'Password must contain at least 8 characters and cannot contain blank spaces',
+        'string.pattern.base': 'City name must be only made of letters(it can be a compound city name)',
       }),
     birthDate: Joi.date(),
     postalCode: Joi.number().max(9999).integer(),
