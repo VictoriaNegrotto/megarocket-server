@@ -20,7 +20,7 @@ const adminValidation = (req, res, next) => {
       .min(5)
       .regex(/^(?!\.)(?!.*\.\.)[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-z-]+)*(\.[a-z]{2,4})$/)
       .messages({
-        'string.pattern.base': 'Email is not valid, muy contain only one @ and a valid domain',
+        'string.pattern.base': 'Email is not valid, must contain only one @ and a valid domain',
       }),
     password: Joi.string()
       .min(3)
