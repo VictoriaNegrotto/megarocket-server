@@ -2,6 +2,10 @@ import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 const adminsSchema = new Schema({
+  FirebaseUid: {
+    type: String,
+    required: true,
+  },
   firstName: {
     type: String,
     minLength: 3,

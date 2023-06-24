@@ -3,6 +3,10 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const memberSchema = new Schema({
+  FirebaseUid: {
+    type: String,
+    required: true,
+  },
   firstName: {
     type: String,
     minLength: 3,
