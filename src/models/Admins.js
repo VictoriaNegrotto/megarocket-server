@@ -41,12 +41,6 @@ const adminsSchema = new Schema({
     maxLength: 20,
     required: true,
   },
-  password: {
-    type: String,
-    minLength: 3,
-    maxLength: 20,
-    required: true,
-  },
   isActive: {
     type: Boolean,
     default: true,

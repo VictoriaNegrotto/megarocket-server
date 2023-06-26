@@ -56,9 +56,6 @@ const memberSchema = new Schema({
     enum: ['Black', 'Classic', 'Only Classes'],
     default: 'Classic',
   },
-  password: {
-    type: String,
-  },
   isActive: {
     type: Boolean,
     default: true,
