@@ -1,4 +1,5 @@
 import Trainer from '../models/Trainer';
+import firebaseApp from '../helper/firebase';
 
 const getTrainerById = async (req, res) => {
   try {
@@ -78,39 +79,40 @@ const updateTrainer = async (req, res) => {
 };
 
 const createTrainer = async (req, res) => {
+  let firebaseUid;
   try {
-    const {
-      firstName,
-      lastName,
-      dni,
-      phone,
-      email,
-      city,
-      password,
-      salary,
-    } = req.body;
-
-    const trainer = await Trainer.create({
-      firstName,
-      lastName,
-      dni,
-      phone,
-      email,
-      city,
-      password,
-      salary,
+    const newFirebaseUser = await firebaseApp.auth().createUser({
+      email: req.body.email,
+      password: req.body.password,
     });
+    firebaseUid = newFirebaseUser.uid;
 
-    res.status(201).json({
-      message: `Trainer ${trainer.firstName} was created successfully!`,
-      data: trainer,
-      error: false,
+    await firebaseApp.auth().setCustomUserClaims(newFirebaseUser.uid, { role: 'TRAINER' });
+    const trainers = new Trainer(
+      {
+        firebaseUid: newFirebaseUser.uid,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        dni: req.body.dni,
+        phone: req.body.phone,
+        city: req.body.city,
+        salary: req.body.salary,
+      },
+    );
+    const trainerSaved = await trainers.save();
+
+    return res.status(201).json({
+      message: 'Register successfully',
+      data: trainerSaved,
     });
   } catch (error) {
-    res.status(500).json({
-      message: error,
-      data: undefined,
-      error: true,
+    if (firebaseUid) {
+      await firebaseApp.auth().deleteUser(firebaseUid);
+    }
+
+    return res.status(400).json({
+      message: error.toString(),
     });
   }
 };
