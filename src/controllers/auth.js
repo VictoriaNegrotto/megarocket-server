@@ -1,11 +1,12 @@
 import Member from '../models/Member';
-import Trainer from '../models/Trainer';
 import Admin from '../models/Admins';
 import SuperAdmins from '../models/Super-admin';
 
 const getAuth = async (req, res) => {
   try {
-    const member = await Member.findOne({ firebaseUid: req.headers.firebaseUid });
+    const member = await Member.findOne({
+      firebaseUid: req.headers.firebaseUid,
+    });
     if (member) {
       return res.status(201).json({
         message: 'Member found',
@@ -22,8 +23,9 @@ const getAuth = async (req, res) => {
         error: false,
       });
     }
-
-    const superAdmin = await SuperAdmins.findOne({ firebaseUid: req.headers.firebaseUid });
+    const superAdmin = await SuperAdmins.findOne({
+      firebaseUid: req.headers.firebaseUid,
+    });
     if (superAdmin) {
       return res.status(201).json({
         message: 'Super Admin found',
@@ -31,16 +33,6 @@ const getAuth = async (req, res) => {
         error: false,
       });
     }
-
-    const trainer = await Trainer.findOne({ firebaseUid: req.headers.firebaseUid });
-    if (trainer) {
-      return res.status(201).json({
-        message: 'Trainer found',
-        data: trainer,
-        error: false,
-      });
-    }
-
     return res.status(404).json({
       message: 'User not found',
       data: undefined,
@@ -55,4 +47,4 @@ const getAuth = async (req, res) => {
   }
 };
 
-export default (getAuth);
+export default { getAuth };

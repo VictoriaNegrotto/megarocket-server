@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-import '../models/Admins';
+import firebaseApp from '../helper/firebase';
+import Admins from '../models/Admins';
 
 const Admin = mongoose.model('Admin');
 
@@ -28,37 +29,39 @@ const getAdmins = async (req, res) => {
 };
 
 const createAdmin = async (req, res) => {
+  let firebaseUid;
   try {
-    const {
-      firstName,
-      lastName,
-      dni,
-      phone,
-      email,
-      city,
-      password,
-    } = req.body;
-
-    const admin = await Admin.create({
-      firstName,
-      lastName,
-      dni,
-      phone,
-      email,
-      city,
-      password,
+    const newFirebaseUser = await firebaseApp.auth().createUser({
+      email: req.body.email,
+      password: req.body.password,
     });
+    firebaseUid = newFirebaseUser.uid;
 
-    res.status(201).json({
-      message: `Admin ${admin.firstName} was created successfully!`,
-      data: admin,
-      error: false,
+    await firebaseApp.auth().setCustomUserClaims(newFirebaseUser.uid, { role: 'ADMIN' });
+    const admin = new Admins(
+      {
+        firebaseUid: newFirebaseUser.uid,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        dni: req.body.dni,
+        phone: req.body.phone,
+        city: req.body.city,
+      },
+    );
+    const adminSaved = await admin.save();
+
+    return res.status(201).json({
+      message: 'Register successfully',
+      data: adminSaved,
     });
   } catch (error) {
-    res.status(500).json({
-      message: error,
-      data: undefined,
-      error: true,
+    if (firebaseUid) {
+      await firebaseApp.auth().deleteUser(firebaseUid);
+    }
+
+    return res.status(400).json({
+      message: error.toString(),
     });
   }
 };

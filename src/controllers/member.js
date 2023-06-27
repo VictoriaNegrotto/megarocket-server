@@ -1,3 +1,4 @@
+import firebaseApp from '../helper/firebase';
 import memberSchema from '../models/Member';
 
 const getMemberById = async (req, res) => {
@@ -139,41 +140,44 @@ const getMembers = async (req, res) => {
 };
 
 const createMember = async (req, res) => {
+  let firebaseUid;
   try {
-    const {
-      firstName,
-      lastName,
-      dni,
-      phone,
-      email,
-      city,
-      birthDate,
-      postalCode,
-      memberships,
-      password,
-    } = req.body;
-    const memberCreate = await memberSchema.create({
-      firstName,
-      lastName,
-      dni,
-      phone,
-      email,
-      city,
-      birthDate,
-      postalCode,
-      memberships,
-      password,
+    const newFirebaseUser = await firebaseApp.auth().createUser({
+      email: req.body.email,
+      password: req.body.password,
     });
+    firebaseUid = newFirebaseUser.uid;
+
+    await firebaseApp.auth().setCustomUserClaims(newFirebaseUser.uid, { role: 'MEMBER' });
+    // eslint-disable-next-line new-cap
+    const member = new memberSchema(
+      {
+        firebaseUid: newFirebaseUser.uid,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        dni: req.body.dni,
+        phone: req.body.phone,
+        city: req.body.city,
+        birthDate: req.body.birthDate,
+        postalCode: req.body.postalCode,
+        memberships: req.body.memberships,
+        isActive: req.body.isActive,
+      },
+    );
+    const memberSaved = await member.save();
+
     return res.status(201).json({
-      message: 'Member created',
-      data: memberCreate,
-      error: false,
+      message: 'Register successfully',
+      data: memberSaved,
     });
   } catch (error) {
-    return res.status(500).json({
-      message: error,
-      data: undefined,
-      error: true,
+    if (firebaseUid) {
+      await firebaseApp.auth().deleteUser(firebaseUid);
+    }
+
+    return res.status(400).json({
+      message: error.toString(),
     });
   }
 };
