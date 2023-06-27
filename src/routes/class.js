@@ -1,14 +1,15 @@
 import { Router } from 'express';
 import validations from '../validations/class';
 import classController from '../controllers/class';
+import verifyToken from '../middlewares/authMiddleware';
 
 const classRoute = Router();
 
 classRoute
-  .get('/', classController.getAllClasses)
-  .get('/:id', classController.getClassById)
-  .put('/:id', validations.validateUpdate, classController.updateClass)
-  .delete('/:id', classController.deleteClass)
-  .post('/', validations.validateCreate, classController.createClass);
+  .get('/', verifyToken(['ADMIN', 'TRAINER', 'MEMBER']), classController.getAllClasses)
+  .get('/:id', verifyToken(['ADMIN']), classController.getClassById)
+  .put('/:id', verifyToken(['ADMIN']), validations.validateUpdate, classController.updateClass)
+  .delete('/:id', verifyToken(['ADMIN']), classController.deleteClass)
+  .post('/', verifyToken(['ADMIN']), validations.validateCreate, classController.createClass);
 
 export default classRoute;
