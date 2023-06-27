@@ -1,6 +1,6 @@
 import firebaseApp from '../helper/firebase';
 
-const verifyToken = async (req, res, next) => {
+const verifyToken = (accessRole) => async (req, res, next) => {
   const { token } = req.headers;
   if (!token) {
     return res.status(400).json({
@@ -11,6 +11,22 @@ const verifyToken = async (req, res, next) => {
   }
   try {
     const response = await firebaseApp.auth().verifyIdToken(token);
+    const firebaseUser = await firebaseApp.auth().getUser(response.uid);
+    const role = firebaseUser.customClaims?.role;
+    if (!role) {
+      return res.status(403).json({
+        message: 'No credentials found',
+        data: undefined,
+        error: true,
+      });
+    }
+    if (!accessRole.includes(role)) {
+      return res.status(403).json({
+        message: 'Credentials not authorized to access this information',
+        data: undefined,
+        error: true,
+      });
+    }
     req.headers.firebaseApp = response.user_id;
     return next();
   } catch (error) {
@@ -21,5 +37,4 @@ const verifyToken = async (req, res, next) => {
     });
   }
 };
-
 export default verifyToken;

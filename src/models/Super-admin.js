@@ -13,12 +13,6 @@ const superAdminSchema = new Schema({
     required: true,
     lowercase: true,
   },
-  password: {
-    type: String,
-    minLength: 8,
-    maxLength: 20,
-    required: true,
-  },
   isActive: {
     type: Boolean,
     default: true,
