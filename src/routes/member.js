@@ -5,7 +5,7 @@ import verifyToken from '../middlewares/authMiddleware';
 
 const memberRouter = Router();
 memberRouter.get('/', verifyToken(['ADMIN']), memberController.getMembers);
-memberRouter.post('/', verifyToken(['ADMIN']), validationsMember.validateCreate, memberController.createMember);
+memberRouter.post('/', validationsMember.validateCreate, memberController.createMember);
 
 memberRouter.get('/:id', verifyToken(['ADMIN', 'MEMBER']), memberController.getMemberById);
 memberRouter.get('/filter/:nameMember', verifyToken(['ADMIN', 'MEMBER']), memberController.filterMember);
