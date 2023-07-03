@@ -6,6 +6,7 @@ import adminsRouter from './admins';
 import memberRouter from './member';
 import classRoute from './class';
 import superAdminRoute from './super-admins';
+import authRouter from './auth';
 
 const router = Router();
 router.use('/member', memberRouter);
@@ -16,5 +17,6 @@ router.use('/member', memberRouter);
 router.use('/admins', adminsRouter);
 router.use('/class', classRoute);
 router.use('/superadmin', superAdminRoute);
+router.use('/auth', authRouter);
 
 export default router;
