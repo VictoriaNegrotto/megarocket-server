@@ -27,7 +27,7 @@ const verifyToken = (accessRole) => async (req, res, next) => {
         error: true,
       });
     }
-    req.headers.firebaseApp = response.user_id;
+    req.headers.firebaseApp = response.uid;
     return next();
   } catch (error) {
     return res.status(401).json({
