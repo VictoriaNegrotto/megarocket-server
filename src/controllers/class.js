@@ -169,6 +169,18 @@ const createClass = async (req, res) => {
         error: true,
       });
     }
+    const existingClass = await Class.findOne({
+      day,
+      hour,
+      trainer,
+    });
+    if (existingClass) {
+      return res.status(400).json({
+        message: 'Trainer is already scheduled for another class at the same day and hour',
+        data: undefined,
+        error: true,
+      });
+    }
     const activityExist = await Activity.findById(activity);
     if (activityExist === null) {
       return res.status(404).json({
