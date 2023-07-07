@@ -49,6 +49,7 @@ const createAdmin = async (req, res) => {
         city: req.body.city,
       },
     );
+
     const adminSaved = await admin.save();
 
     return res.status(201).json({
@@ -132,6 +133,11 @@ const updateAdmin = async (req, res) => {
       }
     }
     await Admin.findOneAndUpdate({ _id: adminId }, req.body, { runValidators: true });
+    await firebaseApp.auth().updateUser(existingAdmin.firebaseUid, {
+      email: req.body.email,
+      password: req.body.password,
+    });
+
     res.status(200).json({
       message: 'Admin updated',
       data: req.body,
@@ -166,6 +172,10 @@ const deleteAdmin = async (req, res) => {
       });
     }
     await Admin.findOneAndUpdate({ _id: adminId }, { isActive: false });
+    await firebaseApp.auth().updateUser(existingAdmin.firebaseUid, {
+      disabled: true,
+    });
+
     res.status(200).json({
       message: 'Admin deleted',
       data: undefined,
