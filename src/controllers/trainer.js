@@ -63,6 +63,10 @@ const updateTrainer = async (req, res) => {
     const trainer = await Trainer.findByIdAndUpdate(id, {
       firstName, lastName, dni, phone, email, city, password, salary,
     }, { new: true, runValidators: true });
+    await firebaseApp.auth().updateUser(trainer.firebaseUid, {
+      email: req.body.email,
+      password: req.body.password,
+    });
 
     return res.status(200).json({
       message: `Trainer with ID: ${id} was updated!`,
@@ -132,6 +136,9 @@ const deleteTrainer = async (req, res) => {
     }
 
     const trainer = await Trainer.findByIdAndUpdate(id, { isActive: false }, { new: true });
+    await firebaseApp.auth().updateUser(trainer.firebaseUid, {
+      disabled: true,
+    });
 
     return res.status(200).json({
       message: 'Trainer deleted',

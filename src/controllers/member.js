@@ -44,6 +44,10 @@ const updateMember = async (req, res) => {
 
     const memberUpdated = await memberSchema
       .findByIdAndUpdate(id, newMemberData, { new: true, runValidators: true });
+    await firebaseApp.auth().updateUser(newMember.firebaseUid, {
+      email: req.body.email,
+      password: req.body.password,
+    });
 
     return res.status(200).json({
       message: 'Member updated!',
@@ -101,6 +105,9 @@ const deleteMember = async (req, res) => {
 
     const memberDelete = await memberSchema
       .findByIdAndUpdate(id, { isActive: false }, { new: true });
+    await firebaseApp.auth().updateUser(existsMember.firebaseUid, {
+      disabled: true,
+    });
     return res.status(200).json({
       message: `Member delete! It was ${memberDelete.firstName}`,
       data: memberDelete,

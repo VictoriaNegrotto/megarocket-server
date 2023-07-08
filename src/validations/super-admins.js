@@ -31,7 +31,12 @@ const validateUpdate = (req, res, next) => {
         'string.pattern.base': 'Email is not valid, must contain only one @ and a valid domain',
       })
       .lowercase(),
-    password: Joi.string().min(8).max(20).regex(/^(?!.*\s)[A-Za-z\d!@#$%^&*]+$/)
+    password: Joi
+      .string()
+      .min(8)
+      .max(20)
+      .regex(/^(?!.*\s)[A-Za-z\d!@#$%^&*]+$/)
+      .allow('')
       .messages({
         'string.pattern.base': 'Password must contain at least 8 characters and cannot contain blank spaces',
       }),
