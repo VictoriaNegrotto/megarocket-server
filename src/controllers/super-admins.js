@@ -102,6 +102,10 @@ const updateSuperAdmin = async (req, res) => {
 
     const updatedSuperAdmin = await SuperAdmin
       .findByIdAndUpdate(id, newSuperAdminData, { new: true, runValidators: true });
+    await firebaseApp.auth().updateUser(existSuperAdmin.firebaseUid, {
+      email: req.body.email,
+      password: req.body.password,
+    });
 
     return res.status(200).json({
       message: 'SuperAdmin Updated!',
@@ -159,6 +163,9 @@ const deleteSuperAdmin = async (req, res) => {
 
     const superAdminDelete = await SuperAdmin
       .findByIdAndUpdate(id, { isActive: false }, { new: true });
+    await firebaseApp.auth().updateUser(existSuperAdmin.firebaseUid, {
+      disabled: true,
+    });
 
     return res.status(200).json({
       message: 'Super Admin deleted!',

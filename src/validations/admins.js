@@ -23,6 +23,7 @@ const adminValidation = (req, res, next) => {
         'string.pattern.base': 'Email is not valid, must contain only one @ and a valid domain',
       }),
     password: Joi.string()
+      .allow('')
       .min(3)
       .max(20)
       .regex(/^(?!.*\s)[A-Za-z\d!@#$%^&*]+$/)

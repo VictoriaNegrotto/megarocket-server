@@ -21,7 +21,12 @@ const validateUpdate = (req, res, next) => {
       .messages({
         'string.pattern.base': 'City name must be only made of letters(it can be a compound city name)',
       }),
-    password: Joi.string().min(8).max(20).regex(/^(?!.*\s)[A-Za-z\d!@#$%^&*]+$/)
+    password: Joi
+      .string()
+      .min(8)
+      .max(20)
+      .regex(/^(?!.*\s)[A-Za-z\d!@#$%^&*]+$/)
+      .allow('')
       .messages({
         'string.pattern.base': 'Password must contain at least 8 characters and cannot contain blank spaces',
       }),

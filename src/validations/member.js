@@ -68,7 +68,12 @@ const validateUpdate = (req, res, next) => {
     birthDate: Joi.date(),
     postalCode: Joi.number().max(9999).integer(),
     memberships: Joi.string().valid('Black', 'Classic', 'Only Classes'),
-    password: Joi.string().min(8).max(20).regex(/^(?!.*\s)[A-Za-z\d!@#$%^&*]+$/)
+    password: Joi
+      .string()
+      .min(8)
+      .max(20)
+      .regex(/^(?!.*\s)[A-Za-z\d!@#$%^&*]+$/)
+      .allow('')
       .messages({
         'string.pattern.base': 'Password must contain at least 8 characters and cannot contain blank spaces',
       }),
