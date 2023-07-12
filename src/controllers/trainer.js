@@ -26,6 +26,31 @@ const getTrainerById = async (req, res) => {
     });
   }
 };
+const getTrainerByEmail = async (req, res) => {
+  try {
+    const { email } = req.params;
+    const trainer = await Trainer.findOne({ $and: [{ email }, { isActive: true }] });
+
+    if (!trainer) {
+      return res.status(404).json({
+        message: `Trainer with ID: ${email} was not found`,
+        data: undefined,
+        error: true,
+      });
+    }
+    return res.status(200).json({
+      message: `Trainer with ID: ${email} was found!`,
+      data: trainer,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error,
+      data: undefined,
+      error: true,
+    });
+  }
+};
 
 const getAllTrainers = async (req, res) => {
   try {
@@ -160,6 +185,7 @@ const trainerControllers = {
   getTrainerById,
   updateTrainer,
   deleteTrainer,
+  getTrainerByEmail,
 };
 
 export default trainerControllers;

@@ -27,6 +27,32 @@ const getMemberById = async (req, res) => {
     });
   }
 };
+const getMemberByEmail = async (req, res) => {
+  try {
+    const { email } = req.params;
+
+    const memberByEmail = await memberSchema.findOne({ email, isActive: true });
+    if (!memberByEmail) {
+      return res.status(404).json({
+        message: 'Member not found!. Email not exists',
+        data: undefined,
+        error: true,
+      });
+    }
+
+    return res.status(200).json({
+      message: `Member found! It was ${memberByEmail.firstName}`,
+      data: memberByEmail,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: `An error ocurred:\n ${error}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
 
 const updateMember = async (req, res) => {
   try {
@@ -196,6 +222,7 @@ const memberController = {
   deleteMember,
   getMembers,
   createMember,
+  getMemberByEmail,
 };
 
 export default memberController;
