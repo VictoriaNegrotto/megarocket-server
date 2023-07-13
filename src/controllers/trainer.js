@@ -73,7 +73,7 @@ const updateTrainer = async (req, res) => {
   try {
     const { id } = req.params;
     const {
-      firstName, lastName, dni, phone, email, city, password, salary,
+      firstName, lastName, dni, phone, email, city, salary,
     } = req.body;
     const trai = await Trainer.findById(id);
 
@@ -86,15 +86,14 @@ const updateTrainer = async (req, res) => {
     }
 
     const trainer = await Trainer.findByIdAndUpdate(id, {
-      firstName, lastName, dni, phone, email, city, password, salary,
+      firstName, lastName, dni, phone, email, city, salary,
     }, { new: true, runValidators: true });
     await firebaseApp.auth().updateUser(trainer.firebaseUid, {
       email: req.body.email,
-      password: req.body.password,
     });
 
     return res.status(200).json({
-      message: `Trainer with ID: ${id} was updated!`,
+      message: `Trainer with Name: ${firstName} was updated!`,
       data: trainer,
       error: false,
     });
