@@ -44,7 +44,8 @@ const updateSubscription = async (req, res) => {
         date,
       },
       { new: true, runValidators: true },
-    );
+    ).populate();
+    console.log(Subscription.findById(id));
     if (!suscriptionToUpdate) {
       return res.status(404).json({
         message: `Subscription Id: ${id} was not found`,
