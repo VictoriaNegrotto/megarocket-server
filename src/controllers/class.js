@@ -29,6 +29,36 @@ const getClassById = async (req, res) => {
   }
 };
 
+const getClassByTrainer = async (req, res) => {
+  try {
+    const { idTrainer } = req.params;
+    const trainerClasses = await Class.find({
+      $and: [{ trainer: idTrainer },
+        { isActive: true }],
+    })
+      .populate('trainer')
+      .populate('activity');
+    if (!trainerClasses) {
+      return res.status(404).json({
+        message: `Class with ID ${idTrainer} was not found`,
+        data: undefined,
+        error: true,
+      });
+    }
+    return res.status(200).json({
+      message: 'Success',
+      data: trainerClasses,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
 const updateClass = async (req, res) => {
   try {
     const { id } = req.params;
@@ -139,6 +169,17 @@ const createClass = async (req, res) => {
         error: true,
       });
     }
+    const existingClass = await Class.findOne({
+      day,
+      hour,
+    });
+    if (existingClass) {
+      return res.status(400).json({
+        message: 'Class is already scheduled at the same day and hour',
+        data: undefined,
+        error: true,
+      });
+    }
     const activityExist = await Activity.findById(activity);
     if (activityExist === null) {
       return res.status(404).json({
@@ -171,9 +212,7 @@ const createClass = async (req, res) => {
 
 const getAllClasses = async (req, res) => {
   try {
-    const classes = await Class.find({ isActive: true })
-      .populate('trainer')
-      .populate('activity');
+    const classes = await Class.find({ isActive: true }).populate('trainer').populate('activity');
     if (classes.length === 0) {
       return res.status(404).json({
         message: 'Classes not found',
@@ -196,7 +235,12 @@ const getAllClasses = async (req, res) => {
 };
 
 const classController = {
-  updateClass, getClassById, deleteClass, createClass, getAllClasses,
+  updateClass,
+  getClassById,
+  deleteClass,
+  createClass,
+  getAllClasses,
+  getClassByTrainer,
 };
 
 export default classController;

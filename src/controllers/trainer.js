@@ -26,6 +26,31 @@ const getTrainerById = async (req, res) => {
     });
   }
 };
+const getTrainerByEmail = async (req, res) => {
+  try {
+    const { email } = req.params;
+    const trainer = await Trainer.findOne({ $and: [{ email }, { isActive: true }] });
+
+    if (!trainer) {
+      return res.status(404).json({
+        message: `Trainer with ID: ${email} was not found`,
+        data: undefined,
+        error: true,
+      });
+    }
+    return res.status(200).json({
+      message: `Trainer with ID: ${email} was found!`,
+      data: trainer,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error,
+      data: undefined,
+      error: true,
+    });
+  }
+};
 
 const getAllTrainers = async (req, res) => {
   try {
@@ -48,7 +73,7 @@ const updateTrainer = async (req, res) => {
   try {
     const { id } = req.params;
     const {
-      firstName, lastName, dni, phone, email, city, password, salary,
+      firstName, lastName, dni, phone, email, city, salary,
     } = req.body;
     const trai = await Trainer.findById(id);
 
@@ -61,15 +86,14 @@ const updateTrainer = async (req, res) => {
     }
 
     const trainer = await Trainer.findByIdAndUpdate(id, {
-      firstName, lastName, dni, phone, email, city, password, salary,
+      firstName, lastName, dni, phone, email, city, salary,
     }, { new: true, runValidators: true });
     await firebaseApp.auth().updateUser(trainer.firebaseUid, {
       email: req.body.email,
-      password: req.body.password,
     });
 
     return res.status(200).json({
-      message: `Trainer with ID: ${id} was updated!`,
+      message: `Trainer with Name: ${firstName} was updated!`,
       data: trainer,
       error: false,
     });
@@ -160,6 +184,7 @@ const trainerControllers = {
   getTrainerById,
   updateTrainer,
   deleteTrainer,
+  getTrainerByEmail,
 };
 
 export default trainerControllers;

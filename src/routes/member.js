@@ -6,6 +6,7 @@ import verifyToken from '../middlewares/authMiddleware';
 const memberRouter = Router();
 memberRouter.get('/', verifyToken(['ADMIN']), memberController.getMembers);
 memberRouter.post('/', validationsMember.validateCreate, memberController.createMember);
+memberRouter.get('/email/:email', verifyToken(['ADMIN', 'MEMBER']), memberController.getMemberByEmail);
 
 memberRouter.get('/:id', verifyToken(['ADMIN', 'MEMBER']), memberController.getMemberById);
 memberRouter.get('/filter/:nameMember', verifyToken(['ADMIN', 'MEMBER']), memberController.filterMember);

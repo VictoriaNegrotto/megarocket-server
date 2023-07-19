@@ -7,9 +7,10 @@ const trainerRoute = Router();
 
 trainerRoute
   .get('/:id', verifyToken(['ADMIN', 'TRAINER']), trainerControllers.getTrainerById)
+  .get('/email/:email', verifyToken(['ADMIN', 'TRAINER']), trainerControllers.getTrainerByEmail)
   .put('/:id', verifyToken(['ADMIN', 'TRAINER']), validations.validateUpdate, trainerControllers.updateTrainer)
   .delete('/:id', verifyToken(['ADMIN']), trainerControllers.deleteTrainer)
-  .get('/', verifyToken(['ADMIN']), trainerControllers.getAllTrainers)
+  .get('/', trainerControllers.getAllTrainers)
   .post('/', verifyToken(['ADMIN']), validations.trainerCreate, trainerControllers.createTrainer);
 
 export default trainerRoute;

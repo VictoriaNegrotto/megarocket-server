@@ -100,6 +100,33 @@ const getAdminById = async (req, res) => {
   return undefined;
 };
 
+const getAdminByEmail = async (req, res) => {
+  const email = req.params.id;
+
+  try {
+    const foundAdmin = await Admin.findOne({ email, isActive: true });
+    if (!foundAdmin) {
+      return res.status(404).json({
+        message: 'Admin not found',
+        data: undefined,
+        error: true,
+      });
+    }
+    res.status(200).json({
+      message: 'Admin found',
+      data: foundAdmin,
+      error: false,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: `${error.message} (Admin Email: ${email})`,
+      data: undefined,
+      error: true,
+    });
+  }
+  return undefined;
+};
+
 const updateAdmin = async (req, res) => {
   const adminId = req.params.id;
   if (!mongoose.Types.ObjectId.isValid(adminId)) {
@@ -197,6 +224,7 @@ const adminsControllers = {
   getAdminById,
   updateAdmin,
   deleteAdmin,
+  getAdminByEmail,
 };
 
 export default adminsControllers;
