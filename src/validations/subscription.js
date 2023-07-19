@@ -34,8 +34,7 @@ const validateCreate = (req, res, next) => {
       .required(),
     members: Joi.array().items(Joi.string().custom(isObjectId).messages({
       invalid: 'The Member id must be a valid ObjectId',
-    }))
-      .required(),
+    })),
     date: Joi.date().required(),
   });
 

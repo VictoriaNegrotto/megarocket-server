@@ -157,20 +157,13 @@ const createSubscription = async (req, res) => {
         error: true,
       });
     }
-    const memberExist = await Member.findById(members);
-    if (memberExist === null) {
-      return res.status(404).json({
-        message: 'There is no Member with that ID',
-        data: undefined,
-        error: true,
-      });
-    }
 
     const newSubscription = await Subscription.create({
       classes,
       members,
       date,
     });
+
     return res.status(201).json({
       message: 'Subscription was created successfully!',
       data: newSubscription,
