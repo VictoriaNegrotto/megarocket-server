@@ -131,7 +131,7 @@ const createTrainer = async (req, res) => {
     const trainerSaved = await trainers.save();
 
     return res.status(201).json({
-      message: 'Register successfully',
+      message: 'New Admin created!',
       data: trainerSaved,
     });
   } catch (error) {
