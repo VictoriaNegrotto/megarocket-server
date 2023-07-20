@@ -150,6 +150,7 @@ const createSubscription = async (req, res) => {
   try {
     const { classes, members, date } = req.body;
     const classExist = await Class.findById(classes);
+    const subHour = await Subscription.findOne({ date });
     if (classExist === null) {
       return res.status(404).json({
         message: 'There is no Class with that ID',
@@ -157,7 +158,13 @@ const createSubscription = async (req, res) => {
         error: true,
       });
     }
-
+    if (subHour != null) {
+      return res.status(404).json({
+        message: 'There is already a subscription at that time and date',
+        data: undefined,
+        error: true,
+      });
+    }
     const newSubscription = await Subscription.create({
       classes,
       members,

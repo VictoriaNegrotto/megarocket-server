@@ -201,7 +201,7 @@ const createMember = async (req, res) => {
     const memberSaved = await member.save();
 
     return res.status(201).json({
-      message: 'New Admin created!',
+      message: 'New Member created!',
       data: memberSaved,
     });
   } catch (error) {
