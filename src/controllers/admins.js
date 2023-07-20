@@ -53,7 +53,7 @@ const createAdmin = async (req, res) => {
     const adminSaved = await admin.save();
 
     return res.status(201).json({
-      message: 'Register successfully',
+      message: 'New Admin created!',
       data: adminSaved,
     });
   } catch (error) {
